@@ -123,7 +123,7 @@ class PromoCode(models.Model):
         return self.code
 
 
-class RestaurantOpenBuffet(models.Model):
+class RestaurantOpenBuffetPackage(models.Model):
     # relations
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
 
@@ -134,6 +134,15 @@ class RestaurantOpenBuffet(models.Model):
 
     def __str__(self):
         return f"{self.restaurant.name}"
+
+
+class OpenBuffetPackageOptions(models.Model):
+    # relations
+    package = models.ForeignKey(RestaurantOpenBuffetPackage, on_delete=models.CASCADE)
+
+    # fields
+    option = models.CharField(max_length=50)
+    is_additional = models.BooleanField(default=False)
 
 
 # class Hotel(models.Model):
