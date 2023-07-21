@@ -1,25 +1,25 @@
-how to run it
-install python 3
-create python env using
+# how to run it
+## install python 3
+## create python env using
 
 ```shell
 python3 -m venv env
 source env/bin/activate
 ```
 
-install requirements using:
+## install requirements using:
 
 ```shell
 pip install -r requirements.txt
 ```
 
-create db:
+## create db:
 
 ```shell
 python manage.py migrate
 ```
 
-create superuser:
+## create superuser:
 
 ```shell
 python manage.py createsuperuser
@@ -27,7 +27,7 @@ python manage.py createsuperuser
 
 and follow the steps it asks for
 
-run server:
+## run server:
 
 ```shell
 python runserver.py
