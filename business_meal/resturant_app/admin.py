@@ -52,3 +52,8 @@ class OrderAdmin(ModelAdmin):
 @admin.register(models.OrderMeal)
 class OrderMealAdmin(ModelAdmin):
     """Admin View for OrderMeal"""
+
+
+@admin.register(models.MealOptions)
+class MealOptionsAdmin(ModelAdmin):
+    """Admin View for MealOptions"""

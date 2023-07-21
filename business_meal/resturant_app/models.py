@@ -48,6 +48,18 @@ class Meal(models.Model):
         return self.name
 
 
+class MealOptions(models.Model):
+    # relations
+    meal = models.ForeignKey(Meal, on_delete=models.CASCADE)
+    # fields
+    option = models.CharField(max_length=50)
+    price = models.IntegerField(default=0)
+    is_additional = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.option
+
+
 class RestaurantOpenBuffet(models.Model):
     # relations
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
