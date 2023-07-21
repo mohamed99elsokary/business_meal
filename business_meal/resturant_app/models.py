@@ -72,16 +72,16 @@ class Order(models.Model):
     status = models.CharField(
         max_length=50,
         choices=[
-            ("canceled", "canceled"),
-            ("returned", "returned"),
-            ("delivering", "delivering"),
             ("preparing", "preparing"),
+            ("delivering", "delivering"),
             ("delivered", "delivered"),
+            ("canceled", "canceled"),
+            ("is_paid", "is_paid"),
         ],
     )
     payment_type = models.CharField(max_length=50)
     is_checkout = models.BooleanField()
-    is_paid = models.BooleanField()
+    is_paid = models.BooleanField(default=False)
     payment_url = models.CharField(max_length=50)
     note = models.CharField(max_length=50)
     ordered_time = models.DateTimeField(auto_now=False, auto_now_add=False)
