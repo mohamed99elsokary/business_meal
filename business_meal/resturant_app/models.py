@@ -60,57 +60,6 @@ class MealOptions(models.Model):
         return self.option
 
 
-class RestaurantOpenBuffet(models.Model):
-    # relations
-    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
-
-    # fields
-    clients_count = models.IntegerField()
-    price = models.IntegerField()
-
-    def __str__(self):
-        return f"{self.restaurant.name}"
-
-
-class Hotel(models.Model):
-    name = models.CharField(max_length=50)
-    description = models.CharField(max_length=50)
-    address = models.CharField(max_length=50)
-    max_persons = models.IntegerField()
-
-    def __str__(self):
-        return self.name
-
-
-class HotelPlans(models.Model):
-    hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
-    number_of_guests = models.IntegerField()
-    price = models.IntegerField()
-    services = models.CharField(max_length=50)
-
-    def __str__(self):
-        return self.hotel.name
-
-
-class HotelImages(models.Model):
-    # relations
-    hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
-    # fields
-    image = models.ImageField(upload_to="media/")
-
-    def __str__(self):
-        return self.name
-
-
-class UserFavorites(models.Model):
-    # relations
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    meal = models.ForeignKey(Meal, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.user
-
-
 class Order(models.Model):
     # relations
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="order_user")
@@ -149,3 +98,59 @@ class OrderMeal(models.Model):
     meal = models.ForeignKey(Meal, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     note = models.CharField(max_length=50)
+
+
+class OrderMealOption(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    option = models.ForeignKey(MealOptions, on_delete=models.CASCADE)
+
+
+class UserFavorites(models.Model):
+    # relations
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    meal = models.ForeignKey(Meal, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user
+
+
+# class RestaurantOpenBuffet(models.Model):
+#     # relations
+#     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
+
+#     # fields
+#     clients_count = models.IntegerField()
+#     price = models.IntegerField()
+
+#     def __str__(self):
+#         return f"{self.restaurant.name}"
+
+
+# class Hotel(models.Model):
+#     name = models.CharField(max_length=50)
+#     description = models.CharField(max_length=50)
+#     address = models.CharField(max_length=50)
+#     max_persons = models.IntegerField()
+
+#     def __str__(self):
+#         return self.name
+
+
+# class HotelPlans(models.Model):
+#     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
+#     number_of_guests = models.IntegerField()
+#     price = models.IntegerField()
+#     services = models.CharField(max_length=50)
+
+#     def __str__(self):
+#         return self.hotel.name
+
+
+# class HotelImages(models.Model):
+#     # relations
+#     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
+#     # fields
+#     image = models.ImageField(upload_to="media/")
+
+#     def __str__(self):
+#         return self.name
