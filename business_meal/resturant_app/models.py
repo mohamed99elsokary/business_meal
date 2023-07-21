@@ -114,6 +114,15 @@ class UserFavorites(models.Model):
         return self.user
 
 
+class PromoCode(models.Model):
+    code = models.CharField(max_length=50)
+    times_to_use = models.IntegerField()
+    used_times = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.code
+
+
 # class RestaurantOpenBuffet(models.Model):
 #     # relations
 #     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)

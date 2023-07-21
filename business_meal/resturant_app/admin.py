@@ -50,6 +50,11 @@ class OrderMealAdmin(ModelAdmin):
     """Admin View for OrderMeal"""
 
 
+@admin.register(models.PromoCode)
+class PromoCodeAdmin(ModelAdmin):
+    """Admin View for PromoCode"""
+
+
 @admin.register(models.MealOptions)
 class MealOptionsAdmin(ModelAdmin):
     def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
