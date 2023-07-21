@@ -51,7 +51,7 @@ class PromoCodeAdmin(ModelAdmin):
 
 
 @admin.register(models.OrderItemOption)
-class OrderItemOptionAdmin(admin.ModelAdmin):
+class OrderItemOptionAdmin(ModelAdmin):
     """Admin View for OrderItemOption"""
 
 
