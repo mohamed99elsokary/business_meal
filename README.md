@@ -1,36 +1,34 @@
-# business_meal project
+how to run it
+install python 3
+create python env using
 
-note:
-
-to run manage.py in production, run the command as follow:
-
-```bash
-export DJANGO_SETTINGS_MODULE=business_meal.settings.production; python manage.py runserver ./
-```
-
-## Pre Commit
-
-pre-commit is used to maintain code quality.
-
-for first time setup:
-
-```bash
-pip install -r requirements/local.txt
-pre-commit install
-pre-commit run --all-files
-```
-
-## First Time install locally
-
-```bash
-virtualenv -p python3  env
+```shell
+python3 -m venv env
 source env/bin/activate
-pip install -r requirements/local.txt
+```
+
+install requirements using:
+
+```shell
+pip install -r requirements.txt
+```
+
+create db:
+
+```shell
 python manage.py migrate
-python manage.py runserver
-python manage.py createsuperuser --email admin@example.com --username admin
-git init
-pre-commit install
-pre-commit run --all-files
-git commit -m "first commit"
+```
+
+create superuser:
+
+```shell
+python manage.py createsuperuser
+```
+
+and follow the steps it asks for
+
+run server:
+
+```shell
+python runserver.py
 ```
