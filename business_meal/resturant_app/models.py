@@ -100,34 +100,36 @@ class PromoCode(models.Model):
         return self.code
 
 
-# class Hotel(models.Model):
-#     name = models.CharField(max_length=50)
-#     description = models.CharField(max_length=50)
-#     address = models.CharField(max_length=50)
-#     max_persons = models.IntegerField()
+class Hotel(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.CharField(max_length=50)
+    address = models.CharField(max_length=50)
+    admin = models.ForeignKey(
+        User, on_delete=models.CASCADE, null=True, blank=True, default=None
+    )
 
-#     def __str__(self):
-#         return self.name
-
-
-# class HotelPlans(models.Model):
-#     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
-#     number_of_guests = models.IntegerField()
-#     price = models.IntegerField()
-#     services = models.CharField(max_length=50)
-
-#     def __str__(self):
-#         return self.hotel.name
+    def __str__(self):
+        return self.name
 
 
-# class HotelImages(models.Model):
-#     # relations
-#     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
-#     # fields
-#     image = models.ImageField(upload_to="media/")
+class HotelPlans(models.Model):
+    hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
+    number_of_guests = models.IntegerField()
+    price = models.IntegerField()
+    services = models.CharField(max_length=50)
 
-#     def __str__(self):
-#         return self.nameuser_address
+    def __str__(self):
+        return self.hotel.name
+
+
+class HotelImages(models.Model):
+    # relations
+    hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
+    # fields
+    image = models.ImageField(upload_to="media/")
+
+    def __str__(self):
+        return self.nameuser_address
 
 
 class Order(models.Model):
@@ -171,6 +173,13 @@ class OrderItem(models.Model):
     meal = models.ForeignKey(Meal, on_delete=models.CASCADE)
     package = models.ForeignKey(
         RestaurantOpenBuffetPackage,
+        on_delete=models.CASCADE,
+        default=None,
+        null=True,
+        blank=True,
+    )
+    hotel_plan = models.ForeignKey(
+        HotelPlans,
         on_delete=models.CASCADE,
         default=None,
         null=True,
