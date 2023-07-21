@@ -1,4 +1,8 @@
+from typing import Any
+
 from django.contrib import admin
+from django.db.models.query import QuerySet
+from django.http.request import HttpRequest
 from unfold.admin import ModelAdmin, StackedInline
 
 from . import models
@@ -17,6 +21,12 @@ class BranchAdmin(ModelAdmin):
 @admin.register(models.Meal)
 class MealAdmin(ModelAdmin):
     """Admin View for Meal"""
+
+    def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
+        qs = super().get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(restaurant__admin=request.user)
 
 
 @admin.register(models.UserFavorites)
