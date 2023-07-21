@@ -93,14 +93,14 @@ class Order(models.Model):
         return self.name
 
 
-class OrderMeal(models.Model):
+class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     meal = models.ForeignKey(Meal, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     note = models.CharField(max_length=50)
 
 
-class OrderMealOption(models.Model):
+class OrderItemOption(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     option = models.ForeignKey(MealOptions, on_delete=models.CASCADE)
 

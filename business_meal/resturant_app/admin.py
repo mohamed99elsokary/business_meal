@@ -40,14 +40,19 @@ class OrderAdmin(ModelAdmin):
     """Admin View for Order"""
 
 
-@admin.register(models.OrderMeal)
-class OrderMealAdmin(ModelAdmin):
+@admin.register(models.OrderItem)
+class OrderItemAdmin(ModelAdmin):
     """Admin View for OrderMeal"""
 
 
 @admin.register(models.PromoCode)
 class PromoCodeAdmin(ModelAdmin):
     """Admin View for PromoCode"""
+
+
+@admin.register(models.OrderItemOption)
+class OrderItemOptionAdmin(admin.ModelAdmin):
+    """Admin View for OrderItemOption"""
 
 
 @admin.register(models.MealOptions)
