@@ -123,16 +123,17 @@ class PromoCode(models.Model):
         return self.code
 
 
-# class RestaurantOpenBuffet(models.Model):
-#     # relations
-#     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
+class RestaurantOpenBuffet(models.Model):
+    # relations
+    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
 
-#     # fields
-#     clients_count = models.IntegerField()
-#     price = models.IntegerField()
+    # fields
+    clients_count = models.IntegerField()
+    image = models.ImageField()
+    price = models.IntegerField()
 
-#     def __str__(self):
-#         return f"{self.restaurant.name}"
+    def __str__(self):
+        return f"{self.restaurant.name}"
 
 
 # class Hotel(models.Model):
