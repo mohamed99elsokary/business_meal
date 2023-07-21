@@ -1,9 +1,4 @@
-from typing import Any, Optional
-
 from django.contrib import admin
-from django.db.models.fields.related import RelatedField
-from django.db.models.query import QuerySet
-from django.http.request import HttpRequest
 from unfold.admin import ModelAdmin, StackedInline
 
 from . import models
@@ -23,7 +18,7 @@ class BranchAdmin(ModelAdmin):
 class MealAdmin(ModelAdmin):
     """Admin View for Meal"""
 
-    def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
+    def get_queryset(self, request):
         qs = super().get_queryset(request)
         if request.user.is_superuser:
             return qs
@@ -57,7 +52,7 @@ class PromoCodeAdmin(ModelAdmin):
 
 @admin.register(models.MealOptions)
 class MealOptionsAdmin(ModelAdmin):
-    def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
+    def get_queryset(self, request):
         qs = super().get_queryset(request)
         if request.user.is_superuser:
             return qs
