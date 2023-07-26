@@ -3,6 +3,16 @@ from django.db import models
 from business_meal.userapp.models import Address, User
 
 
+class Category(models.Model):
+    # relations
+    image = models.ImageField(upload_to="media/", null=True, blank=True, default=None)
+    name = models.CharField(max_length=50)
+    # fields
+
+    def __str__(self):
+        return str(self.name)
+
+
 class Restaurant(models.Model):
     # relations
     admin = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -10,6 +20,9 @@ class Restaurant(models.Model):
     name = models.CharField(max_length=50)
     phone = models.CharField(max_length=50)
     logo = models.ImageField(upload_to="media/")
+    cover_photo = models.ImageField(
+        upload_to="media/", null=True, blank=True, default=None
+    )
     description = models.CharField(max_length=50)
     is_open_buffet = models.BooleanField(default=False)
     is_available = models.BooleanField(default=True)
@@ -37,6 +50,9 @@ class Branch(models.Model):
 class Meal(models.Model):
     # relations
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
+    category = models.ForeignKey(
+        Category, on_delete=models.CASCADE, null=True, blank=True, default=None
+    )
     # fields
     name = models.CharField(max_length=50)
     image = models.ImageField(upload_to="media/")
@@ -60,9 +76,12 @@ class MealOptions(models.Model):
         return self.option
 
 
-class RestaurantOpenBuffetPackage(models.Model):
+class OpenBuffetPackage(models.Model):
     # relations
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
+    category = models.ForeignKey(
+        Category, on_delete=models.CASCADE, null=True, blank=True, default=None
+    )
 
     # fields
     clients_count = models.IntegerField()
@@ -75,7 +94,7 @@ class RestaurantOpenBuffetPackage(models.Model):
 
 class OpenBuffetPackageOptions(models.Model):
     # relations
-    package = models.ForeignKey(RestaurantOpenBuffetPackage, on_delete=models.CASCADE)
+    package = models.ForeignKey(OpenBuffetPackage, on_delete=models.CASCADE)
 
     # fields
     option = models.CharField(max_length=50)
@@ -95,6 +114,9 @@ class PromoCode(models.Model):
     code = models.CharField(max_length=50)
     times_to_use = models.IntegerField()
     used_times = models.IntegerField(default=0)
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, null=True, blank=True, default=None
+    )
 
     def __str__(self):
         return self.code
@@ -102,6 +124,11 @@ class PromoCode(models.Model):
 
 class Hotel(models.Model):
     name = models.CharField(max_length=50)
+    image = models.ImageField(upload_to="media/", null=True, blank=True, default=None)
+    cover_photo = models.ImageField(
+        upload_to="media/", null=True, blank=True, default=None
+    )
+
     description = models.CharField(max_length=50)
     address = models.CharField(max_length=50)
     admin = models.ForeignKey(
@@ -112,19 +139,32 @@ class Hotel(models.Model):
         return self.name
 
 
-class HotelPlans(models.Model):
+class Hall(models.Model):
     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
-    number_of_guests = models.IntegerField()
+    min = models.IntegerField(help_text="number of guests", default=0)
+    max = models.IntegerField(help_text="number of guests", default=0)
     price = models.IntegerField()
-    services = models.CharField(max_length=50)
+    name = models.CharField(max_length=50)
+    description = models.TextField(default=None, null=True, blank=True)
 
     def __str__(self):
         return self.hotel.name
 
 
-class HotelImages(models.Model):
+class HallOptions(models.Model):
     # relations
-    hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
+    hall = models.ForeignKey(Hall, on_delete=models.CASCADE)
+    # fields
+    option = models.CharField(max_length=50)
+    price = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.option
+
+
+class HallImages(models.Model):
+    # relations
+    hall = models.ForeignKey(Hall, on_delete=models.CASCADE)
     # fields
     image = models.ImageField(upload_to="media/")
 
@@ -172,14 +212,14 @@ class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     meal = models.ForeignKey(Meal, on_delete=models.CASCADE)
     package = models.ForeignKey(
-        RestaurantOpenBuffetPackage,
+        OpenBuffetPackage,
         on_delete=models.CASCADE,
         default=None,
         null=True,
         blank=True,
     )
-    hotel_plan = models.ForeignKey(
-        HotelPlans,
+    hall = models.ForeignKey(
+        Hall,
         on_delete=models.CASCADE,
         default=None,
         null=True,
