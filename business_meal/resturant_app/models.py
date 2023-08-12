@@ -84,6 +84,7 @@ class OpenBuffetPackage(models.Model):
     )
 
     # fields
+    name = models.CharField(max_length=50, default=None, null=True, blank=True)
     clients_count = models.IntegerField()
     image = models.ImageField()
     price = models.IntegerField()
@@ -99,6 +100,7 @@ class OpenBuffetPackageOptions(models.Model):
     # fields
     option = models.CharField(max_length=50)
     is_additional = models.BooleanField(default=False)
+    price = models.IntegerField(default=None, null=True, blank=True)
 
 
 class UserFavorites(models.Model):
@@ -128,8 +130,7 @@ class Hotel(models.Model):
     cover_photo = models.ImageField(
         upload_to="media/", null=True, blank=True, default=None
     )
-
-    description = models.CharField(max_length=50)
+    description = models.TextField()
     address = models.CharField(max_length=50)
     admin = models.ForeignKey(
         User, on_delete=models.CASCADE, null=True, blank=True, default=None
