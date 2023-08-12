@@ -20,4 +20,4 @@ echo ----------------- done migration -----------------
 sudo  supervisorctl restart business_meal
 check_okay "error restarting"
 echo ----------------- done restarting supervisor task -----------------
-' | ssh business_meal
+' | ssh foods
