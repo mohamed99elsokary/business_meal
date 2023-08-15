@@ -18,8 +18,8 @@
 
 ## orders (17-8)
 
-* [ ] get orders list filtered by user
-* [ ] get orders details
+* [x] get orders list filtered by user
+* [x] get orders details
 
 ## restaurants (21-8)
 

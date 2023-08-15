@@ -36,12 +36,11 @@ class Order(models.Model):
     estimated_time = models.DateTimeField(auto_now=False, auto_now_add=False)
     delivered_time = models.DateTimeField(auto_now=False, auto_now_add=False)
 
-    def __str__(self):
-        return self.name
-
 
 class OrderItem(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    order = models.ForeignKey(
+        Order, on_delete=models.CASCADE, related_name="order_items"
+    )
     meal = models.ForeignKey(Meal, on_delete=models.CASCADE)
     package = models.ForeignKey(
         "openbuffet_app.OpenBuffetPackage",

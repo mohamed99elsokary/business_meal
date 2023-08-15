@@ -59,7 +59,7 @@ class Address(models.Model):
     apartment = models.CharField(max_length=50)
 
     def __str__(self) -> str:
-        return f"{self.description}"
+        return f"{self.user}"
 
     class Meta:
         verbose_name_plural = "Addresses"
