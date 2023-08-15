@@ -17,13 +17,6 @@ class SiteConfiguration(SingletonModel):
         verbose_name = "Site Configuration"
 
 
-class Category(models.Model):
-    name = models.CharField(max_length=50)
-
-    def __str__(self):
-        return self.name
-
-
 class AbstractSection(models.Model):
     title = models.TextField(null=True, blank=True)
     text = models.TextField(null=True, blank=True)
@@ -138,3 +131,13 @@ class About(models.Model):
     facebook = models.URLField(max_length=500)
     snapchat = models.URLField(max_length=500)
     whatsapp = models.CharField(max_length=500)
+
+
+class Category(models.Model):
+    # relations
+    image = models.ImageField(upload_to="media/", null=True, blank=True, default=None)
+    name = models.CharField(max_length=50)
+    # fields
+
+    def __str__(self):
+        return str(self.name)

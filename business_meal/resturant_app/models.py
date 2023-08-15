@@ -1,16 +1,7 @@
 from django.db import models
 
+from business_meal.addonsapp.models import Category
 from business_meal.userapp.models import Address, User
-
-
-class Category(models.Model):
-    # relations
-    image = models.ImageField(upload_to="media/", null=True, blank=True, default=None)
-    name = models.CharField(max_length=50)
-    # fields
-
-    def __str__(self):
-        return str(self.name)
 
 
 class Restaurant(models.Model):
