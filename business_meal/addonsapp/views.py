@@ -1,17 +1,13 @@
 from rest_framework import mixins, viewsets
 
-from business_meal.addonsapp.models import ContactUs, PageSection
-from business_meal.addonsapp.serializers import (
-    ContactUsSerializer,
-    PageSectionSerializer,
-)
+from business_meal.addonsapp import models, serializers
 
 """ PageSection """
 
 
 class PageSectionViewSet(viewsets.ReadOnlyModelViewSet):
-    serializer_class = PageSectionSerializer
-    queryset = PageSection.objects.all()
+    serializer_class = serializers.PageSectionSerializer
+    queryset = models.PageSection.objects.all()
     pagination_class = None
     filterset_fields = ("page_type",)
 
@@ -20,9 +16,18 @@ class PageSectionViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class ContactUsViewset(mixins.CreateModelMixin, viewsets.GenericViewSet):
-    queryset = ContactUs.objects
-    serializer_class = ContactUsSerializer
+    queryset = models.ContactUs.objects
+    serializer_class = serializers.ContactUsSerializer
 
     def perform_create(self, serializer):
         serializer.save()
         # serializer.instance.send_notification_email()
+
+
+class AdsViewSet(
+    mixins.RetrieveModelMixin,
+    mixins.ListModelMixin,
+    viewsets.GenericViewSet,
+):
+    queryset = models.Ads.objects.all()
+    serializer_class = serializers.AdsSerializer

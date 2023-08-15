@@ -34,3 +34,9 @@ class ContactUsSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.ContactUs
         fields = "__all__"
+
+
+class AdsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Ads
+        fields = "__all__"

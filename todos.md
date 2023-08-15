@@ -2,8 +2,8 @@
 
 ## adds  (16-8)
 
-* [ ] get adds list
-* [ ] get adds details
+* [x] get adds list
+* [x] get adds details
 * [ ] get categories list
 
 ## address (17-8)
