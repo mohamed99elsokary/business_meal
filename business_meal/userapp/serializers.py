@@ -51,8 +51,8 @@ class LoginSerializer(serializers.Serializer):
             refersh_token = RefreshToken.for_user(user)
             access_token = refersh_token.access_token
             return {
-                "refersh_token": refersh_token,
-                "access_token": access_token,
+                "refersh_token": str(refersh_token),
+                "access_token": str(access_token),
             }
         raise serializers.ValidationError("email or password wrong")
 
