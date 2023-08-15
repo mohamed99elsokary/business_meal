@@ -14,6 +14,7 @@ class Hotel(models.Model):
     admin = models.ForeignKey(
         User, on_delete=models.CASCADE, null=True, blank=True, default=None
     )
+    rate = models.IntegerField(default=0)
 
     def __str__(self):
         return self.name

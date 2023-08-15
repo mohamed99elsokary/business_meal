@@ -17,6 +17,7 @@ class Restaurant(models.Model):
     description = models.CharField(max_length=50)
     is_open_buffet = models.BooleanField(default=False)
     is_available = models.BooleanField(default=True)
+    rate = models.IntegerField(default=0)
 
     def __str__(self):
         return self.name
