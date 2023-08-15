@@ -72,3 +72,12 @@ class DeliveryCar(models.Model):
 
     def __str__(self):
         return f"{self.user} {self.model} {self.plat}"
+
+
+class UserFavorites(models.Model):
+    # relations
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    meal = models.ForeignKey("resturant_app.Meal", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user

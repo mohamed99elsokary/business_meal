@@ -141,3 +141,15 @@ class Category(models.Model):
 
     def __str__(self):
         return str(self.name)
+
+
+class PromoCode(models.Model):
+    code = models.CharField(max_length=50)
+    times_to_use = models.IntegerField()
+    used_times = models.IntegerField(default=0)
+    user = models.ForeignKey(
+        "userapp.User", on_delete=models.CASCADE, null=True, blank=True, default=None
+    )
+
+    def __str__(self):
+        return self.code

@@ -56,3 +56,8 @@ class AddressAdmin(ModelAdmin):
 @admin.register(models.DeliveryCar)
 class DeliveryCarAdmin(ModelAdmin):
     """Admin View for DeliveryCar"""
+
+
+@admin.register(models.UserFavorites)
+class UserFavoritesAdmin(ModelAdmin):
+    """Admin View for UserFavorites"""
