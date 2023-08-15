@@ -60,16 +60,16 @@ THIRD_PARTY_APPS = [
     "import_export",
     "django_filters",
     # all auth
-    "allauth.socialaccount",
-    "allauth.socialaccount.providers.facebook",
+    # "allauth.socialaccount",
+    # "allauth.socialaccount.providers.facebook",
     "dj_rest_auth",
     "drf_yasg",
 ]
 # local apps
 LOCAL_APPS = [
-    'business_meal.order_app',
-    'business_meal.hotel_app',
-    'business_meal.openbuffet_app',
+    "business_meal.order_app",
+    "business_meal.hotel_app",
+    "business_meal.openbuffet_app",
     "business_meal.resturant_app",
     "business_meal.userapp",
     "business_meal.addonsapp",
