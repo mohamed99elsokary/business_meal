@@ -31,3 +31,11 @@ class AdsViewSet(
 ):
     queryset = models.Ads.objects.all()
     serializer_class = serializers.AdsSerializer
+
+
+class CategoryViewSet(
+    mixins.ListModelMixin,
+    viewsets.GenericViewSet,
+):
+    queryset = models.Category.objects.all()
+    serializer_class = serializers.CategorySerializer

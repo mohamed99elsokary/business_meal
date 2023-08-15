@@ -40,3 +40,8 @@ class AdsSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Ads
         fields = "__all__"
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Category
+        fields = '__all__'

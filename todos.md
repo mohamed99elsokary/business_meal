@@ -4,7 +4,7 @@
 
 * [x] get adds list
 * [x] get adds details
-* [ ] get categories list
+* [x] get categories list
 
 ## address (17-8)
 
