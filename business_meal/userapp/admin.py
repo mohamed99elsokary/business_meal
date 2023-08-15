@@ -1,3 +1,4 @@
+from allauth.account.models import EmailAddress
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import gettext_lazy as _
@@ -6,6 +7,9 @@ from unfold.admin import ModelAdmin, StackedInline
 from business_meal.userapp import models
 
 from . import models
+
+admin.site.unregister(EmailAddress)
+# admin.site.unregister(authtoken)
 
 
 class AddressInline(StackedInline):
