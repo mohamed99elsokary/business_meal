@@ -1,8 +1,10 @@
 from typing import Any
+
 from django.contrib.auth import authenticate
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
-from business_meal.userapp.models import User
+
+from business_meal.userapp.models import Address, User
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -59,3 +61,11 @@ class UserDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ("username", "phone")
+
+
+class AddressSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
+    class Meta:
+        model = Address
+        fields = "__all__"

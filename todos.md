@@ -8,9 +8,9 @@
 
 ## address (17-8)
 
-* [ ] get user addresses list
-* [ ] update user address
-* [ ] create user address
+* [x] get user addresses list
+* [x] update user address
+* [x] create user address
 
 ## notifications (17-8)
 

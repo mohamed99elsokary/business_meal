@@ -1,15 +1,18 @@
 from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
 from dj_rest_auth.registration.views import SocialLoginView
-from rest_framework import mixins, status ,viewsets
+from rest_framework import mixins, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
+
 from business_meal.services.views import ModelViewSetClones
 from business_meal.userapp import models
 from business_meal.userapp.serializers import (
+    AddressSerializer,
     LoginSerializer,
     UserDataSerializer,
     UserSerializer,
 )
+
 
 class UserViewSet(
     mixins.RetrieveModelMixin, ModelViewSetClones, viewsets.GenericViewSet
@@ -32,7 +35,7 @@ class UserViewSet(
 
     @action(methods=["post"], detail=False)
     def login(self, request, *args, **kwargs):
-        return super().create_clone(request,data=False ,*args, **kwargs)
+        return super().create_clone(request, data=False, *args, **kwargs)
 
     @action(methods=["get"], detail=False)
     def get_me(self, request):
@@ -52,7 +55,14 @@ class UserViewSet(
         request.user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
 class FacebookLogin(SocialLoginView):
     adapter_class = FacebookOAuth2Adapter
-    
-    
+
+
+class AddressViewSet(viewsets.ModelViewSet):
+    queryset = models.Address.objects.all()
+    serializer_class = AddressSerializer
+
+    def get_queryset(self):
+        return super().get_queryset().filter(user=self.request.user)
