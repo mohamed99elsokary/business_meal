@@ -51,6 +51,7 @@ class Meal(models.Model):
     description = models.CharField(max_length=50)
     price = models.IntegerField()
     is_available = models.BooleanField(default=True)
+    is_top_dish = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
