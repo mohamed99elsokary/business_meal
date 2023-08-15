@@ -1,11 +1,11 @@
 #!/bin/bash
 
-git push origin master
+git push origin develop
 echo '
 check_okay () { if [ $? != 0 ]; then echo "----- $1 -----" ; exit; fi };
 echo ----------------- inside server -----------------
 cd /var/www/html/business_meal/
-git pull origin master
+git pull origin develop
 check_okay "error pulling code"
 echo ----------------- done pulling code -----------------
 source env/bin/activate
