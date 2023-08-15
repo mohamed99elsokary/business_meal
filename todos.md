@@ -1,22 +1,27 @@
 # endpoints
 
-## adds
+## adds  (16-8)
 
 * [ ] get adds list
 * [ ] get adds details
 * [ ] get categories list
 
-## address
+## address (17-8)
 
 * [ ] get user addresses list
 * [ ] update user address
 * [ ] create user address
 
-## notifications
+## notifications (17-8)
 
 * [ ] get notifications list
 
-## restaurants
+## orders (17-8)
+
+* [ ] get orders list filtered by user
+* [ ] get orders details
+
+## restaurants (21-8)
 
 * [ ] get restaurants list
     > filters : meal_category is_open_buffet
@@ -25,19 +30,19 @@
     > annotate start_with (lowest meal price in the restaurant) - OpenBuffetPackage count (min_count , max_count)
 * [ ] get restaurants details
 
-## meals
+## meals  (21-8)
 
 * [ ] get meals list
     > filters : restaurant
     > pagination : None
     > annotate category name
 
-## meal options
+## meal options  (21-8)
 
 * [ ] get meal_options list
     > filters : meal - is_additional
 
-## Open Buffet
+## Open Buffet  (21-8)
 
 * [ ] get Package list
     > filters : restaurant
@@ -46,7 +51,7 @@
 * [ ] get Open Buffet Package Options list
     > filters : package - is_additional
 
-## hotel
+## hotel   (21-8)
 
 * [ ] get Hotel list
   > annotate: Hall (min - max)
@@ -58,16 +63,11 @@
 * [ ] get halls options list
     > filters: hall
 
-## orders
-
-* [ ] get orders list filtered by user
-* [ ] get orders details
-
 ## user
 
-* [ ] register - login  by number
-* [ ] update user
+* [X] register - login  by number
+* [X] update user
 * [ ] get promo codes list filtered by user and generic codes
 
-
 cart is missing
+socket is missing
