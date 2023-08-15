@@ -18,6 +18,7 @@ admin.site.index_title = "business_meal site administration"
 
 main_patterns = i18n_patterns(
     path("admin/", admin.site.urls),
+    path("api/", include("business_meal.openbuffet_app.urls")),
     path("api/", include("business_meal.resturant_app.urls")),
     path("api/", include("business_meal.userapp.urls")),
     path("api/", include("business_meal.addonsapp.urls")),

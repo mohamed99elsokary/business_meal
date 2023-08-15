@@ -67,6 +67,7 @@ THIRD_PARTY_APPS = [
 ]
 # local apps
 LOCAL_APPS = [
+    'business_meal.openbuffet_app',
     "business_meal.resturant_app",
     "business_meal.userapp",
     "business_meal.addonsapp",
