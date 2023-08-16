@@ -23,12 +23,12 @@
 
 ## restaurants (21-8)
 
-* [ ] get restaurants list
+* [x] get restaurants list
     > filters : meal_category is_open_buffet
     > search : name_en - name_ar
     > order : rate
     > annotate start_with (lowest meal price in the restaurant) - OpenBuffetPackage count (min_count , max_count)
-* [ ] get restaurants details
+* [x] get restaurants details
 
 ## meals  (21-8)
 
