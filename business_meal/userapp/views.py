@@ -23,10 +23,9 @@ class UserViewSet(
     def get_serializer_class(self):
         if self.action == "login":
             return LoginSerializer
-        elif self.action == "update_me":
+        elif self.action in ["update_me", "get_me"]:
             return UserDataSerializer
-        elif self.action == "get_me":
-            return UserDataSerializer
+
         return super().get_serializer_class()
 
     @action(methods=["post"], detail=False)

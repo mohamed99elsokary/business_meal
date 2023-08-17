@@ -2,15 +2,15 @@
 
 ## adds  (16-8)
 
-* [x] get adds list
-* [x] get adds details
-* [x] get categories list
+* [X] get adds list
+* [X] get adds details
+* [X] get categories list
 
 ## address (17-8)
 
-* [x] get user addresses list
-* [x] update user address
-* [x] create user address
+* [X] get user addresses list
+* [X] update user address
+* [X] create user address
 
 ## notifications (17-8)
 
@@ -18,50 +18,58 @@
 
 ## orders (17-8)
 
-* [x] get orders list filtered by user
-* [x] get orders details
+* [X] get orders list filtered by user
+* [X] get orders details
 
 ## restaurants (21-8)
 
-* [x] get restaurants list
-    > filters : meal_category is_open_buffet
-    > search : name_en - name_ar
-    > order : rate
-    > annotate start_with (lowest meal price in the restaurant) - OpenBuffetPackage count (min_count , max_count)
-* [x] get restaurants details
+* [X] get restaurants list
+  > filters : meal_category is_open_buffet
+  > search : name_en - name_ar
+  > order : rate
+  > annotate start_with (lowest meal price in the restaurant) - OpenBuffetPackage count (min_count , max_count)
+  >
+* [X] get restaurants details
 
 ## meals  (21-8)
 
-* [ ] get meals list
-    > filters : restaurant
-    > pagination : None
-    > annotate category name
+* [X] get meals list
+  > filters : restaurant
+  > pagination : None
+  > annotate category name
+  >
 
 ## meal options  (21-8)
 
-* [ ] get meal_options list
-    > filters : meal - is_additional
+* [X] get meal_options list
+  > filters : meal - is_additional
+  >
 
 ## Open Buffet  (21-8)
 
-* [ ] get Package list
-    > filters : restaurant
-    > pagination : None
-    > annotate category name
-* [ ] get Open Buffet Package Options list
-    > filters : package - is_additional
+* [X] get Package list
+  > filters : restaurant
+  > pagination : None
+  > annotate category name
+  >
+* [X] get Open Buffet Package Options list
+  > filters : package - is_additional
+  >
 
 ## hotel   (21-8)
 
-* [ ] get Hotel list
+* [X] get Hotel list
   > annotate: Hall (min - max)
-* [ ] get Hotel details
-* [ ] get halls list
-    > filters: hotel
-    > pagination : None
-    > annotate category name  - hall images
-* [ ] get halls options list
-    > filters: hall
+  >
+* [X] get Hotel details
+* [X] get halls list
+  > filters: hotel
+  > pagination : None
+  > annotate category name  - hall images
+  >
+* [X] get halls options list
+  > filters: hall
+  >
 
 ## user
 
