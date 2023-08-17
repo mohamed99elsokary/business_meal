@@ -12,14 +12,14 @@ class RestaurantViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class MealViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = query = models.Meal.objects.all().select_related("category")
+    queryset = models.Meal.objects.all().select_related("category")
     serializer_class = serializers.MealSerializer
     filterset_class = filters.MealFilter
     pagination_class = None
 
 
 class MealOptionsViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = query = models.MealOptions.objects.all()
+    queryset = models.MealOptions.objects.all()
     serializer_class = serializers.MealOptionsSerializer
     filterset_class = filters.MealOptionsFilter
     pagination_class = None
