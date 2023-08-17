@@ -13,3 +13,9 @@ class MealFilter(filters.FilterSet):
     class Meta:
         model = models.Meal
         fields = ("restaurant",)
+
+
+class MealOptionsFilter(filters.FilterSet):
+    class Meta:
+        model = models.MealOptions
+        fields = ("meal", "is_additional")

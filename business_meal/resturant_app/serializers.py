@@ -25,3 +25,9 @@ class MealSerializer(serializers.ModelSerializer):
 
     def get_category_name(self, obj) -> str:
         return obj.category.name
+
+
+class MealOptionsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.MealOptions
+        fields = "__all__"

@@ -16,3 +16,10 @@ class MealViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.MealSerializer
     filterset_class = filters.MealFilter
     pagination_class = None
+
+
+class MealOptionsViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = query = models.MealOptions.objects.all()
+    serializer_class = serializers.MealOptionsSerializer
+    filterset_class = filters.MealOptionsFilter
+    pagination_class = None
