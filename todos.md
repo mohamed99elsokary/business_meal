@@ -75,7 +75,7 @@
 
 * [X] register - login  by number
 * [X] update user
-* [ ] get promo codes list filtered by user and generic codes
+* [X] get promo codes list filtered by user and generic codes
 
 cart is missing
 socket is missing

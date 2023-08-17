@@ -1,3 +1,4 @@
+from django.db.models import Q
 from rest_framework import mixins, viewsets
 
 from business_meal.addonsapp import models, serializers
@@ -39,3 +40,11 @@ class CategoryViewSet(
 ):
     queryset = models.Category.objects.all()
     serializer_class = serializers.CategorySerializer
+
+
+class PromoCodeViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = models.PromoCode.objects.all()
+    serializer_class = serializers.PromoCodeSerializer
+
+    def get_queryset(self):
+        return self.queryset.filter(Q(user=self.request.user) | Q(user__isnull=True))
