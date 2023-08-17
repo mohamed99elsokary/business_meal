@@ -9,6 +9,9 @@ class OrderViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = models.Order.objects.all()
     serializer_class = serializers.OrderSerializer
 
+    def get_queryset(self):
+        return self.queryset.filter(user=self.request.user)
+
     def get_serializer_class(self):
         if self.action == "retrieve":
             return serializers.DetailedOrderSerializer
