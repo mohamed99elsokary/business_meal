@@ -12,10 +12,6 @@
 * [X] update user address
 * [X] create user address
 
-## notifications (17-8)
-
-* [ ] get notifications list
-
 ## orders (17-8)
 
 * [X] get orders list filtered by user
@@ -77,5 +73,19 @@
 * [X] update user
 * [X] get promo codes list filtered by user and generic codes
 
-cart is missing
-socket is missing
+## notifications -- package
+
+* [ ] get notifications list filtered by user
+* [ ] toggle all notifications to seen
+* [ ] push notifications
+* [ ] notifications redirection
+
+## cart
+
+* [ ] add product to cart
+* [ ] get all cart items
+* [ ] checkout
+
+## Socket -- squad semi generic app
+
+    socket is missing
