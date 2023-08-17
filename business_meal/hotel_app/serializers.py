@@ -34,3 +34,11 @@ class HotelHallSerializer(serializers.ModelSerializer):
 
     # def get_category_name(self, obj) -> str:
     #     return obj.category.name
+
+
+class HallOptionsSerializer(serializers.ModelSerializer):
+    images = HallImagesSerializer(source="hallimages_set", many=True)
+
+    class Meta:
+        model = models.HallOptions
+        fields = "__all__"

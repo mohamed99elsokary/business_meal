@@ -16,3 +16,10 @@ class HotelHallViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.HotelHallSerializer
     pagination_class = None
     filterset_fields = ["hotel"]
+
+
+class HallOptionsViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = models.HallOptions.objects.all()
+    serializer_class = serializers.HallOptionsSerializer
+    pagination_class = None
+    filterset_fields = ["hall"]
