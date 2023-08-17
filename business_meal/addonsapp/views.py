@@ -43,8 +43,9 @@ class CategoryViewSet(
 
 
 class PromoCodeViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = models.PromoCode.objects.all()
+    queryset = models.PromoCode.objects.filter(is_active=True)
     serializer_class = serializers.PromoCodeSerializer
+    lookup_field = "code"
 
     def get_queryset(self):
         return self.queryset.filter(Q(user=self.request.user) | Q(user__isnull=True))
