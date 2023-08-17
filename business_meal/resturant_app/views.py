@@ -9,3 +9,10 @@ class RestaurantViewSet(viewsets.ReadOnlyModelViewSet):
     ordering = ("rate",)
     search_fields = ["name"]
     filterset_class = filters.RestaurantFilter
+
+
+class MealViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = query = models.Meal.objects.all().select_related("category")
+    serializer_class = serializers.MealSerializer
+    filterset_class = filters.MealFilter
+    pagination_class = None
