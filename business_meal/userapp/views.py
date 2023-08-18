@@ -4,14 +4,17 @@ from rest_framework import mixins, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from business_meal.services.views import ModelViewSetClones
 from business_meal.userapp import models
 from business_meal.userapp.serializers import (
     AddressSerializer,
     LoginSerializer,
+    RegisterLoginSerializer,
     UserDataSerializer,
     UserSerializer,
+    VerifySerializer,
 )
+
+from ..services.views import ModelViewSetClones
 
 
 class UserViewSet(
@@ -25,7 +28,10 @@ class UserViewSet(
             return LoginSerializer
         elif self.action in ["update_me", "get_me"]:
             return UserDataSerializer
-
+        elif self.action == "register_login":
+            return RegisterLoginSerializer
+        elif self.action == "verify":
+            return VerifySerializer
         return super().get_serializer_class()
 
     @action(methods=["post"], detail=False)
@@ -53,6 +59,14 @@ class UserViewSet(
     def delete_me(self, request):
         request.user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+    @action(methods=["post"], detail=False)
+    def register_login(self, request, *args, **kwargs):
+        return super().create_clone(request, *args, **kwargs)
+
+    @action(methods=["post"], detail=False)
+    def verify(self, request, *args, **kwargs):
+        return super().create_clone(request, *args, **kwargs)
 
 
 class FacebookLogin(SocialLoginView):

@@ -25,7 +25,8 @@ class User(UserMixin, CustomModel, AbstractUser):
     phone = models.CharField(_("Phone"), max_length=50, null=True, blank=True)
 
     # verification
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+    is_new = models.BooleanField(default=True)
 
     verification_code = models.CharField(
         max_length=10, default=rand_int_4digits, null=True, blank=True
