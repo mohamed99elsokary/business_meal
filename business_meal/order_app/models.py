@@ -3,6 +3,8 @@ from django.db import models
 from business_meal.resturant_app.models import Meal, MealOptions, PromoCode
 from business_meal.userapp.models import Address, User
 
+from .conf import ORDER_CHOICES
+
 
 class Order(models.Model):
     # relations
@@ -16,16 +18,7 @@ class Order(models.Model):
     )
     # fields
     type = models.CharField(max_length=50)
-    status = models.CharField(
-        max_length=50,
-        choices=[
-            ("preparing", "preparing"),
-            ("delivering", "delivering"),
-            ("delivered", "delivered"),
-            ("canceled", "canceled"),
-            ("is_paid", "is_paid"),
-        ],
-    )
+    status = models.CharField(max_length=50, choices=ORDER_CHOICES.choices)
     payment_type = models.CharField(max_length=50)
     is_checkout = models.BooleanField()
     is_paid = models.BooleanField(default=False)
