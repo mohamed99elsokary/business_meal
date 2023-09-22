@@ -1,11 +1,18 @@
-from rest_framework import viewsets
+from rest_framework import mixins, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from . import models, serializers
+from .conf import CANCELLED
 
 
-class OrderViewSet(viewsets.ReadOnlyModelViewSet):
+class OrderViewSet(
+    mixins.RetrieveModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
+    mixins.ListModelMixin,
+    viewsets.GenericViewSet,
+):
     queryset = models.Order.objects.all()
     serializer_class = serializers.OrderSerializer
 
@@ -17,7 +24,18 @@ class OrderViewSet(viewsets.ReadOnlyModelViewSet):
             return serializers.DetailedOrderSerializer
         elif self.action == "get_current_order":
             return serializers.CurrentOrderSerializer
+        elif self.action in {"update", "partial_update"}:
+            return serializers.UpdateOrderSerializer
         return super().get_serializer_class()
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        if instance.is_checkout:
+            instance.status = CANCELLED
+            instance.save()
+        else:
+            instance.delete()
+        return Response(status=200)
 
     @action(methods=["get"], detail=False)
     def get_current_order(self, request, *args, **kwargs):

@@ -80,12 +80,12 @@
 
 * [X] get current order
   > return the latest not finished order or creates new one and return it
-* [ ] update order
-* [ ] cancel order
+* [x] update order
+* [x] cancel order
 * [ ] reorder
   > will delete the latest unfinished order if exists
-* [ ] get all orders
-* [ ] get order details
+* [x] get all orders
+* [x] get order details
   > add provider name
 * [ ] add order item
   > user can't add more than one provider in one cart
