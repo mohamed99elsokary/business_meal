@@ -89,28 +89,33 @@
 ## orders
 
 * [X] get current order
+
   > return the latest not finished order or creates new one and return it
   >
 * [X] update order
 * [X] cancel order
-* [ ] reorder
-  > will delete the latest unfinished order if exists
-  >
 * [X] get all orders
 * [X] get order details
+
   > add provider name
   >
 * [X] add order item
+
   > user can't add more than one provider in one cart
   >
 * [X] delete order item
 * [X] update order item
-* [ ] get order new payment link
 * [ ] checkout
+
   > get user address id
   > pickup order
   > schedule order
   > promo code
+  >
+* [ ] get order new payment link
+* [ ] reorder
+
+  > will delete the latest unfinished order if exists
   >
 
 ## Socket -- squad semi generic app
