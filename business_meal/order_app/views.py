@@ -2,6 +2,7 @@ from rest_framework import mixins, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
+from ..services.views import ModelViewSetClones
 from . import models, serializers
 from .conf import CANCELLED
 
@@ -12,6 +13,7 @@ class OrderViewSet(
     mixins.DestroyModelMixin,
     mixins.ListModelMixin,
     viewsets.GenericViewSet,
+    ModelViewSetClones,
 ):
     queryset = models.Order.objects.all()
     serializer_class = serializers.OrderSerializer
@@ -42,3 +44,13 @@ class OrderViewSet(
         order = models.Order.objects.get_or_create(user=request.user, is_checkout=False)
         serializer = self.get_serializer(order[0])
         return Response(serializer.data)
+
+
+class OrderItemViewSet(
+    mixins.CreateModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
+    viewsets.GenericViewSet,
+):
+    queryset = query = models.OrderItem.objects.all()
+    serializer_class = serializers.AddOrderItemSerializer
