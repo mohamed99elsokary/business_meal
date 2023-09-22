@@ -3,6 +3,8 @@ from django.db import models
 from business_meal.resturant_app.models import Meal, MealOptions, PromoCode
 from business_meal.userapp.models import Address, User
 
+from ..hotel_app.models import Hotel
+from ..resturant_app.models import Restaurant
 from .conf import ORDER_CHOICES
 
 
@@ -27,14 +29,18 @@ class Order(models.Model):
     promo = models.ForeignKey(
         PromoCode, on_delete=models.CASCADE, null=True, blank=True, default=None
     )
+    restaurant = models.ForeignKey(
+        Restaurant, on_delete=models.CASCADE, default=None, null=True, blank=True
+    )
+    hotel = models.ForeignKey(
+        Hotel, on_delete=models.CASCADE, default=None, null=True, blank=True
+    )
     # fields
-    type = models.CharField(max_length=50)
-    status = models.CharField(max_length=50, choices=ORDER_CHOICES.choices)
-    payment_type = models.CharField(max_length=50)
+    status = models.CharField(max_length=50, choices=ORDER_CHOICES)
     is_checkout = models.BooleanField()
     is_paid = models.BooleanField(default=False)
-    payment_url = models.CharField(max_length=50)
-    note = models.CharField(max_length=50)
+    payment_url = models.CharField(max_length=500, default=None, null=True, blank=True)
+    note = models.TextField(default=None, null=True, blank=True)
     ordered_time = models.DateTimeField(auto_now=False, auto_now_add=True)
     scheduled_time = models.DateTimeField(default=None, null=True, blank=True)
     estimated_time = models.DateTimeField(default=None, null=True, blank=True)
