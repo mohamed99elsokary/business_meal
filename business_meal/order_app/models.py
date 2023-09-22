@@ -10,9 +10,20 @@ class Order(models.Model):
     # relations
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="order_user")
     delivery_user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="delivery_user"
+        User,
+        on_delete=models.CASCADE,
+        related_name="delivery_user",
+        default=None,
+        null=True,
+        blank=True,
     )
-    user_address = models.ForeignKey(Address, on_delete=models.CASCADE)
+    user_address = models.ForeignKey(
+        Address,
+        on_delete=models.CASCADE,
+        default=None,
+        null=True,
+        blank=True,
+    )
     promo = models.ForeignKey(
         PromoCode, on_delete=models.CASCADE, null=True, blank=True, default=None
     )
@@ -24,10 +35,10 @@ class Order(models.Model):
     is_paid = models.BooleanField(default=False)
     payment_url = models.CharField(max_length=50)
     note = models.CharField(max_length=50)
-    ordered_time = models.DateTimeField(auto_now=False, auto_now_add=False)
-    scheduled_time = models.DateTimeField(auto_now=False, auto_now_add=False)
-    estimated_time = models.DateTimeField(auto_now=False, auto_now_add=False)
-    delivered_time = models.DateTimeField(auto_now=False, auto_now_add=False)
+    ordered_time = models.DateTimeField(auto_now=False, auto_now_add=True)
+    scheduled_time = models.DateTimeField(default=None, null=True, blank=True)
+    estimated_time = models.DateTimeField(default=None, null=True, blank=True)
+    delivered_time = models.DateTimeField(default=None, null=True, blank=True)
 
 
 class OrderItem(models.Model):

@@ -78,7 +78,7 @@
 
 ## orders
 
-* [ ] get current order
+* [X] get current order
   > return the latest not finished order or creates new one and return it
 * [ ] update order
 * [ ] cancel order

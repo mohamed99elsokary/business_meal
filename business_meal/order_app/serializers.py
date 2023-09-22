@@ -21,3 +21,7 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Order
         fields = "__all__"
+
+
+class CurrentOrderSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
