@@ -151,6 +151,12 @@ class PromoCode(models.Model):
     user = models.ForeignKey(
         "userapp.User", on_delete=models.CASCADE, null=True, blank=True, default=None
     )
+    discount = models.IntegerField(default=0)
+    discount_type = models.CharField(
+        max_length=50,
+        default="amount",
+        choices=[("amount", "amount"), ("discount", "discount")],
+    )
 
     def __str__(self):
         return self.code
