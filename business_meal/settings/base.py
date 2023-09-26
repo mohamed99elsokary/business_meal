@@ -33,7 +33,8 @@ ALLOWED_HOSTS = ["*"]
 AUTH_USER_MODEL = "userapp.User"
 AUTHENTICATION_BACKENDS = ["django.contrib.auth.backends.AllowAllUsersModelBackend"]
 # Application definition
-
+FILE_UPLOAD_MAX_MEMORY_SIZE = 5 * 1048576
+FILE_UPLOAD_MAX_SIZE = 100 * 1048576
 
 DJANGO_APPS = [
     "unfold",
