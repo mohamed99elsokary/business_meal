@@ -18,3 +18,4 @@ django-smart-selects==1.6.0
 django-solo==2.0.0
 psycopg2-binary==2.9.3 # https://github.com/psycopg/psycopg2
 django-unfold == 0.6.9
+django-lifecycle==1.0.0

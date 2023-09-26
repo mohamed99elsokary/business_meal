@@ -4,7 +4,8 @@ from rest_framework.routers import DefaultRouter
 from . import views
 
 router = DefaultRouter()
-# router.register("path", views.)
+router.register("order", views.OrderViewSet)
+router.register("order-item", views.OrderItemViewSet)
 urlpatterns = [
     path("", include(router.urls)),
 ]

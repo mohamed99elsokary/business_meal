@@ -1,12 +1,13 @@
 from django.urls import include, path
 from rest_framework import routers
 
-from business_meal.userapp.views import (UserViewSet,FacebookLogin)
+from business_meal.userapp import views
 
 router = routers.DefaultRouter()
-router.register("users", UserViewSet, basename="users")
+router.register("users", views.UserViewSet, basename="users")
 
+router.register("address", views.AddressViewSet)
 urlpatterns = [
     path("", include(router.urls)),
-    path("users/facebook/", FacebookLogin.as_view(), name="fb_login"),
+    path("users/facebook/", views.FacebookLogin.as_view(), name="fb_login"),
 ]

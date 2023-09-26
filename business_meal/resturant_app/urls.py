@@ -5,6 +5,9 @@ from . import views
 
 router = DefaultRouter()
 # router.register("path", views.)
+router.register("restaurant", views.RestaurantViewSet)
+router.register("meal", views.MealViewSet)
+router.register("meal-options", views.MealOptionsViewSet)
 urlpatterns = [
     path("", include(router.urls)),
 ]

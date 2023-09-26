@@ -2,72 +2,122 @@
 
 ## adds  (16-8)
 
-* [ ] get adds list
-* [ ] get adds details
-* [ ] get categories list
+* [X] get adds list
+* [X] get adds details
+* [X] get categories list
 
 ## address (17-8)
 
-* [ ] get user addresses list
-* [ ] update user address
-* [ ] create user address
-
-## notifications (17-8)
-
-* [ ] get notifications list
+* [X] get user addresses list
+* [X] update user address
+* [X] create user address
 
 ## orders (17-8)
 
-* [ ] get orders list filtered by user
-* [ ] get orders details
+* [X] get orders list filtered by user
+* [X] get orders details
 
 ## restaurants (21-8)
 
-* [ ] get restaurants list
-    > filters : meal_category is_open_buffet
-    > search : name_en - name_ar
-    > order : rate
-    > annotate start_with (lowest meal price in the restaurant) - OpenBuffetPackage count (min_count , max_count)
-* [ ] get restaurants details
+* [X] get restaurants list
+
+  > filters : meal_category is_open_buffet
+  > search : name_en - name_ar
+  > order : rate
+  > annotate start_with (lowest meal price in the restaurant) - OpenBuffetPackage count (min_count , max_count)
+  >
+* [X] get restaurants details
 
 ## meals  (21-8)
 
-* [ ] get meals list
-    > filters : restaurant
-    > pagination : None
-    > annotate category name
+* [X] get meals list
+  > filters : restaurant
+  > pagination : None
+  > annotate category name
+  >
 
 ## meal options  (21-8)
 
-* [ ] get meal_options list
-    > filters : meal - is_additional
+* [X] get meal_options list
+  > filters : meal - is_additional
+  >
 
 ## Open Buffet  (21-8)
 
-* [ ] get Package list
-    > filters : restaurant
-    > pagination : None
-    > annotate category name
-* [ ] get Open Buffet Package Options list
-    > filters : package - is_additional
+* [X] get Package list
+
+  > filters : restaurant
+  > pagination : None
+  > annotate category name
+  >
+* [X] get Open Buffet Package Options list
+
+  > filters : package - is_additional
+  >
 
 ## hotel   (21-8)
 
-* [ ] get Hotel list
+* [X] get Hotel list
+
   > annotate: Hall (min - max)
-* [ ] get Hotel details
-* [ ] get halls list
-    > filters: hotel
-    > pagination : None
-    > annotate category name  - hall images
-* [ ] get halls options list
-    > filters: hall
+  >
+* [X] get Hotel details
+* [X] get halls list
+
+  > filters: hotel
+  > pagination : None
+  > annotate category name  - hall images
+  >
+* [X] get halls options list
+
+  > filters: hall
+  >
 
 ## user
 
 * [X] register - login  by number
 * [X] update user
-* [ ] get promo codes list filtered by user and generic codes
+* [X] get promo codes list filtered by user and generic codes
 
-cart is missing
-socket is missing
+## notifications -- package
+
+* [ ] get notifications list filtered by user
+* [ ] toggle all notifications to seen
+* [ ] push notifications
+* [ ] notifications redirection
+
+## orders
+
+* [X] get current order
+
+  > return the latest not finished order or creates new one and return it
+  >
+* [X] update order
+* [X] cancel order
+* [X] get all orders
+* [X] get order details
+
+  > add provider name
+  >
+* [X] add order item
+
+  > user can't add more than one provider in one cart
+  >
+* [X] delete order item
+* [X] update order item
+* [ ] checkout
+
+  > get user address id
+  > pickup order
+  > schedule order
+  > promo code
+  >
+* [ ] get order new payment link
+* [ ] reorder
+
+  > will delete the latest unfinished order if exists
+  >
+
+## Socket -- squad semi generic app
+
+    socket is missing
