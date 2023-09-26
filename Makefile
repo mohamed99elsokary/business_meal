@@ -1,18 +1,8 @@
-# code templates
-gen_temp:
-	# generate code from models
-	# ex: make gen_temp app=business_meal.userapp
-	python manage.py generator app $(app)
-gen_temp_all:
-	for app in business_meal.userapp; do \
-		python manage.py generator app $$app ; \
-	done
-
-# docker compose in development
 build_dev:
+	docker stop $$(docker ps -q) || true
 	docker-compose -f local.yml up --build
 dev:
-	docker-compose -f local.yml down
+	docker stop $$(docker ps -q) || true
 	docker-compose -f local.yml up
 test:
 	docker-compose -f local.yml run web pytest
