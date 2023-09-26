@@ -12,8 +12,8 @@ class RestaurantSerializer(serializers.ModelSerializer):
 
     def get_lowest_meal_price(self, obj) -> int:
         if meals := models.Meal.objects.filter(restaurant=obj):
-            return None
-        return meals.order_by("price").first().price
+            return meals.order_by("price").first().price
+        return None
 
 
 class MealSerializer(serializers.ModelSerializer):
