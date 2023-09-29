@@ -13,4 +13,5 @@ class OpenBuffetPackageViewSet(viewsets.ReadOnlyModelViewSet):
 class OpenBuffetOptionsViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = models.OpenBuffetPackageOptions.objects.all()
     serializer_class = serializers.OpenBuffetPackageOptionsSerializer
-    filterset_fields = ["is_additional"]
+    filterset_fields = ["is_additional", "package"]
+    pagination_class = None
