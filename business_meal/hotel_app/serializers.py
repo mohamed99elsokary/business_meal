@@ -37,8 +37,6 @@ class HotelHallSerializer(serializers.ModelSerializer):
 
 
 class HallOptionsSerializer(serializers.ModelSerializer):
-    images = HallImagesSerializer(source="hallimages_set", many=True)
-
     class Meta:
         model = models.HallOptions
         fields = "__all__"
