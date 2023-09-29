@@ -6,7 +6,7 @@ from . import models
 class RestaurantFilter(filters.FilterSet):
     class Meta:
         model = models.Restaurant
-        fields = ["is_open_buffet", "meal__category"]
+        fields = ["is_open_buffet", "meal__category", "openbuffetpackage__category"]
 
 
 class MealFilter(filters.FilterSet):
