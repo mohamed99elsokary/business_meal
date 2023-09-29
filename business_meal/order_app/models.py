@@ -74,7 +74,13 @@ class OrderItem(OrderItemsMixin, models.Model):
 
 
 class OrderItemOption(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    order_item = models.ForeignKey(
+        OrderItem,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        default=None,
+    )
     meal_option = models.ForeignKey(
         MealOptions,
         on_delete=models.CASCADE,
