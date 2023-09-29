@@ -15,6 +15,10 @@ class AddOrderItemSerializer(OrderItemSerializer):
         meal = attrs.get("meal")
         package = attrs.get("package")
         hall = attrs.get("hall")
+        if not meal and not package and not hall:
+            raise serializers.ValidationError(
+                {"detail": "you have to select meal, package or hall."}
+            )
         if order.hotel or order.restaurant:
             if meal and order.restaurant != meal.restaurant:
                 raise serializers.ValidationError(
