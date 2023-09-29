@@ -22,7 +22,7 @@ class OrderViewSet(
         return self.queryset.filter(user=self.request.user)
 
     def get_serializer_class(self):
-        if self.action == "retrieve":
+        if self.action in ["get_current_order", "retrieve"]:
             return serializers.DetailedOrderSerializer
         elif self.action == "get_current_order":
             return serializers.CurrentOrderSerializer
@@ -39,12 +39,6 @@ class OrderViewSet(
             instance.delete()
         return Response(status=200)
 
-    @action(methods=["get"], detail=False)
-    def get_current_order(self, request, *args, **kwargs):
-        order = models.Order.objects.get_or_create(user=request.user, is_checkout=False)
-        serializer = self.get_serializer(order[0])
-        return Response(serializer.data)
-
 
 class OrderItemViewSet(
     mixins.CreateModelMixin,
@@ -52,5 +46,5 @@ class OrderItemViewSet(
     mixins.DestroyModelMixin,
     viewsets.GenericViewSet,
 ):
-    queryset = query = models.OrderItem.objects.all()
+    queryset = models.OrderItem.objects.all()
     serializer_class = serializers.AddOrderItemSerializer
