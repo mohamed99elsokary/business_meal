@@ -29,7 +29,7 @@ class Hall(models.Model):
     description = models.TextField(default=None, null=True, blank=True)
 
     def __str__(self):
-        return self.hotel.name
+        return self.name
 
 
 class HallOptions(models.Model):
