@@ -22,12 +22,21 @@ class OrderItemOptionsSerializer(serializers.ModelSerializer):
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
+    options = OrderItemOptionsSerializer(many=True, source="orderitemoption_set")
+
     class Meta:
         model = models.OrderItem
         fields = "__all__"
 
 
-class AddOrderItemSerializer(OrderItemSerializer):
+class AddOrderItemSerializer(serializers.ModelSerializer):
+    order = serializers.HiddenField(default=CurrentOrder())
+    options = OrderItemOptionsSerializer(many=True, write_only=True)
+
+    class Meta:
+        model = models.OrderItem
+        fields = "__all__"
+
     def validate(self, attrs):
         order = attrs.get("order")
         meal = attrs.get("meal")
@@ -58,6 +67,18 @@ class AddOrderItemSerializer(OrderItemSerializer):
                 )
         return super().validate(attrs)
 
+    def create(self, validated_data):
+        options_data = validated_data.pop("options", [])
+        order_item = super().create(validated_data)
+        models.OrderItemOption.objects.bulk_create(
+            [
+                models.OrderItemOption(order_item=order_item, **option_data)
+                for option_data in options_data
+            ]
+        )
+
+        return order_item
+
 
 class DetailedOrderSerializer(serializers.ModelSerializer):
     items = OrderItemSerializer(many=True, source="order_items")
@@ -86,7 +107,3 @@ class UpdateOrderSerializer(serializers.ModelSerializer):
             "note",
             "scheduled_time",
         )
-
-
-class CurrentOrderSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
