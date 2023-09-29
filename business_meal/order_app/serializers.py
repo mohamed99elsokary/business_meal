@@ -3,6 +3,16 @@ from rest_framework import serializers
 from . import models
 
 
+class CurrentOrder:
+    requires_context = True
+
+    def __call__(self, serializer_field):
+        user = serializer_field.context["request"].user
+        order = models.Order.objects.get_or_create(user=user, is_checkout=False)
+        return order[0]
+
+    def __repr__(self):
+        return "%s()" % self.__class__.__name__
 class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.OrderItem
