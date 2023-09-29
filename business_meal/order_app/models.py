@@ -52,7 +52,9 @@ class OrderItem(OrderItemsMixin, models.Model):
     order = models.ForeignKey(
         Order, on_delete=models.CASCADE, related_name="order_items"
     )
-    meal = models.ForeignKey(Meal, on_delete=models.CASCADE)
+    meal = models.ForeignKey(
+        Meal, on_delete=models.CASCADE, null=True, blank=True, default=None
+    )
     package = models.ForeignKey(
         "openbuffet_app.OpenBuffetPackage",
         on_delete=models.CASCADE,
