@@ -50,4 +50,4 @@ class HallImages(models.Model):
     image = models.ImageField(upload_to="media/")
 
     def __str__(self):
-        return self.nameuser_address
+        return self.hall.name
