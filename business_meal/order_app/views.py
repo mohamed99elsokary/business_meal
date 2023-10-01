@@ -39,6 +39,12 @@ class OrderViewSet(
             instance.delete()
         return Response(status=200)
 
+    @action(methods=["get"], detail=False)
+    def get_current_order(self, request, *args, **kwargs):
+        order = models.Order.objects.get_or_create(user=request.user, is_checkout=False)
+        serializer = self.get_serializer(order[0])
+        return Response(serializer.data)
+
 
 class OrderItemViewSet(
     mixins.CreateModelMixin,
