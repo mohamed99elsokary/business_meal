@@ -49,6 +49,7 @@ DJANGO_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sites",
+    "django.contrib.gis",
 ]
 THIRD_PARTY_APPS = [
     "allauth",
@@ -120,25 +121,25 @@ WSGI_APPLICATION = "business_meal.wsgi.application"
 
 # sqlite3 database
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
-
-# postgresql
 # DATABASES = {
 #     "default": {
-#         "ENGINE": "django.db.backends.postgresql",
-#         "NAME": config("POSTGRES_DB", cast=str),
-#         "USER": config("POSTGRES_USER", cast=str),
-#         "PASSWORD": config("POSTGRES_PASSWORD", cast=str),
-#         "HOST": config("POSTGRES_HOST", cast=str),
-#         "PORT": config("POSTGRES_PORT", cast=str),
-#         "ATOMIC_REQUESTS": True,
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
 #     }
 # }
+
+# -- postgresql
+DATABASES = {
+    "default": {
+        "ENGINE": "django.contrib.gis.db.backends.postgis",
+        "NAME": config("POSTGRES_DB", cast=str),
+        "USER": config("POSTGRES_USER", cast=str),
+        "PASSWORD": config("POSTGRES_PASSWORD", cast=str),
+        "HOST": config("POSTGRES_HOST", cast=str),
+        "PORT": config("POSTGRES_PORT", cast=str),
+        "ATOMIC_REQUESTS": True,
+    }
+}
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 

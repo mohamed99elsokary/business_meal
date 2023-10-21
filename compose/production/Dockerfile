@@ -5,6 +5,8 @@ RUN apt-get update \
     && apt-get install -y build-essential \
     # psycopg2 dependencies
     && apt-get install -y libpq-dev \
+    # gis dependencies \
+    && apt-get install -y gdal-bin python3-gdal \
     # Translations dependencies
     && apt-get install -y gettext \
     # cleaning up unused files
