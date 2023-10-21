@@ -1,3 +1,4 @@
+from django.contrib.gis.db import models as gis_model
 from django.db import models
 
 from business_meal.addonsapp.models import Category, PromoCode
@@ -29,7 +30,7 @@ class Branch(models.Model):
     admin = models.ForeignKey(User, on_delete=models.CASCADE)
     # fields
     phone = models.CharField(max_length=50)
-    location = models.CharField(max_length=50)
+    location = gis_model.PointField(srid=4326, blank=True, null=True)
     street = models.CharField(max_length=50)
     building = models.CharField(max_length=50)
     is_available = models.BooleanField(default=True)

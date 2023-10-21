@@ -1,4 +1,5 @@
 from django.contrib.auth.models import AbstractUser, UserManager
+from django.contrib.gis.db import models as gis_model
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -51,7 +52,7 @@ class User(UserMixin, CustomModel, AbstractUser):
 class Address(models.Model):
     user = models.ForeignKey("User", verbose_name=_("User"), on_delete=models.CASCADE)
     phone = models.CharField(max_length=50)
-    location = models.CharField(max_length=50)
+    location = gis_model.PointField(srid=4326, blank=True, null=True)
     is_default = models.BooleanField(_("Is default"), default=False)
     postal_code = models.CharField(_("Postal code"), max_length=100)
     street = models.CharField(max_length=50)
