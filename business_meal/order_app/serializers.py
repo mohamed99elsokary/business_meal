@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from ..addonsapp.serializers import PromoCodeSerializer
 from . import models
 
 
@@ -83,6 +84,7 @@ class AddOrderItemSerializer(serializers.ModelSerializer):
 class DetailedOrderSerializer(serializers.ModelSerializer):
     items = OrderItemSerializer(many=True, source="order_items")
     provider_name = serializers.SerializerMethodField()
+    promo = PromoCodeSerializer()
 
     class Meta:
         model = models.Order
