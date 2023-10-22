@@ -6,10 +6,10 @@ from business_meal.userapp.models import Address, User
 from ..hotel_app.models import Hotel
 from ..resturant_app.models import Restaurant
 from .conf import ORDER_CHOICES
-from .model_mixins import OrderItemsMixin
+from .model_mixins import OrderItemOptionMixin, OrderItemsMixin, OrderMixin
 
 
-class Order(models.Model):
+class Order(OrderMixin, models.Model):
     # relations
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="order_user")
     delivery_user = models.ForeignKey(
@@ -74,7 +74,7 @@ class OrderItem(OrderItemsMixin, models.Model):
     note = models.TextField(null=True, blank=True, default=None)
 
 
-class OrderItemOption(models.Model):
+class OrderItemOption(OrderItemOptionMixin, models.Model):
     order_item = models.ForeignKey(
         OrderItem,
         on_delete=models.CASCADE,
