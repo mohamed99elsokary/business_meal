@@ -1,4 +1,4 @@
-from django_lifecycle import BEFORE_CREATE, LifecycleModelMixin, hook
+from django_lifecycle import AFTER_CREATE, BEFORE_CREATE, LifecycleModelMixin, hook
 
 
 class OrderItemsMixin(LifecycleModelMixin):
@@ -13,3 +13,15 @@ class OrderItemsMixin(LifecycleModelMixin):
             elif self.hall:
                 order.hotel = self.hall.hotel
         order.save()
+
+    @hook(AFTER_CREATE)
+    def recalculate_order_price(self):
+        price = 0
+        if self.meal:
+            price = self.meal.price
+        elif self.package:
+            price = self.package.price
+        elif self.hall:
+            price = self.hall.price
+        self.order.total += price
+        self.order.save()
