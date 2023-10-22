@@ -38,6 +38,7 @@ class Order(models.Model):
     )
     # fields
     status = models.CharField(max_length=50, choices=ORDER_CHOICES)
+    total = models.IntegerField(default=0)
     is_checkout = models.BooleanField()
     is_paid = models.BooleanField(default=False)
     payment_url = models.CharField(max_length=500, default=None, null=True, blank=True)
