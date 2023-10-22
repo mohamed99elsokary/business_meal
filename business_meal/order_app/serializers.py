@@ -91,7 +91,12 @@ class DetailedOrderSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
     def get_provider_name(self, obj) -> str:
-        return obj.restaurant.name if obj.restaurant else obj.hotel.name
+        if obj.restaurant:
+            return obj.restaurant.name
+        elif obj.hotel:
+            return obj.hotel.name
+        else:
+            return ""
 
 
 class OrderSerializer(serializers.ModelSerializer):
