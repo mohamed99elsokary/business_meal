@@ -32,7 +32,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
 
 class AddOrderItemSerializer(serializers.ModelSerializer):
     order = serializers.HiddenField(default=CurrentOrder())
-    options = OrderItemOptionsSerializer(many=True, write_only=True)
+    options = OrderItemOptionsSerializer(many=True, write_only=True, required=False)
 
     class Meta:
         model = models.OrderItem
@@ -69,14 +69,16 @@ class AddOrderItemSerializer(serializers.ModelSerializer):
         return super().validate(attrs)
 
     def create(self, validated_data):
-        options_data = validated_data.pop("options", [])
+        if validated_data.get("options"):
+            options_data = validated_data.pop("options", [])
         order_item = super().create(validated_data)
-        models.OrderItemOption.objects.bulk_create(
-            [
-                models.OrderItemOption(order_item=order_item, **option_data)
-                for option_data in options_data
-            ]
-        )
+        if validated_data.get("options"):
+            models.OrderItemOption.objects.bulk_create(
+                [
+                    models.OrderItemOption(order_item=order_item, **option_data)
+                    for option_data in options_data
+                ]
+            )
 
         return order_item
 
