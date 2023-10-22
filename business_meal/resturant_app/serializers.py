@@ -31,3 +31,11 @@ class MealOptionsSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.MealOptions
         fields = "__all__"
+
+
+class BranchSerializer(serializers.ModelSerializer):
+    location = serializers.ListField()
+
+    class Meta:
+        model = models.Branch
+        fields = "__all__"

@@ -59,6 +59,7 @@ class UserDataSerializer(serializers.ModelSerializer):
 
 class AddressSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    location = serializers.ListField()
 
     class Meta:
         model = Address
