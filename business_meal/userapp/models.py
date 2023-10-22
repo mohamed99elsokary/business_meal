@@ -59,6 +59,8 @@ class Address(models.Model):
     building = models.CharField(max_length=50)
     floor = models.CharField(max_length=50)
     apartment = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, default=None, null=True, blank=True)
+    description = models.TextField()
 
     def __str__(self) -> str:
         return f"{self.user}"
