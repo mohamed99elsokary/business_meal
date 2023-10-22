@@ -1,7 +1,9 @@
 from allauth.account.models import EmailAddress
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.contrib.gis.db import models as db_models
 from django.utils.translation import gettext_lazy as _
+from mapwidgets.widgets import GooglePointFieldWidget
 from unfold.admin import ModelAdmin, StackedInline
 
 from business_meal.userapp import models
@@ -55,6 +57,8 @@ class AddressAdmin(ModelAdmin):
     list_select_related = ("user",)
     autocomplete_fields = ["user"]
     search_fields = ("user__email", "user__username")
+
+    formfield_overrides = {db_models.PointField: {"widget": GooglePointFieldWidget}}
 
 
 @admin.register(models.DeliveryCar)

@@ -66,6 +66,7 @@ THIRD_PARTY_APPS = [
     # "allauth.socialaccount.providers.facebook",
     "dj_rest_auth",
     "drf_yasg",
+    "mapwidgets",
 ]
 # local apps
 LOCAL_APPS = [

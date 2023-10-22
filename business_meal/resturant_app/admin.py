@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.contrib.gis.db import models as db_models
+from mapwidgets.widgets import GooglePointFieldWidget
 from unfold.admin import ModelAdmin, StackedInline
 
 from . import models
@@ -12,6 +14,8 @@ class RestaurantAdmin(ModelAdmin):
 @admin.register(models.Branch)
 class BranchAdmin(ModelAdmin):
     """Admin View for Branch"""
+
+    formfield_overrides = {db_models.PointField: {"widget": GooglePointFieldWidget}}
 
 
 @admin.register(models.Meal)
