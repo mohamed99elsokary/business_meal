@@ -1,6 +1,9 @@
 from rest_framework import serializers
 
 from ..addonsapp.serializers import PromoCodeSerializer
+from ..hotel_app.serializers import HotelHallSerializer
+from ..openbuffet_app.serializers import OpenBuffetPackageSerializer
+from ..resturant_app.serializers import MealSerializer
 from . import models
 
 
@@ -24,6 +27,9 @@ class OrderItemOptionsSerializer(serializers.ModelSerializer):
 
 class OrderItemSerializer(serializers.ModelSerializer):
     options = OrderItemOptionsSerializer(many=True, source="orderitemoption_set")
+    meal = MealSerializer()
+    hall = HotelHallSerializer()
+    package = OpenBuffetPackageSerializer()
 
     class Meta:
         model = models.OrderItem
