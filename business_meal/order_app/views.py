@@ -45,6 +45,15 @@ class OrderViewSet(
         serializer = self.get_serializer(order[0])
         return Response(serializer.data)
 
+    @action(methods=["get"], detail=True)
+    def checkout(self, request, *args, **kwargs):
+        object: models.Order = self.get_object()
+        object.is_checkout = True
+        object.payment_url = "www.google.com"
+        object.save()
+        serializer = self.get_serializer(object)
+        return Response(serializer.data)
+
 
 class OrderItemViewSet(
     mixins.CreateModelMixin,
