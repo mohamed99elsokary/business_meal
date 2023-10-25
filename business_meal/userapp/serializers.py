@@ -65,6 +65,11 @@ class AddressSerializer(serializers.ModelSerializer):
         model = Address
         fields = "__all__"
 
+    def create(self, validated_data):
+        location = validated_data["location"]
+        validated_data["location"] = f"SRID=4326;POINT ({location[0]} {location[1]})"
+        return super().create(validated_data)
+
 
 class VerifySerializer(UserToken, serializers.Serializer):
     phone = serializers.CharField(write_only=True, default="01111155856")
