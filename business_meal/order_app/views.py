@@ -22,7 +22,7 @@ class OrderViewSet(
         return self.queryset.filter(user=self.request.user)
 
     def get_serializer_class(self):
-        if self.action in ["get_current_order", "retrieve"]:
+        if self.action in ["get_current_order", "retrieve", "list"]:
             return serializers.DetailedOrderSerializer
         elif self.action == "get_current_order":
             return serializers.CurrentOrderSerializer
