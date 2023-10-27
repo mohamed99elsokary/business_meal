@@ -23,7 +23,7 @@ class OrderItemsMixin(LifecycleModelMixin):
             price = self.package.price
         elif self.hall:
             price = self.hall.price
-        self.order.total += price
+        self.order.total += price * self.quantity
         self.order.save()
 
 
@@ -36,7 +36,7 @@ class OrderItemOptionMixin(LifecycleModelMixin):
             price = self.meal_option.price
         elif self.package_option:
             price = self.package_option.price
-        order.total += price
+        order.total += price * self.quantity
         order.save()
 
 
