@@ -1,0 +1,6 @@
+install the package 
+add it's settings in settings file 
+fix it's admin 
+add it's endpoints (user needs to be able to add-edit-delete his token)
+add notifications app and it's own inapp notifications model
+create notifications handler

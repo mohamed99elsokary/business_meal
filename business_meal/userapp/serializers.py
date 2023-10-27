@@ -1,3 +1,4 @@
+from bit68_notifications.models import ExpoDevice
 from django.contrib.auth import authenticate
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
@@ -14,6 +15,33 @@ class UserToken(serializers.Serializer):
         refersh_token = RefreshToken.for_user(user)
         access_token = refersh_token.access_token
         return {"refersh_token": str(refersh_token), "access_token": str(access_token)}
+
+
+class ExpoDeviceSerializer(serializers.Serializer):
+    registration_id = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = ExpoDevice
+        fields = ("registration_id",)
+
+    def create(self, validated_data):
+        user = self.context["request"].user
+
+        if user.is_authenticated:
+            user = user
+        else:
+            user = None
+
+        device = ExpoDevice.objects.filter(
+            registration_id=validated_data["registration_id"]
+        ).first()
+        if not device:
+            device = ExpoDevice.objects.create(
+                registration_id=validated_data["registration_id"]
+            )
+        device.user = user
+        device.save()
+        return device
 
 
 class UserSerializer(UserToken, serializers.ModelSerializer):
