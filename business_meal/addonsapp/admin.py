@@ -1,3 +1,4 @@
+from bit68_notifications.models import ExpoDevice
 from django.contrib import admin
 from solo.admin import SingletonModelAdmin
 from unfold.admin import ModelAdmin, StackedInline
@@ -14,6 +15,12 @@ from business_meal.addonsapp.models import (
 from . import models
 
 # SiteConfiguration
+admin.site.unregister(ExpoDevice)
+
+
+@admin.register(ExpoDevice)
+class ExpoDeviceAdmin(ModelAdmin):
+    """Admin View for ExpoDevice"""
 
 
 @admin.register(SiteConfiguration)

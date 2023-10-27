@@ -18,6 +18,7 @@ WORKDIR /
 
 COPY ./requirements/base.txt /requirements/base.txt
 COPY ./requirements/production.txt /requirements/production.txt
+COPY ./packages/* /packages/
 COPY ./requirements.txt /requirements.txt
 RUN pip install --cache-dir=/root/.pip -r ./requirements.txt
 

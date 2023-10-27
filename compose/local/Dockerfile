@@ -17,6 +17,7 @@ WORKDIR /
 
 COPY ./requirements/base.txt /requirements/base.txt
 COPY ./requirements/local.txt /requirements/local.txt
+COPY ./packages/* /packages/
 RUN pip install --cache-dir=/root/.pip -r ./requirements/local.txt
 
 COPY ./compose/production/entrypoint /entrypoint

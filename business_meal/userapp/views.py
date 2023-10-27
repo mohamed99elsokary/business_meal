@@ -1,4 +1,5 @@
 from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
+from bit68_notifications.models import ExpoDevice
 from dj_rest_auth.registration.views import SocialLoginView
 from rest_framework import mixins, status, viewsets
 from rest_framework.decorators import action
@@ -7,6 +8,7 @@ from rest_framework.response import Response
 from business_meal.userapp import models
 from business_meal.userapp.serializers import (
     AddressSerializer,
+    ExpoDeviceSerializer,
     LoginSerializer,
     RegisterLoginSerializer,
     UserDataSerializer,
@@ -79,3 +81,11 @@ class AddressViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return super().get_queryset().filter(user=self.request.user)
+
+
+class ExpoDeviceViewSet(
+    mixins.CreateModelMixin,
+    viewsets.GenericViewSet,
+):
+    queryset = ExpoDevice.objects.all()
+    serializer_class = ExpoDeviceSerializer
