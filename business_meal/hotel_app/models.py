@@ -1,3 +1,4 @@
+from django.contrib.gis.db import models as gis_model
 from django.db import models
 
 from business_meal.userapp.models import User
@@ -15,6 +16,7 @@ class Hotel(models.Model):
         User, on_delete=models.CASCADE, null=True, blank=True, default=None
     )
     rate = models.IntegerField(default=0)
+    location = gis_model.PointField(srid=4326, blank=True, null=True)
 
     def __str__(self):
         return self.name
