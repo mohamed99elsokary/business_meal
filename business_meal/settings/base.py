@@ -14,6 +14,7 @@ from datetime import timedelta
 from os.path import join, normpath
 from pathlib import Path
 
+from bit68_notifications.conf import EXPO_NOTIFICATION
 from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -256,3 +257,4 @@ REST_USE_JWT = True
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_UNIQUE_EMAIL = True
+PUSH_NOTIFICATION_DEVICE_TYPES = [EXPO_NOTIFICATION]
