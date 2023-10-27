@@ -8,6 +8,7 @@ from unfold.admin import ModelAdmin, StackedInline
 
 from business_meal.userapp import models
 
+from ..services.admin import UserAdmin as BaseUserAdmin
 from . import models
 
 admin.site.unregister(EmailAddress)
@@ -22,7 +23,7 @@ class AddressInline(StackedInline):
 
 
 @admin.register(models.User)
-class UserAdmin(ModelAdmin, BaseUserAdmin):
+class UserAdmin(BaseUserAdmin):
     list_display = [
         "id",
         "email",
