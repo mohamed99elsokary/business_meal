@@ -3,6 +3,12 @@ from rest_framework import serializers
 from . import models
 
 
+class HallAvailableTimeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.HallAvailableTime
+        fields = "__all__"
+
+
 class HotelSerializer(serializers.ModelSerializer):
     min_cap = serializers.SerializerMethodField()
     max_cap = serializers.SerializerMethodField()
@@ -27,6 +33,7 @@ class HallImagesSerializer(serializers.ModelSerializer):
 class HotelHallSerializer(serializers.ModelSerializer):
     # category_name = serializers.SerializerMethodField()
     images = HallImagesSerializer(source="hallimages_set", many=True)
+    times = HallAvailableTimeSerializer(many=True, source="hallavailabletime_set")
 
     class Meta:
         model = models.Hall
