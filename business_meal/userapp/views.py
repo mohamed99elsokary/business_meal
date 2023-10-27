@@ -83,9 +83,6 @@ class AddressViewSet(viewsets.ModelViewSet):
         return super().get_queryset().filter(user=self.request.user)
 
 
-class ExpoDeviceViewSet(
-    mixins.CreateModelMixin,
-    viewsets.GenericViewSet,
-):
+class ExpoDeviceViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
     queryset = ExpoDevice.objects.all()
     serializer_class = ExpoDeviceSerializer

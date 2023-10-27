@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 
 from ..addonsapp.serializers import PromoCodeSerializer
@@ -16,7 +17,7 @@ class CurrentOrder:
         return order[0]
 
     def __repr__(self):
-        return "%s()" % self.__class__.__name__
+        return f"{self.__class__.__name__}()"
 
 
 class OrderItemOptionsSerializer(serializers.ModelSerializer):
@@ -122,3 +123,18 @@ class UpdateOrderSerializer(serializers.ModelSerializer):
             "note",
             "scheduled_time",
         )
+
+
+class CheckoutSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField()
+
+    class Meta:
+        model = models.Order
+        fields = ("id", "payment_type")
+
+    def create(self, validated_data):
+        user = self.context["request"].user
+        order = get_object_or_404(models.Order, id=validated_data["id"], user=user)
+        order.payment_type = validated_data["payment_type"]
+        order.save()
+        return order

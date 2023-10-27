@@ -28,6 +28,8 @@ class OrderViewSet(
             return serializers.CurrentOrderSerializer
         elif self.action in {"update", "partial_update"}:
             return serializers.UpdateOrderSerializer
+        elif self.action == "checkout":
+            return serializers.CheckoutSerializer
         return super().get_serializer_class()
 
     def destroy(self, request, *args, **kwargs):
@@ -45,14 +47,9 @@ class OrderViewSet(
         serializer = self.get_serializer(order[0])
         return Response(serializer.data)
 
-    @action(methods=["get"], detail=True)
+    @action(methods=["post"], detail=False)
     def checkout(self, request, *args, **kwargs):
-        object: models.Order = self.get_object()
-        object.is_checkout = True
-        object.payment_url = "www.google.com"
-        object.save()
-        serializer = self.get_serializer(object)
-        return Response(serializer.data)
+        return self.create_clone(request, True, *args, **kwargs)
 
 
 class OrderItemViewSet(
