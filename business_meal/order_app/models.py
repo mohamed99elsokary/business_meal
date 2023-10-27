@@ -96,3 +96,4 @@ class OrderItemOption(OrderItemOptionMixin, models.Model):
         null=True,
         blank=True,
     )
+    quantity = models.IntegerField(default=1)
