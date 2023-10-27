@@ -41,6 +41,15 @@ class Order(OrderMixin, models.Model):
     total = models.IntegerField(default=0)
     is_checkout = models.BooleanField()
     is_paid = models.BooleanField(default=False)
+    payment_type = models.CharField(
+        max_length=100,
+        choices=[
+            ("cash_on_delivery", "cash_on_delivery"),
+            ("online_payment", "online_payment"),
+        ],
+        null=True,
+        blank=True,
+    )
     payment_url = models.CharField(max_length=500, default=None, null=True, blank=True)
     note = models.TextField(default=None, null=True, blank=True)
     ordered_time = models.DateTimeField(auto_now=False, auto_now_add=True)
