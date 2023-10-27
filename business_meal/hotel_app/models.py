@@ -34,6 +34,18 @@ class Hall(models.Model):
         return self.name
 
 
+class HallAvailableTime(models.Model):
+    # relations
+    Hall = models.ForeignKey(Hall, on_delete=models.CASCADE)
+    # fields
+    # day = models.CharField(max_length=50)
+    start_time = models.TimeField(auto_now=False, auto_now_add=False)
+    end_time = models.TimeField(auto_now=False, auto_now_add=False)
+
+    def __str__(self):
+        return self.pk
+
+
 class HallOptions(models.Model):
     # relations
     hall = models.ForeignKey(Hall, on_delete=models.CASCADE)

@@ -44,3 +44,8 @@ class HallImagesAdmin(ModelAdmin):
 @admin.register(models.HallOptions)
 class HallOptionsAdmin(ModelAdmin):
     "Admin View for HallOptions"
+
+
+@admin.register(models.HallAvailableTime)
+class HallAvailableTimeAdmin(admin.ModelAdmin):
+    """Admin View for HallAvailableTime"""
