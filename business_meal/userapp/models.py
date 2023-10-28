@@ -50,17 +50,28 @@ class User(UserMixin, CustomModel, AbstractUser):
 
 
 class Address(models.Model):
-    user = models.ForeignKey("User", verbose_name=_("User"), on_delete=models.CASCADE)
     phone = models.CharField(max_length=50)
     location = gis_model.PointField(srid=4326, blank=True, null=True)
-    is_default = models.BooleanField(_("Is default"), default=False)
-    postal_code = models.CharField(_("Postal code"), max_length=100)
-    street = models.CharField(max_length=50)
-    building = models.CharField(max_length=50)
-    floor = models.CharField(max_length=50)
-    apartment = models.CharField(max_length=50)
     name = models.CharField(max_length=50, default=None, null=True, blank=True)
-    description = models.TextField()
+    user = models.ForeignKey(
+        "User",
+        verbose_name=_("User"),
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        default=None,
+    )
+    is_default = models.BooleanField(
+        _("Is default"), default=False, null=True, blank=True
+    )
+    postal_code = models.CharField(
+        _("Postal code"), max_length=100, null=True, blank=True, default=None
+    )
+    street = models.CharField(max_length=50, null=True, blank=True, default=None)
+    building = models.CharField(max_length=50, null=True, blank=True, default=None)
+    floor = models.CharField(max_length=50, null=True, blank=True, default=None)
+    apartment = models.CharField(max_length=50, null=True, blank=True, default=None)
+    description = models.TextField(null=True, blank=True, default=None)
 
     def __str__(self) -> str:
         return f"{self.user}"
