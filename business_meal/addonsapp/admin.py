@@ -7,6 +7,7 @@ from business_meal.addonsapp.forms import SectionContentForm, SliderPictureForm
 from business_meal.addonsapp.models import (
     ContactUs,
     PageSection,
+    PrivacyPolicy,
     SectionContent,
     SiteConfiguration,
     SliderPicture,
@@ -16,6 +17,11 @@ from . import models
 
 # SiteConfiguration
 admin.site.unregister(ExpoDevice)
+
+
+@admin.register(PrivacyPolicy)
+class PrivacyPolicyAdmin(ModelAdmin):
+    """Admin View for PrivacyPolicy"""
 
 
 @admin.register(ExpoDevice)

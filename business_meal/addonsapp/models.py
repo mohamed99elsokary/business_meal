@@ -124,6 +124,10 @@ class TermsAndConditions(models.Model):
     text = models.TextField()
 
 
+class PrivacyPolicy(models.Model):
+    text = models.TextField()
+
+
 class About(models.Model):
     text = models.TextField()
     instagram = models.URLField(max_length=500)
