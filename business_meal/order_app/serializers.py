@@ -124,6 +124,32 @@ class UpdateOrderSerializer(serializers.ModelSerializer):
             "scheduled_time",
         )
 
+    def validate_hall_time(self, instance, validated_data):
+        if "scheduled_time" in validated_data:
+            scheduled_time = validated_data["scheduled_time"]
+        elif instance.scheduled_time:
+            scheduled_time = instance.scheduled_time
+        same_time_orders = (
+            models.Order.objects.filter(
+                scheduled_time=scheduled_time, hotel=instance.hotel
+            )
+            .exclude(id=instance.id)
+            .values_list("id", flat=True)
+        )
+        if same_time_orders.count() > 0:
+            same_time_halls = models.OrderItem.objects.filter(
+                order__in=same_time_orders, hall=instance.hall
+            )
+            if same_time_halls.count() > 0:
+                raise serializers.ValidationError(
+                    {"detail": "sorry this time is reserved already"}
+                )
+
+    def update(self, instance, validated_data):
+        if instance.hotel:
+            self.validate_hall_time(instance, validated_data)
+        return super().update(instance, validated_data)
+
 
 class CheckoutSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField()
