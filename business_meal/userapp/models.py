@@ -24,7 +24,15 @@ class User(UserMixin, CustomModel, AbstractUser):
         max_length=150,
     )
     phone = models.CharField(_("Phone"), max_length=50, null=True, blank=True)
-
+    user_type = models.CharField(
+        max_length=50,
+        choices=[
+            ("delivery", "delivery"),
+            ("client", "client"),
+            ("manager", "manager"),
+        ],
+        default="client",
+    )
     # verification
     is_active = models.BooleanField(default=True)
     is_new = models.BooleanField(default=True)
