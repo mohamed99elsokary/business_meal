@@ -9,6 +9,9 @@ router.register("contact-us", views.ContactUsViewset)
 router.register("adds", views.AdsViewSet)
 router.register("category", views.CategoryViewSet)
 router.register("promocode", views.PromoCodeViewSet)
+router.register("privacy-policy", views.PrivacyPolicyViewSet)
+router.register("about", views.AboutViewSet)
+router.register("terms-and-conditions", views.TermsAndConditionsViewSet)
 urlpatterns = [
     path("", include(router.urls)),
 ]

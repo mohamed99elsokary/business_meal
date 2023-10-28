@@ -6,6 +6,21 @@ from business_meal.addonsapp import models, serializers
 """ PageSection """
 
 
+class AboutViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = models.About.objects.all()
+    serializer_class = serializers.AboutSerializer
+
+
+class TermsAndConditionsViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = models.TermsAndConditions.objects.all()
+    serializer_class = serializers.TermsAndConditionsSerializer
+
+
+class PrivacyPolicyViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = models.PrivacyPolicy.objects.all()
+    serializer_class = serializers.PrivacyPolicySerializer
+
+
 class PageSectionViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.PageSectionSerializer
     queryset = models.PageSection.objects.all()

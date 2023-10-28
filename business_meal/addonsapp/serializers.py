@@ -6,6 +6,24 @@ from business_meal.services.custom_ModelSerializer import ErrorMixin
 """ PageSection """
 
 
+class AboutSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.About
+        fields = "__all__"
+
+
+class TermsAndConditionsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.TermsAndConditions
+        fields = "__all__"
+
+
+class PrivacyPolicySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.PrivacyPolicy
+        fields = "__all__"
+
+
 class SliderPictureSerializer(ErrorMixin, serializers.ModelSerializer):
     class Meta:
         model = models.SliderPicture
