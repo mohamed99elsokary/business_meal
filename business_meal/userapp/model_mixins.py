@@ -1,5 +1,7 @@
 from django.utils.crypto import get_random_string
 
+from .utils import send_sms
+
 
 class UserMixin:
     def soft_delete(self):
@@ -20,7 +22,7 @@ class UserMixin:
         phone = self.phone if phone is None else phone
         otp = self.set_otp()
         text = f"Your one time password (OTP) for Business Meal is {otp}"
-        # send_sms(phone, text)
+        # send_sms(self.phone, text)
 
     def set_otp(self):
         otp = get_random_string(length=4, allowed_chars="0123456789")

@@ -22,3 +22,4 @@ psycopg2-binary==2.9.3 # https://github.com/psycopg/psycopg2
 django-unfold == 0.6.9
 django-lifecycle==1.0.0
 ./packages/bit68_notifications-1.0.9.tar.gz
+taqnyat
