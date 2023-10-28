@@ -125,13 +125,16 @@ class UpdateOrderSerializer(serializers.ModelSerializer):
         )
 
     def validate_hall_time(self, instance, validated_data):
-        if "scheduled_time" in validated_data:
-            scheduled_time = validated_data["scheduled_time"]
-        elif instance.scheduled_time:
-            scheduled_time = instance.scheduled_time
+        # if "scheduled_time" in validated_data:
+        # scheduled_time = validated_data["scheduled_time"]
+        # if instance.scheduled_time:
+        scheduled_time = instance.scheduled_time
         same_time_orders = (
             models.Order.objects.filter(
-                scheduled_time=scheduled_time, hotel=instance.hotel
+                scheduled_time__year=scheduled_time.year,
+                scheduled_time__month=scheduled_time.month,
+                scheduled_time__day=scheduled_time.day,
+                hotel=instance.hotel,
             )
             .exclude(id=instance.id)
             .values_list("id", flat=True)
