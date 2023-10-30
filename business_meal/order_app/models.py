@@ -38,6 +38,7 @@ class Order(OrderMixin, models.Model):
     )
     # fields
     status = models.CharField(max_length=50, choices=ORDER_CHOICES)
+    delivery_fee = models.IntegerField(default=0)
     total = models.IntegerField(default=0)
     is_checkout = models.BooleanField()
     is_paid = models.BooleanField(default=False)

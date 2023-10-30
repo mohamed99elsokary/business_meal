@@ -1,4 +1,6 @@
-from TaqnyatSms import client
+# from TaqnyatSms import client
+class client:
+    ...
 
 
 def send_sms(phone: str, text: str):

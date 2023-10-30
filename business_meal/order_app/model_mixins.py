@@ -1,4 +1,11 @@
-from django_lifecycle import AFTER_CREATE, BEFORE_CREATE, LifecycleModelMixin, hook
+from django.contrib.gis.db.models.functions import Distance
+from django_lifecycle import (
+    AFTER_CREATE,
+    AFTER_SAVE,
+    BEFORE_CREATE,
+    LifecycleModelMixin,
+    hook,
+)
 
 
 class OrderItemsMixin(LifecycleModelMixin):
@@ -49,3 +56,19 @@ class OrderMixin(LifecycleModelMixin):
             discount_amount = self.total * (self.promo.discount / 100)
             self.total -= discount_amount
         self.save()
+
+    @hook(AFTER_SAVE, when="user_address", has_changed=True)
+    def calculate_delivery_fees(self):
+        from ..resturant_app.models import Branch
+
+        if self.restaurant:
+            user_location = self.user_address.location
+            branches = (
+                Branch.objects.filter(restaurant=self.restaurant)
+                .annotate(distance=Distance("location", user_location))
+                .order_by("distance")
+            )
+            branch = branches.first()
+            self.delivery_fee = branch.distance.km * 10
+            self.total += self.delivery_fee
+            self.save(skip_hooks=True)
