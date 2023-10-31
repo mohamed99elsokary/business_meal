@@ -25,9 +25,14 @@ class OrderViewSet(
             return self.queryset.filter(user=user)
         elif user.user_type == "delivery":
             return self.queryset.filter(
-                Q(delivery_user=user) | Q(delivery_user__isnull=True)
+                Q(Q(delivery_user=user) | Q(delivery_user__isnull=True)),
+                user_address_isnull=False,
+                is_check_out=True,
             )
-        return self.queryset.filter(Q(restaurant__admin=user) | Q(hotel__admin=user))
+        return self.queryset.filter(
+            Q(Q(restaurant__admin=user) | Q(hotel__admin=user)),
+            is_check_out=True,
+        )
 
     def get_serializer_class(self):
         if self.action in ["get_current_order", "retrieve", "list"]:
