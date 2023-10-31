@@ -34,7 +34,7 @@ class MealAdmin(ModelAdmin, TranslationAdmin):
             kwargs["queryset"] = models.Restaurant.objects.filter(admin=request.user)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
-TranslationAdmin
+
 @admin.register(models.MealOptions)
 class MealOptionsAdmin(ModelAdmin, TranslationAdmin):
     def get_queryset(self, request):
