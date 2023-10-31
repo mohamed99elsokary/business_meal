@@ -87,7 +87,7 @@ class LoginSerializer(UserToken, serializers.Serializer):
 class UserDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ("username", "phone", "is_new")
+        fields = ("id", "username", "phone", "is_new")
 
 
 class AddressSerializer(serializers.ModelSerializer):
