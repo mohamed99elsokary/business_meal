@@ -10,11 +10,16 @@ from business_meal.userapp.models import Address, User
 class UserToken(serializers.Serializer):
     refersh_token = serializers.CharField(read_only=True)
     access_token = serializers.CharField(read_only=True)
+    user_type = serializers.CharField(read_only=True)
 
     def create_user_token(self, user):
         refersh_token = RefreshToken.for_user(user)
         access_token = refersh_token.access_token
-        return {"refersh_token": str(refersh_token), "access_token": str(access_token)}
+        return {
+            "refersh_token": str(refersh_token),
+            "access_token": str(access_token),
+            "user_type": user.user_type,
+        }
 
 
 class ExpoDeviceSerializer(serializers.Serializer):
