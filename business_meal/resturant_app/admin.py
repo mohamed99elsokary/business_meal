@@ -1,13 +1,14 @@
 from django.contrib import admin
 from django.contrib.gis.db import models as db_models
 from mapwidgets.widgets import GooglePointFieldWidget
+from modeltranslation.admin import TranslationAdmin
 from unfold.admin import ModelAdmin, StackedInline
 
 from . import models
 
 
 @admin.register(models.Restaurant)
-class RestaurantAdmin(ModelAdmin):
+class RestaurantAdmin(ModelAdmin, TranslationAdmin):
     """Admin View for Restaurant"""
 
 
@@ -19,7 +20,7 @@ class BranchAdmin(ModelAdmin):
 
 
 @admin.register(models.Meal)
-class MealAdmin(ModelAdmin):
+class MealAdmin(ModelAdmin, TranslationAdmin):
     """Admin View for Meal"""
 
     def get_queryset(self, request):
@@ -33,9 +34,9 @@ class MealAdmin(ModelAdmin):
             kwargs["queryset"] = models.Restaurant.objects.filter(admin=request.user)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
-
+TranslationAdmin
 @admin.register(models.MealOptions)
-class MealOptionsAdmin(ModelAdmin):
+class MealOptionsAdmin(ModelAdmin, TranslationAdmin):
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         if request.user.is_superuser:
@@ -51,5 +52,5 @@ class MealOptionsAdmin(ModelAdmin):
 
 
 @admin.register(models.Category)
-class CategoryAdmin(ModelAdmin):
+class CategoryAdmin(ModelAdmin, TranslationAdmin):
     "Admin View for Category"

@@ -1,4 +1,5 @@
 from django.contrib import admin
+from modeltranslation.admin import TranslationAdmin
 from unfold.admin import ModelAdmin, StackedInline
 
 from . import models
@@ -9,7 +10,7 @@ from . import models
 
 
 @admin.register(models.OpenBuffetPackage)
-class OpenBuffetPackage(ModelAdmin):
+class OpenBuffetPackage(ModelAdmin, TranslationAdmin):
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         if request.user.is_superuser:
@@ -25,7 +26,7 @@ class OpenBuffetPackage(ModelAdmin):
 
 
 @admin.register(models.OpenBuffetPackageOptions)
-class OpenBuffetPackageOptionsAdmin(ModelAdmin):
+class OpenBuffetPackageOptionsAdmin(ModelAdmin, TranslationAdmin):
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         if request.user.is_superuser:

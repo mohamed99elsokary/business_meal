@@ -1,11 +1,12 @@
 from django.contrib import admin
+from modeltranslation.admin import TranslationAdmin
 from unfold.admin import ModelAdmin, StackedInline
 
 from . import models
 
 
 @admin.register(models.Hotel)
-class HotelAdmin(ModelAdmin):
+class HotelAdmin(ModelAdmin, TranslationAdmin):
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         if request.user.is_superuser:
@@ -14,7 +15,7 @@ class HotelAdmin(ModelAdmin):
 
 
 @admin.register(models.Hall)
-class HallAdmin(ModelAdmin):
+class HallAdmin(ModelAdmin, TranslationAdmin):
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         if request.user.is_superuser:
@@ -42,7 +43,7 @@ class HallImagesAdmin(ModelAdmin):
 
 
 @admin.register(models.HallOptions)
-class HallOptionsAdmin(ModelAdmin):
+class HallOptionsAdmin(ModelAdmin, TranslationAdmin):
     "Admin View for HallOptions"
 
 
