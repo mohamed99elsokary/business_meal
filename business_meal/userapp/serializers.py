@@ -122,8 +122,8 @@ class RegisterLoginSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ("phone", "is_new")
-        read_only_fields = ("is_new",)
+        fields = ("phone", "is_new", "user_type")
+        read_only_fields = ("is_new", "user_type")
 
     def create(self, validated_data):
         return User.create_user_or_login(validated_data)
