@@ -5,8 +5,9 @@ from rest_framework import mixins, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from business_meal.userapp import models
-from business_meal.userapp.serializers import (
+from ..services.views import ModelViewSetClones
+from . import models
+from .serializers import (
     AddressSerializer,
     ExpoDeviceSerializer,
     LoginSerializer,
@@ -15,8 +16,6 @@ from business_meal.userapp.serializers import (
     UserSerializer,
     VerifySerializer,
 )
-
-from ..services.views import ModelViewSetClones
 
 
 class UserViewSet(
