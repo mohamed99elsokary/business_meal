@@ -27,11 +27,11 @@ class OrderViewSet(
             return self.queryset.filter(
                 Q(Q(delivery_user=user) | Q(delivery_user__isnull=True)),
                 user_address_isnull=False,
-                is_check_out=True,
+                is_checkout=True,
             )
         return self.queryset.filter(
             Q(Q(restaurant__admin=user) | Q(hotel__admin=user)),
-            is_check_out=True,
+            is_checkout=True,
         )
 
     def get_serializer_class(self):
@@ -65,6 +65,10 @@ class OrderViewSet(
         return self.create_clone(request, True, *args, **kwargs)
 
 
+# from django.http import HttpResponse
+from django.shortcuts import render
+
+
 class OrderItemViewSet(
     mixins.CreateModelMixin,
     mixins.UpdateModelMixin,
@@ -73,3 +77,8 @@ class OrderItemViewSet(
 ):
     queryset = models.OrderItem.objects.all()
     serializer_class = serializers.AddOrderItemSerializer
+
+
+def payment(request, id):
+    order = models.Order.objects.get(id=id)
+    return render(request, "payment.html", {"total": (order.total) * 100})
