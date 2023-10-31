@@ -1,3 +1,4 @@
+from django.db.models import Q
 from rest_framework import mixins, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -19,7 +20,14 @@ class OrderViewSet(
     serializer_class = serializers.OrderSerializer
 
     def get_queryset(self):
-        return self.queryset.filter(user=self.request.user)
+        user = self.request.user
+        if user.user_type == "client":
+            return self.queryset.filter(user=user)
+        elif user.user_type == "delivery":
+            return self.queryset.filter(
+                Q(delivery_user=user) | Q(delivery_user__isnull=True)
+            )
+        return self.queryset.filter(Q(restaurant__admin=user) | Q(hotel__admin=user))
 
     def get_serializer_class(self):
         if self.action in ["get_current_order", "retrieve", "list"]:
