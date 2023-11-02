@@ -52,5 +52,5 @@ class HallOptionsAdmin(ModelAdmin, TranslationAdmin):
 
 
 @admin.register(models.HallAvailableTime)
-class HallAvailableTimeAdmin(admin.ModelAdmin):
+class HallAvailableTimeAdmin(ModelAdmin, TranslationAdmin):
     """Admin View for HallAvailableTime"""

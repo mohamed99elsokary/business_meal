@@ -1,6 +1,6 @@
 from modeltranslation.translator import TranslationOptions, register
 
-from .models import Hall, HallOptions, Hotel
+from .models import Hall, HallAvailableTime, HallOptions, Hotel
 
 
 @register(Hotel)
@@ -16,3 +16,8 @@ class HallTranslationOptions(TranslationOptions):
 @register(HallOptions)
 class HallOptionsTranslationOptions(TranslationOptions):
     fields = ("option",)
+
+
+@register(HallAvailableTime)
+class HallAvailableTimeTranslationOptions(TranslationOptions):
+    fields = ("name",)
