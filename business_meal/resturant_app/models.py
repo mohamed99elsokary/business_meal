@@ -1,8 +1,8 @@
 from django.contrib.gis.db import models as gis_model
 from django.db import models
 
-from business_meal.addonsapp.models import Category
-from business_meal.userapp.models import User
+from business_meal.addonsapp.models import Category, PromoCode
+from business_meal.userapp.models import Address, User
 
 
 class Restaurant(models.Model):

@@ -1,12 +1,24 @@
+from django.db.models import Q
 from django_filters import rest_framework as filters
 
 from . import models
 
 
 class RestaurantFilter(filters.FilterSet):
+    meal_category = filters.BaseInFilter(method="filter_by_meal_category")
+    openbuffetpackage__category = filters.BaseInFilter(
+        method="filter_by_openbuffetpackage__category"
+    )
+
     class Meta:
         model = models.Restaurant
-        fields = ["is_open_buffet", "meal__category", "openbuffetpackage__category"]
+        fields = ["is_open_buffet"]
+
+    def filter_by_meal_category(self, queryset, name, value):
+        return queryset.filter(meal__category__name__in=value)
+
+    def filter_by_openbuffetpackage__category(self, queryset, name, value):
+        return queryset.filter(openbuffetpackage__category__name__in=value)
 
 
 class MealFilter(filters.FilterSet):
