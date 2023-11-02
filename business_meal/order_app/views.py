@@ -25,7 +25,10 @@ class OrderViewSet(
     def get_queryset(self):
         user = self.request.user
         if user.user_type == "client":
-            return self.queryset.filter(user=user, is_checkout=True)
+            self.queryset = self.queryset.filter(user=user)
+            if self.action == "list":
+                self.queryset = self.queryset.filter(is_checkout=True)
+            return self.queryset
         elif user.user_type == "delivery":
             return self.queryset.filter(
                 Q(Q(delivery_user=user) | Q(delivery_user__isnull=True)),
