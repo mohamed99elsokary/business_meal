@@ -50,10 +50,6 @@ class AddOrderItemSerializer(serializers.ModelSerializer):
         meal = attrs.get("meal")
         package = attrs.get("package")
         hall = attrs.get("hall")
-        if not meal and not package and not hall:
-            raise serializers.ValidationError(
-                {"detail": "you have to select meal, package or hall."}
-            )
         if order.hotel or order.restaurant:
             if meal and order.restaurant != meal.restaurant:
                 raise serializers.ValidationError(
@@ -75,7 +71,18 @@ class AddOrderItemSerializer(serializers.ModelSerializer):
                 )
         return super().validate(attrs)
 
+    def validate_hall_meal_package_empty(self, validated_data):
+        if (
+            not validated_data.get("meal")
+            and not validated_data.get("package")
+            and not validated_data.get("hall")
+        ):
+            raise serializers.ValidationError(
+                {"detail": "you have to select meal, package or hall."}
+            )
+
     def create(self, validated_data):
+        self.validate_hall_meal_package_empty(validated_data)
         if validated_data.get("options"):
             options_data = validated_data.pop("options", [])
         order_item = super().create(validated_data)
