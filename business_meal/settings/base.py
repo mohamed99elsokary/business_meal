@@ -72,7 +72,7 @@ THIRD_PARTY_APPS = [
 ]
 # local apps
 LOCAL_APPS = [
-    'business_meal.notificationapp',
+    "business_meal.notificationapp",
     "business_meal.order_app",
     "business_meal.hotel_app",
     "business_meal.openbuffet_app",
@@ -259,3 +259,10 @@ ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_UNIQUE_EMAIL = True
 PUSH_NOTIFICATION_DEVICE_TYPES = [EXPO_NOTIFICATION]
+MAP_WIDGETS = {
+    "GooglePointFieldWidget": (
+        ("zoom", 15),
+        ("mapCenterLocationName", "egypt"),
+    ),
+    "GOOGLE_MAP_API_KEY": "AIzaSyDjUKMdu-lMuWjfFTWrh7AStbazp-Vnoww",
+}

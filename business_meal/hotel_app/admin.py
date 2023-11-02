@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.contrib.gis.db import models as db_models
+from mapwidgets.widgets import GooglePointFieldWidget
 from modeltranslation.admin import TranslationAdmin
 from unfold.admin import ModelAdmin, StackedInline
 
@@ -12,6 +14,8 @@ class HotelAdmin(ModelAdmin, TranslationAdmin):
         if request.user.is_superuser:
             return qs
         return qs.filter(admin=request.user)
+
+    formfield_overrides = {db_models.PointField: {"widget": GooglePointFieldWidget}}
 
 
 @admin.register(models.Hall)
