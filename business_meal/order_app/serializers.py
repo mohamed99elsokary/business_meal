@@ -117,12 +117,7 @@ class OrderSerializer(serializers.ModelSerializer):
 class UpdateOrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Order
-        fields = (
-            "user_address",
-            "promo",
-            "note",
-            "scheduled_time",
-        )
+        fields = ("user_address", "promo", "note", "scheduled_time", "status")
 
     def validate_hall_time(self, instance, validated_data):
         # if "scheduled_time" in validated_data:
