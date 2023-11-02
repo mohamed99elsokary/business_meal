@@ -29,7 +29,7 @@ class OrderViewSet(
         elif user.user_type == "delivery":
             return self.queryset.filter(
                 Q(Q(delivery_user=user) | Q(delivery_user__isnull=True)),
-                user_address_isnull=False,
+                user_address__isnull=False,
                 is_checkout=True,
             )
         return self.queryset.filter(
