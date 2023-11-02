@@ -4,17 +4,24 @@ from .utils import send_sms
 
 
 class UserMixin:
-    def soft_delete(self):
-        self.is_deleted = True
-        user_email = self.email
-        random = get_random_string(10)
-        self.email = user_email + random
-        self.save()
-        return self
+    # def soft_delete(self):
+    #     self.is_deleted = True
+    #     user_email = self.email
+    #     random = get_random_string(10)
+    #     self.email = user_email + random
+    #     self.save()
+    #     return self
 
     @classmethod
     def create_user_or_login(cls, validated_data):
-        user, created = cls.objects.get_or_create(phone=validated_data["phone"])
+        latest_user = cls.objects.last()
+        user = cls.objects.filter(phone=validated_data["phone"])
+        if user.count() > 0:
+            user = user.first()
+        else:
+            user = cls.objects.create(
+                phone=validated_data["phone"], email=f"{latest_user.id+1}@email.com"
+            )
         user.send_otp()
         return user
 
