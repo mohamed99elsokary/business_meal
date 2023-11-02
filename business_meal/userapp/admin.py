@@ -4,6 +4,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.gis.db import models as db_models
 from django.utils.translation import gettext_lazy as _
 from mapwidgets.widgets import GooglePointFieldWidget
+from modeltranslation.admin import TranslationAdmin
 from unfold.admin import ModelAdmin, StackedInline
 
 from business_meal.userapp import models
@@ -66,7 +67,7 @@ class AddressAdmin(ModelAdmin):
 
 
 @admin.register(models.DeliveryCar)
-class DeliveryCarAdmin(ModelAdmin):
+class DeliveryCarAdmin(ModelAdmin, TranslationAdmin):
     """Admin View for DeliveryCar"""
 
 
