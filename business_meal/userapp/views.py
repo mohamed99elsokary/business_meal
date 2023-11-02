@@ -10,6 +10,7 @@ from . import models
 from .serializers import (
     AddressSerializer,
     ExpoDeviceSerializer,
+    GenerateUserSerializer,
     LoginSerializer,
     RegisterLoginSerializer,
     UserDataSerializer,
@@ -33,6 +34,8 @@ class UserViewSet(
             return RegisterLoginSerializer
         elif self.action == "verify":
             return VerifySerializer
+        elif self.action == "generate_user":
+            return GenerateUserSerializer
         return super().get_serializer_class()
 
     @action(methods=["post"], detail=False)
@@ -47,6 +50,10 @@ class UserViewSet(
     def get_me(self, request):
         serializer = self.get_serializer(request.user)
         return Response(serializer.data)
+
+    @action(methods=["post"], detail=False)
+    def generate_user(self, request, *args, **kwargs):
+        return super().create_clone(request, *args, **kwargs)
 
     @action(methods=["put"], detail=False)
     def update_me(self, request):

@@ -90,6 +90,17 @@ class UserDataSerializer(serializers.ModelSerializer):
         fields = ("id", "username", "phone", "is_new")
 
 
+class GenerateUserSerializer(UserToken):
+    def create(self, validated_data):
+        last_user = User.objects.last()
+        user = User.objects.create(is_active=True, email=f"{last_user.id}@guest.com")
+        token = self.create_user_token(user)
+        return {
+            "access_token": token["access_token"],
+            "refersh_token": token["refersh_token"],
+        }
+
+
 class AddressSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
     location = serializers.ListField()
