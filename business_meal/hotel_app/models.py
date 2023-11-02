@@ -38,7 +38,7 @@ class HallAvailableTime(models.Model):
     # relations
     Hall = models.ForeignKey(Hall, on_delete=models.CASCADE)
     # fields
-    # day = models.CharField(max_length=50)
+    name = models.CharField(max_length=50)
     start_time = models.TimeField(auto_now=False, auto_now_add=False)
     end_time = models.TimeField(auto_now=False, auto_now_add=False)
 
