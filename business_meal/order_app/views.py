@@ -67,6 +67,13 @@ class OrderViewSet(
     def checkout(self, request, *args, **kwargs):
         return self.create_clone(request, True, *args, **kwargs)
 
+    @action(methods=["get"], detail=True)
+    def accept_order(self, request, *args, **kwargs):
+        order: models.Order = self.get_object()
+        order.delivery_user = request.user
+        order.save()
+        return Response({"detail": "order accepted"})
+
 
 class OrderItemViewSet(
     mixins.CreateModelMixin,
