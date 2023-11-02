@@ -1,5 +1,6 @@
 from bit68_notifications.models import ExpoDevice
 from django.contrib import admin
+from modeltranslation.admin import TranslationAdmin
 from solo.admin import SingletonModelAdmin
 from unfold.admin import ModelAdmin, StackedInline
 
@@ -20,7 +21,7 @@ admin.site.unregister(ExpoDevice)
 
 
 @admin.register(PrivacyPolicy)
-class PrivacyPolicyAdmin(ModelAdmin):
+class PrivacyPolicyAdmin(ModelAdmin, TranslationAdmin):
     """Admin View for PrivacyPolicy"""
 
 
@@ -70,15 +71,15 @@ class ContactUsAdmin(ModelAdmin):
 
 
 @admin.register(models.Ads)
-class AdsAdmin(ModelAdmin):
+class AdsAdmin(ModelAdmin, TranslationAdmin):
     """Admin View for Ads"""
 
 
 @admin.register(models.TermsAndConditions)
-class TermsAndConditionsAdmin(ModelAdmin):
+class TermsAndConditionsAdmin(ModelAdmin, TranslationAdmin):
     """Admin View for TermsAndConditions"""
 
 
 @admin.register(models.About)
-class AboutAdmin(ModelAdmin):
+class AboutAdmin(ModelAdmin, TranslationAdmin):
     """Admin View for About"""

@@ -5,12 +5,12 @@ from .models import Hall, HallOptions, Hotel
 
 @register(Hotel)
 class HotelTranslationOptions(TranslationOptions):
-    fields = ("description",)
+    fields = ("description", "name", "address")
 
 
 @register(Hall)
 class HallTranslationOptions(TranslationOptions):
-    fields = ("description",)
+    fields = ("description", "name")
 
 
 @register(HallOptions)

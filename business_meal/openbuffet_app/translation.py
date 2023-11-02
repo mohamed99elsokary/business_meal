@@ -5,7 +5,7 @@ from .models import OpenBuffetPackage, OpenBuffetPackageOptions
 
 @register(OpenBuffetPackage)
 class OpenBuffetPackageTranslationOptions(TranslationOptions):
-    fields = ("description",)
+    fields = ("description", "name")
 
 
 @register(OpenBuffetPackageOptions)
