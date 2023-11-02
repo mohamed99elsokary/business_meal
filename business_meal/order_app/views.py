@@ -1,4 +1,5 @@
 from django.db.models import Q
+from django.shortcuts import render
 from rest_framework import mixins, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -6,6 +7,7 @@ from rest_framework.response import Response
 from ..services.views import ModelViewSetClones
 from . import models, serializers
 from .conf import CANCELLED
+from .filters import OrderFilter
 
 
 class OrderViewSet(
@@ -18,6 +20,7 @@ class OrderViewSet(
 ):
     queryset = models.Order.objects.all()
     serializer_class = serializers.OrderSerializer
+    filterset_class = OrderFilter
 
     def get_queryset(self):
         user = self.request.user
@@ -63,10 +66,6 @@ class OrderViewSet(
     @action(methods=["post"], detail=False)
     def checkout(self, request, *args, **kwargs):
         return self.create_clone(request, True, *args, **kwargs)
-
-
-# from django.http import HttpResponse
-from django.shortcuts import render
 
 
 class OrderItemViewSet(
