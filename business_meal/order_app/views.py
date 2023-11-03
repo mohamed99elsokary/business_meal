@@ -87,6 +87,11 @@ class OrderItemViewSet(
     queryset = models.OrderItem.objects.all()
     serializer_class = serializers.AddOrderItemSerializer
 
+    def get_serializer_class(self):
+        if self.action in {"update", "partial_update"}:
+            return serializers.UpdateOrderItemSerializer
+        return super().get_serializer_class()
+
 
 def payment(request, id):
     order = models.Order.objects.get(id=id)
