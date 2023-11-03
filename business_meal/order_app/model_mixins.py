@@ -58,21 +58,26 @@ class OrderMixin(LifecycleModelMixin):
             self.total -= discount_amount
         self.save()
 
-    @hook(AFTER_SAVE, when="user_address", has_changed=True, is_not=None)
+    @hook(AFTER_SAVE, when="user_address", has_changed=True)
     def calculate_delivery_fees(self):
         from ..resturant_app.models import Branch
 
         if self.restaurant:
-            user_location = self.user_address.location
-            branches = (
-                Branch.objects.filter(restaurant=self.restaurant)
-                .annotate(distance=Distance("location", user_location))
-                .order_by("distance")
-            )
-            branch = branches.first()
-            self.delivery_fee = branch.distance.km * 10
-            self.total += self.delivery_fee
-            self.save(skip_hooks=True)
+            if not self.user_address:
+                self.total -= self.delivery_fee
+                self.delivery_fee = 0
+                return self.save(skip_hooks=True)
+            else:
+                user_location = self.user_address.location
+                branches = (
+                    Branch.objects.filter(restaurant=self.restaurant)
+                    .annotate(distance=Distance("location", user_location))
+                    .order_by("distance")
+                )
+                branch = branches.first()
+                self.delivery_fee = branch.distance.km * 10
+                self.total += self.delivery_fee
+                self.save(skip_hooks=True)
 
     @hook(
         BEFORE_UPDATE,
