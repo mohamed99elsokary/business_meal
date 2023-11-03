@@ -58,7 +58,7 @@ class OrderMixin(LifecycleModelMixin):
             self.total -= discount_amount
         self.save()
 
-    @hook(AFTER_SAVE, when="user_address", has_changed=True)
+    @hook(AFTER_SAVE, when="user_address", has_changed=True, is_not=None)
     def calculate_delivery_fees(self):
         from ..resturant_app.models import Branch
 
