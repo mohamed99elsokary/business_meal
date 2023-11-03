@@ -126,10 +126,7 @@ class UpdateOrderSerializer(serializers.ModelSerializer):
         fields = ("user_address", "promo", "note", "scheduled_time", "status")
 
     def validate_hall_time(self, instance, validated_data):
-        # if "scheduled_time" in validated_data:
-        # scheduled_time = validated_data["scheduled_time"]
-        # if instance.scheduled_time:
-        scheduled_time = instance.scheduled_time
+        scheduled_time = validated_data["scheduled_time"]
         same_time_orders = (
             models.Order.objects.filter(
                 scheduled_time__year=scheduled_time.year,
@@ -150,7 +147,7 @@ class UpdateOrderSerializer(serializers.ModelSerializer):
                 )
 
     def update(self, instance, validated_data):
-        if instance.hotel:
+        if instance.hotel and "scheduled_time" in validated_data:
             self.validate_hall_time(instance, validated_data)
         return super().update(instance, validated_data)
 
