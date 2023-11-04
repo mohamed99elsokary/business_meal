@@ -82,12 +82,7 @@ class OrderMixin(LifecycleModelMixin):
                 self.total += self.delivery_fee
                 self.save(skip_hooks=True)
 
-    @hook(
-        BEFORE_UPDATE,
-        when="payment_type",
-        was_not="cash_on_delivery",
-        is_now="cash_on_delivery",
-    )
+    @hook(BEFORE_UPDATE, when="payment_type", has_changed=True)
     def update_is_checkout(self):
         self.is_checkout = True
         self.save(skip_hooks=True)

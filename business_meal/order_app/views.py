@@ -114,6 +114,8 @@ def payment(request, id):
 def update_order_gate_way_id(request, id):
     data = request.GET
     if confirm_payment(data["id"]):
-        models.Order.objects.filter(id=id).update(is_paid=True, gate_way_id=data["id"])
+        models.Order.objects.filter(id=id).update(
+            is_paid=True, gate_way_id=data["id"], status="pending_confirmation"
+        )
     else:
         models.Order.objects.filter(id=id).update(gate_way_id=data["id"])
