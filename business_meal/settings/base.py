@@ -63,7 +63,7 @@ THIRD_PARTY_APPS = [
     "import_export",
     "django_filters",
     # all auth
-    # "allauth.socialaccount",
+    "allauth.socialaccount",
     # "allauth.socialaccount.providers.facebook",
     "dj_rest_auth",
     "drf_yasg",
