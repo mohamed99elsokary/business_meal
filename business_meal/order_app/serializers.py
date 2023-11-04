@@ -123,11 +123,12 @@ class DetailedOrderSerializer(serializers.ModelSerializer):
         return list(obj.user_address.location) if obj.user_address else None
 
     def get_restaurant_location(self, obj) -> list:
-        from .model_mixins import get_branch_location
+        if obj.user_address:
+            from .model_mixins import get_branch_location
 
-        branch = get_branch_location(obj) if obj.restaurant else None
+            branch = get_branch_location(obj) if obj.restaurant else None
 
-        return list(branch.location) if branch else None
+            return list(branch.location) if branch else None
 
 
 class OrderSerializer(serializers.ModelSerializer):
