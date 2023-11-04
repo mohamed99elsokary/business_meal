@@ -43,8 +43,7 @@ class OrderViewSet(
     def get_serializer_class(self):
         if self.action in ["get_current_order", "retrieve", "list"]:
             return serializers.DetailedOrderSerializer
-        elif self.action == "get_current_order":
-            return serializers.CurrentOrderSerializer
+
         elif self.action in {"update", "partial_update"}:
             return serializers.UpdateOrderSerializer
         elif self.action == "checkout":
