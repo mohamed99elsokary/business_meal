@@ -1,30 +1,17 @@
 <head>
-    <!-- Other Tags -->
-  
-    <!-- Moyasar Styles -->
     <link rel="stylesheet" href="https://cdn.moyasar.com/mpf/1.12.0/moyasar.css" />
-  
-    <!-- Moyasar Scripts -->
     <script src="https://cdn.moyasar.com/mpf/1.12.0/moyasar.js"></script>
-  
-    <!-- Download CSS and JS files in case you want to test it locally, but use CDN in production -->
   </head>
-  
   <div class="mysr-form"></div>
   <script>
     Moyasar.init({
       element: '.mysr-form',
-      // Amount in the smallest currency unit.
-      // For example:
-      // 10 SAR = 10 * 100 Halalas
-      // 10 KWD = 10 * 1000 Fils
-      // 10 JPY = 10 JPY (Japanese Yen does not have fractions)
       amount: {{total}},
       currency: 'SAR',
       description: 'Coffee Order #1',
-      publishable_api_key: 'pk_test_AQpxBV31a29qhkhUYFYUFjhwllaDVrxSq5ydVNui',
-      callback_url: 'https://moyasar.com/thanks',
+      publishable_api_key: {{api_key}},
+      callback_url: {{url}},
       supported_networks: ['mada'],
-      methods: ['creditcard']
+      methods: ['creditcard'],
     })
   </script>
