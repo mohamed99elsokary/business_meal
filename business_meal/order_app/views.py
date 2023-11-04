@@ -69,7 +69,7 @@ class OrderViewSet(
 
     @action(methods=["post"], detail=False)
     def checkout(self, request, *args, **kwargs):
-        return self.create_clone(request, True, *args, **kwargs)
+        return self.create_clone(request, False, *args, **kwargs)
 
     @action(methods=["get"], detail=True)
     def accept_order(self, request, *args, **kwargs):

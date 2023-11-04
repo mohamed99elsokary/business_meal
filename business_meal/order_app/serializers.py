@@ -180,4 +180,4 @@ class CheckoutSerializer(serializers.ModelSerializer):
         order = get_object_or_404(models.Order, id=validated_data["id"], user=user)
         order.payment_type = validated_data["payment_type"]
         order.save()
-        return order
+        return DetailedOrderSerializer(order).data
