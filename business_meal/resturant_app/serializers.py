@@ -3,6 +3,12 @@ from rest_framework import serializers
 from . import models
 
 
+class TinyRestaurantSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Restaurant
+        fields = ("id", "name", "phone")
+
+
 class RestaurantSerializer(serializers.ModelSerializer):
     lowest_meal_price = serializers.SerializerMethodField()
 
