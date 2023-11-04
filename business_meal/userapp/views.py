@@ -1,10 +1,12 @@
 from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
 from bit68_notifications.models import ExpoDevice
 from dj_rest_auth.registration.views import SocialLoginView
+from django.db.models import Sum
 from rest_framework import mixins, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
+from ..order_app.models import Order
 from ..services.views import ModelViewSetClones
 from . import models
 from .serializers import (
@@ -75,6 +77,13 @@ class UserViewSet(
     @action(methods=["post"], detail=False)
     def verify(self, request, *args, **kwargs):
         return super().create_clone(request, *args, **kwargs)
+
+    @action(methods=["get"], detail=False)
+    def total_delivery(self, request, *args, **kwargs):
+        total_delivery_fees = Order.objects.filter(
+            delivery_user=request.user
+        ).aggregate(fee=Sum("delivery_fee"))["fee"]
+        return Response({"total_delivery": total_delivery_fees})
 
 
 class FacebookLogin(SocialLoginView):
