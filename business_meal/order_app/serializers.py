@@ -102,7 +102,8 @@ class DetailedOrderSerializer(serializers.ModelSerializer):
     provider_name = serializers.SerializerMethodField()
     promo = PromoCodeSerializer()
     restaurant = TinyRestaurantSerializer()
-    client = TinyUserSerializer(source="user")
+    user = TinyUserSerializer()
+    delivery_user = TinyUserSerializer()
     client_location = serializers.SerializerMethodField()
     restaurant_location = serializers.SerializerMethodField()
 

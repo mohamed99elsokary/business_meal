@@ -52,7 +52,7 @@ class ExpoDeviceSerializer(serializers.Serializer):
 class TinyUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["username", "phone"]
+        fields = ["id", "username", "phone"]
 
 
 class UserSerializer(UserToken, serializers.ModelSerializer):
