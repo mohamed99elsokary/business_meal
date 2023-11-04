@@ -97,13 +97,9 @@ class OrderItemViewSet(
 
 def payment(request, id):
     order = models.Order.objects.get(id=id)
-    production_status = config("PRODUCTION", default=False, cast=str)
-    if production_status == "True":
-        PUBLISH_KEY = config("LIVE_PUBLISH_KEY")
-        base_url = "https://backend.businessmeal-sa.com/"
-    else:
-        PUBLISH_KEY = config("STAGING_PUBLISH_KEY")
-        base_url = "http://localhost:8000/"
+    base_url = config("BASE_URL", default=False, cast=str)
+    PUBLISH_KEY = config("PUBLISH_KEY")
+
     return render(
         request,
         "payment.html",
