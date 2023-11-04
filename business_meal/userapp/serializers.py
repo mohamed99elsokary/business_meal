@@ -49,6 +49,12 @@ class ExpoDeviceSerializer(serializers.Serializer):
         return device
 
 
+class TinyUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["username", "phone"]
+
+
 class UserSerializer(UserToken, serializers.ModelSerializer):
     class Meta:
         model = User
