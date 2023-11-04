@@ -4,7 +4,8 @@ from rest_framework import serializers
 from ..addonsapp.serializers import PromoCodeSerializer
 from ..hotel_app.serializers import HotelHallSerializer
 from ..openbuffet_app.serializers import OpenBuffetPackageSerializer
-from ..resturant_app.serializers import MealSerializer
+from ..resturant_app.serializers import MealSerializer, TinyRestaurantSerializer
+from ..userapp.serializers import TinyUserSerializer
 from . import models
 
 
@@ -100,6 +101,10 @@ class DetailedOrderSerializer(serializers.ModelSerializer):
     items = OrderItemSerializer(many=True, source="order_items")
     provider_name = serializers.SerializerMethodField()
     promo = PromoCodeSerializer()
+    restaurant = TinyRestaurantSerializer()
+    client = TinyUserSerializer(source="user")
+    client_location = serializers.SerializerMethodField()
+    restaurant_location = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Order
@@ -112,6 +117,16 @@ class DetailedOrderSerializer(serializers.ModelSerializer):
             return obj.hotel.name
         else:
             return ""
+
+    def get_client_location(self, obj) -> list:
+        return list(obj.user_address.location) if obj.user_address else None
+
+    def get_restaurant_location(self, obj) -> list:
+        from .model_mixins import get_branch_location
+
+        branch = get_branch_location(obj) if obj.restaurant else None
+
+        return list(branch.location) if branch else None
 
 
 class OrderSerializer(serializers.ModelSerializer):
