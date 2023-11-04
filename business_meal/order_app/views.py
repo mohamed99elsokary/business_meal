@@ -1,3 +1,4 @@
+from decouple import config
 from django.db.models import Q
 from django.shortcuts import render
 from rest_framework import mixins, viewsets
@@ -8,6 +9,7 @@ from ..services.views import ModelViewSetClones
 from . import models, serializers
 from .conf import CANCELLED
 from .filters import OrderFilter
+from .utils import confirm_payment
 
 
 class OrderViewSet(
@@ -95,4 +97,27 @@ class OrderItemViewSet(
 
 def payment(request, id):
     order = models.Order.objects.get(id=id)
-    return render(request, "payment.html", {"total": (order.total) * 100})
+    production_status = config("PRODUCTION", default=False, cast=str)
+    if production_status == "True":
+        PUBLISH_KEY = config("LIVE_PUBLISH_KEY")
+        base_url = "https://backend.businessmeal-sa.com/"
+    else:
+        PUBLISH_KEY = config("STAGING_PUBLISH_KEY")
+        base_url = "http://localhost:8000/"
+    return render(
+        request,
+        "payment.html",
+        {
+            "total": order.total * 100,
+            "url": f"{base_url}en/api/gate-way-id/{id}",
+            "api_key": PUBLISH_KEY,
+        },
+    )
+
+
+def update_order_gate_way_id(request, id):
+    data = request.GET
+    if confirm_payment(data["id"]):
+        models.Order.objects.filter(id=id).update(is_paid=True, gate_way_id=data["id"])
+    else:
+        models.Order.objects.filter(id=id).update(gate_way_id=data["id"])

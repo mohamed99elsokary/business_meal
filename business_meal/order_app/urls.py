@@ -9,4 +9,5 @@ router.register("order-item", views.OrderItemViewSet)
 urlpatterns = [
     path("", include(router.urls)),
     path("payment/<int:id>", views.payment),
+    path("gate-way-id/<int:id>", views.update_order_gate_way_id),
 ]
