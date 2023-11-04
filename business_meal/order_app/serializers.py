@@ -1,3 +1,4 @@
+from decouple import config
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 
@@ -181,8 +182,7 @@ class CheckoutSerializer(serializers.ModelSerializer):
         order = get_object_or_404(models.Order, id=validated_data["id"], user=user)
         order.payment_type = validated_data["payment_type"]
         if validated_data["payment_type"] == "online_payment":
-            order.payment_url = (
-                f"https://backend.businessmeal-sa.com/en/api/payment/{order.id}/"
-            )
+            base_url = config("BASE_URL", default=False, cast=str)
+            order.payment_url = f"{base_url}en/api/payment/{order.id}/"
         order.save()
         return DetailedOrderSerializer(order).data
