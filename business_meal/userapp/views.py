@@ -80,9 +80,10 @@ class UserViewSet(
 
     @action(methods=["get"], detail=False)
     def total_delivery(self, request, *args, **kwargs):
-        total_delivery_fees = Order.objects.filter(
-            delivery_user=request.user
-        ).aggregate(fee=Sum("delivery_fee"))["fee"]
+        user_orders = Order.objects.filter(
+            delivery_user=request.user, status="delivered"
+        )
+        total_delivery_fees = user_orders.aggregate(fee=Sum("delivery_fee"))["fee"]
         return Response({"total_delivery": total_delivery_fees})
 
 
