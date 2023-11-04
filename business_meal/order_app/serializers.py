@@ -183,6 +183,6 @@ class CheckoutSerializer(serializers.ModelSerializer):
         order.payment_type = validated_data["payment_type"]
         if validated_data["payment_type"] == "online_payment":
             base_url = config("BASE_URL", default=False, cast=str)
-            order.payment_url = f"{base_url}en/api/payment/{order.id}/"
+            order.payment_url = f"{base_url}en/api/payment/{order.id}"
         order.save()
         return DetailedOrderSerializer(order).data
