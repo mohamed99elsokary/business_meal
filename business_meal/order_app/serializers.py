@@ -180,5 +180,9 @@ class CheckoutSerializer(serializers.ModelSerializer):
         user = self.context["request"].user
         order = get_object_or_404(models.Order, id=validated_data["id"], user=user)
         order.payment_type = validated_data["payment_type"]
+        if validated_data["payment_type"] == "online_payment":
+            order.payment_url = (
+                f"https://backend.businessmeal-sa.com/en/api/payment/{order.id}/"
+            )
         order.save()
         return DetailedOrderSerializer(order).data
