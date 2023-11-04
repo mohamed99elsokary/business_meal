@@ -48,6 +48,17 @@ class OrderItemOptionMixin(LifecycleModelMixin):
         order.save()
 
 
+def get_branch_location(order):
+    from ..resturant_app.models import Branch
+
+    user_location = order.user_address.location
+    return (
+        Branch.objects.filter(restaurant=order.restaurant)
+        .annotate(distance=Distance("location", user_location))
+        .order_by("distance")
+    ).first()
+
+
 class OrderMixin(LifecycleModelMixin):
     @hook(AFTER_CREATE, when="promo", has_changed=True)
     def recalculate_order_price(self):
@@ -60,21 +71,13 @@ class OrderMixin(LifecycleModelMixin):
 
     @hook(AFTER_SAVE, when="user_address", has_changed=True)
     def calculate_delivery_fees(self):
-        from ..resturant_app.models import Branch
-
         if self.restaurant:
             if not self.user_address:
                 self.total -= self.delivery_fee
                 self.delivery_fee = 0
                 return self.save(skip_hooks=True)
             else:
-                user_location = self.user_address.location
-                branches = (
-                    Branch.objects.filter(restaurant=self.restaurant)
-                    .annotate(distance=Distance("location", user_location))
-                    .order_by("distance")
-                )
-                branch = branches.first()
+                branch = get_branch_location(self)
                 self.delivery_fee = branch.distance.km * 10
                 self.total += self.delivery_fee
                 self.save(skip_hooks=True)
