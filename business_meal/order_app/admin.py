@@ -1,11 +1,12 @@
 from django.contrib import admin
-from unfold.admin import ModelAdmin, StackedInline
+from import_export.admin import ImportExportModelAdmin
+from unfold.admin import ModelAdmin
 
 from . import models
 
 
 @admin.register(models.Order)
-class OrderAdmin(ModelAdmin):
+class OrderAdmin(ModelAdmin, ImportExportModelAdmin):
     """Admin View for Order"""
 
 
