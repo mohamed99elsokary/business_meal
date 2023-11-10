@@ -35,6 +35,7 @@ class Branch(models.Model):
     building = models.CharField(max_length=50)
     is_available = models.BooleanField(default=True)
     max_orders = models.IntegerField()
+    delivery_fees = models.FloatField(default=0)
 
     def __str__(self):
         return f"{self.restaurant} {self.street}"
