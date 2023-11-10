@@ -93,7 +93,7 @@ class LoginSerializer(UserToken, serializers.Serializer):
 class UserDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ("id", "username", "phone", "is_new")
+        fields = ("id", "username", "phone", "email", "is_new", "birth_date")
 
 
 class GenerateUserSerializer(UserToken):

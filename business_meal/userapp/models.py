@@ -49,7 +49,9 @@ class User(UserMixin, CustomModel, AbstractUser):
         ),
     )
     password_reset_code = models.CharField(max_length=10, null=True, blank=True)
-
+    birth_date = models.DateField(
+        auto_now=False, auto_now_add=False, blank=True, null=True, default=None
+    )
     objects = CustomUserManager()
 
     EMAIL_FIELD = "email"
