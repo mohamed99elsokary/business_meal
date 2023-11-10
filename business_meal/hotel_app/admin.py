@@ -31,6 +31,8 @@ class HallAdmin(ModelAdmin, TranslationAdmin):
             kwargs["queryset"] = models.Hotel.objects.filter(admin=request.user)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
+    list_display = ("name", "hotel")
+
 
 @admin.register(models.HallImages)
 class HallImagesAdmin(ModelAdmin):
