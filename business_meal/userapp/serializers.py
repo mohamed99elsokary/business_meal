@@ -121,8 +121,11 @@ class AddressSerializer(serializers.ModelSerializer):
         return super().create(validated_data)
 
     def update(self, instance, validated_data):
-        location = validated_data["location"]
-        validated_data["location"] = f"SRID=4326;POINT ({location[0]} {location[1]})"
+        if "location" in validated_data:
+            location = validated_data["location"]
+            validated_data[
+                "location"
+            ] = f"SRID=4326;POINT ({location[0]} {location[1]})"
         return super().update(instance, validated_data)
 
 
