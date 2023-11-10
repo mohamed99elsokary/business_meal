@@ -75,7 +75,7 @@ class OrderViewSet(
     def accept_order(self, request, *args, **kwargs):
         order: models.Order = self.get_object()
         order.delivery_user = request.user
-        order.status = "delivering"
+        # order.status = "delivering"
         order.save()
         return Response({"detail": "order accepted"})
 
