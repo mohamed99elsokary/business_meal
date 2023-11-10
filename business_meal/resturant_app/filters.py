@@ -15,10 +15,10 @@ class RestaurantFilter(filters.FilterSet):
         fields = ["is_open_buffet"]
 
     def filter_by_meal_category(self, queryset, name, value):
-        return queryset.filter(meal__category__name__in=value)
+        return queryset.filter(meal__category__in=value)
 
     def filter_by_openbuffetpackage__category(self, queryset, name, value):
-        return queryset.filter(openbuffetpackage__category__name__in=value)
+        return queryset.filter(openbuffetpackage__category__in=value)
 
 
 class MealFilter(filters.FilterSet):
