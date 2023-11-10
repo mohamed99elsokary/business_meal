@@ -36,6 +36,7 @@ class Branch(models.Model):
     is_available = models.BooleanField(default=True)
     max_orders = models.IntegerField()
     delivery_fees = models.FloatField(default=0)
+    estimated_mins = models.FloatField(default=0)
 
     def __str__(self):
         return f"{self.restaurant} {self.street}"
