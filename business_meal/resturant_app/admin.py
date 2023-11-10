@@ -17,6 +17,7 @@ class BranchAdmin(ModelAdmin):
     """Admin View for Branch"""
 
     formfield_overrides = {db_models.PointField: {"widget": GooglePointFieldWidget}}
+    list_display = ("restaurant",)
 
 
 @admin.register(models.Meal)
@@ -34,6 +35,8 @@ class MealAdmin(ModelAdmin, TranslationAdmin):
             kwargs["queryset"] = models.Restaurant.objects.filter(admin=request.user)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
+    list_display = ("name", "restaurant")
+
 
 @admin.register(models.MealOptions)
 class MealOptionsAdmin(ModelAdmin, TranslationAdmin):
@@ -49,6 +52,11 @@ class MealOptionsAdmin(ModelAdmin, TranslationAdmin):
                 restaurant__admin=request.user
             )
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+    list_display = ("meal", "restaurant")
+
+    def restaurant(self, obj):
+        return obj.meal.restaurant
 
 
 @admin.register(models.Category)

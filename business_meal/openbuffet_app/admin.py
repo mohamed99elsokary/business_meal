@@ -1,12 +1,8 @@
 from django.contrib import admin
 from modeltranslation.admin import TranslationAdmin
-from unfold.admin import ModelAdmin, StackedInline
+from unfold.admin import ModelAdmin
 
 from . import models
-
-# @admin.register(Model)
-# class ModelAdmin(ModelAdmin):
-#    ...
 
 
 @admin.register(models.OpenBuffetPackage)
@@ -24,6 +20,8 @@ class OpenBuffetPackage(ModelAdmin, TranslationAdmin):
             )
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
+    list_display = ("name", "restaurant")
+
 
 @admin.register(models.OpenBuffetPackageOptions)
 class OpenBuffetPackageOptionsAdmin(ModelAdmin, TranslationAdmin):
@@ -39,3 +37,8 @@ class OpenBuffetPackageOptionsAdmin(ModelAdmin, TranslationAdmin):
                 restaurant__admin=request.user
             )
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+    list_display = ("option", "package", "restaurant")
+
+    def restaurant(self, obj):
+        return obj.package.restaurant
