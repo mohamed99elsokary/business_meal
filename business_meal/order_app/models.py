@@ -59,6 +59,13 @@ class Order(OrderMixin, models.Model):
     scheduled_time = models.DateTimeField(default=None, null=True, blank=True)
     estimated_time = models.DateTimeField(default=None, null=True, blank=True)
     delivered_time = models.DateTimeField(default=None, null=True, blank=True)
+    preparing_time = models.DateTimeField(default=None, null=True, blank=True)
+    ready_to_delivery_time = models.DateTimeField(default=None, null=True, blank=True)
+    picked_time = models.DateTimeField(default=None, null=True, blank=True)
+    arrived_to_restaurant_time = models.DateTimeField(
+        default=None, null=True, blank=True
+    )
+    begin_trip_time = models.DateTimeField(default=None, null=True, blank=True)
 
 
 class OrderItem(OrderItemsMixin, models.Model):
