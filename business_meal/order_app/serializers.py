@@ -80,8 +80,10 @@ class AddOrderItemSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         if validated_data.get("options"):
             options_data = validated_data.pop("options", [])
+        else:
+            options_data = None
         order_item = super().create(validated_data)
-        if validated_data.get("options"):
+        if options_data:
             models.OrderItemOption.objects.bulk_create(
                 [
                     models.OrderItemOption(order_item=order_item, **option_data)
