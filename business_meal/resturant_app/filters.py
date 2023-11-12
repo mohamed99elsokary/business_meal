@@ -11,7 +11,7 @@ class RestaurantFilter(filters.FilterSet):
 
     class Meta:
         model = models.Restaurant
-        fields = ["is_open_buffet"]
+        fields = ["is_open_buffet", "meal__is_share_box"]
 
     def filter_by_meal_category(self, queryset, name, value):
         return queryset.filter(meal__category__in=value)
@@ -42,7 +42,11 @@ class BranchFilter(filters.FilterSet):
 
     class Meta:
         model = models.Branch
-        fields = ("restaurant", "restaurant__is_open_buffet")
+        fields = (
+            "restaurant",
+            "restaurant__is_open_buffet",
+            "restaurant__meal__is_share_box",
+        )
 
     def filter_distance(self, queryset, name, value):
         return queryset.filter(distance__lte=value * 1000)
