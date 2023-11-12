@@ -23,7 +23,7 @@ class RestaurantFilter(filters.FilterSet):
 class MealFilter(filters.FilterSet):
     class Meta:
         model = models.Meal
-        fields = ("restaurant",)
+        fields = ("restaurant", "category", "is_share_box")
 
 
 class MealOptionsFilter(filters.FilterSet):

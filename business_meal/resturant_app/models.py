@@ -57,6 +57,7 @@ class Meal(models.Model):
     price = models.IntegerField()
     is_available = models.BooleanField(default=True)
     is_top_dish = models.BooleanField(default=False)
+    is_share_box = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
