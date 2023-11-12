@@ -77,8 +77,8 @@ class OrderMixin(LifecycleModelMixin):
                 self.delivery_fee = 0
                 return self.save(skip_hooks=True)
             else:
-                branch = get_branch_location(self)
-                self.delivery_fee = branch.distance.km * branch.delivery_fees
+                self.branch = get_branch_location(self)
+                self.delivery_fee = self.branch.distance.km * self.branch.delivery_fees
                 self.total += self.delivery_fee
                 self.save(skip_hooks=True)
 
