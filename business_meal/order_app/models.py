@@ -4,7 +4,7 @@ from business_meal.resturant_app.models import Meal, MealOptions, PromoCode
 from business_meal.userapp.models import Address, User
 
 from ..hotel_app.models import Hotel
-from ..resturant_app.models import Restaurant
+from ..resturant_app.models import Branch, Restaurant
 from .conf import ORDER_CHOICES
 from .model_mixins import OrderItemOptionMixin, OrderItemsMixin, OrderMixin
 
@@ -32,6 +32,9 @@ class Order(OrderMixin, models.Model):
     )
     restaurant = models.ForeignKey(
         Restaurant, on_delete=models.CASCADE, default=None, null=True, blank=True
+    )
+    branch = models.ForeignKey(
+        Branch, on_delete=models.CASCADE, default=None, null=True, blank=True
     )
     hotel = models.ForeignKey(
         Hotel, on_delete=models.CASCADE, default=None, null=True, blank=True
