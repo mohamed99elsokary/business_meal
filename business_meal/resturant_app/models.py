@@ -1,8 +1,9 @@
 from django.contrib.gis.db import models as gis_model
 from django.db import models
 
-from business_meal.addonsapp.models import Category, PromoCode
-from business_meal.userapp.models import Address, User
+from ..addonsapp.models import Category, PromoCode
+from ..userapp.models import User
+from .managers import BranchQuerySet
 
 
 class Restaurant(models.Model):
@@ -37,6 +38,7 @@ class Branch(models.Model):
     max_orders = models.IntegerField()
     delivery_fees = models.FloatField(default=0)
     estimated_mins = models.FloatField(default=0)
+    objects: BranchQuerySet = BranchQuerySet.as_manager()
 
     def __str__(self):
         return f"{self.restaurant} {self.street}"

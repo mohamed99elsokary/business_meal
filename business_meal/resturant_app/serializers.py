@@ -41,6 +41,7 @@ class MealOptionsSerializer(serializers.ModelSerializer):
 
 class BranchSerializer(serializers.ModelSerializer):
     location = serializers.ListField()
+    distance = serializers.CharField(default=None)
 
     class Meta:
         model = models.Branch

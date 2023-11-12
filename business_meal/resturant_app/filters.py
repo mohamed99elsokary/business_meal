@@ -30,3 +30,24 @@ class MealOptionsFilter(filters.FilterSet):
     class Meta:
         model = models.MealOptions
         fields = ("meal", "is_additional")
+
+
+class BranchFilter(filters.FilterSet):
+    meal_category = filters.BaseInFilter(method="filter_by_meal_category")
+    openbuffetpackage__category = filters.BaseInFilter(
+        method="filter_by_openbuffetpackage__category"
+    )
+    location = filters.CharFilter(method="annotate_distance")
+
+    class Meta:
+        model = models.Branch
+        fields = ("restaurant", "restaurant__is_open_buffet")
+
+    def annotate_distance(self, queryset, name, value):
+        return queryset.annotate_distance(value).order_by("distance")
+
+    def filter_by_meal_category(self, queryset, name, value):
+        return queryset.filter(restaurant__meal__category__in=value)
+
+    def filter_by_openbuffetpackage__category(self, queryset, name, value):
+        return queryset.filter(restaurant__openbuffetpackage__category__in=value)

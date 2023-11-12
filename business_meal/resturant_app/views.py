@@ -23,3 +23,9 @@ class MealOptionsViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.MealOptionsSerializer
     filterset_class = filters.MealOptionsFilter
     pagination_class = None
+
+
+class BranchViewSet(viewsets.ModelViewSet):
+    queryset = models.Branch.objects.all()
+    serializer_class = serializers.BranchSerializer
+    filterset_class = filters.BranchFilter
