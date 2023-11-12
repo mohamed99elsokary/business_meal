@@ -10,7 +10,7 @@ class OrderFilter(filters.FilterSet):
 
     class Meta:
         model = models.Order
-        fields = ["id"]
+        fields = ["id", "delivery_user"]
 
     def filter_by_status(self, queryset, name, value):
         return queryset.filter(status__in=value)
