@@ -41,8 +41,11 @@ class MealOptionsSerializer(serializers.ModelSerializer):
 
 class BranchSerializer(serializers.ModelSerializer):
     location = serializers.ListField()
-    distance = serializers.CharField(default=None)
+    distance = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Branch
         fields = "__all__"
+
+    def get_distance(self, obj) -> float:
+        return obj.distance.km if obj.distance else None
