@@ -30,7 +30,7 @@ class MealSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
     def get_category_name(self, obj) -> str:
-        return obj.category.name
+        return obj.category.name if obj.category else None
 
 
 class MealOptionsSerializer(serializers.ModelSerializer):

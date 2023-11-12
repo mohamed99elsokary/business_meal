@@ -109,6 +109,7 @@ class DetailedOrderSerializer(serializers.ModelSerializer):
     delivery_user = TinyUserSerializer()
     client_location = serializers.SerializerMethodField()
     restaurant_location = serializers.SerializerMethodField()
+    estimated_mins = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Order
@@ -126,12 +127,10 @@ class DetailedOrderSerializer(serializers.ModelSerializer):
         return list(obj.user_address.location) if obj.user_address else None
 
     def get_restaurant_location(self, obj) -> list:
-        if obj.user_address:
-            from .model_mixins import get_branch_location
+        return list(obj.branch.location) if obj.branch else None
 
-            branch = get_branch_location(obj) if obj.restaurant else None
-
-            return list(branch.location) if branch else None
+    def get_estimated_mins(self, obj) -> int:
+        return obj.branch.estimated_mins if obj.branch else None
 
 
 class OrderSerializer(serializers.ModelSerializer):
