@@ -8,6 +8,8 @@ from django_lifecycle import (
     hook,
 )
 
+from .utils import payment_refund
+
 
 class OrderItemsMixin(LifecycleModelMixin):
     @hook(BEFORE_CREATE)
@@ -124,3 +126,7 @@ class OrderMixin(LifecycleModelMixin):
             is_in_app=True,
             is_push_notification=True,
         )
+
+    @hook(AFTER_SAVE, when="status", was_not="cancelled", is_now="cancelled")
+    def send_notification(self):
+        payment_refund(id=self.gate_way_id, amount=self.total)

@@ -98,7 +98,7 @@ class OrderItemViewSet(
 def payment(request, id):
     order = models.Order.objects.get(id=id)
     base_url = config("BASE_URL", default=False, cast=str)
-    PUBLISH_KEY = config("PUBLISH_KEY")
+    PAYMENT_PUBLISH_KEY = config("PAYMENT_PUBLISH_KEY")
 
     return render(
         request,
@@ -106,7 +106,7 @@ def payment(request, id):
         {
             "total": order.total * 100,
             "url": f"{base_url}en/api/gate-way-id/{id}",
-            "api_key": PUBLISH_KEY,
+            "api_key": PAYMENT_PUBLISH_KEY,
         },
     )
 
