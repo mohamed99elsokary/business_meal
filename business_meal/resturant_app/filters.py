@@ -38,10 +38,14 @@ class BranchFilter(filters.FilterSet):
         method="filter_by_openbuffetpackage__category"
     )
     location = filters.CharFilter(method="annotate_distance")
+    distance = filters.NumberFilter(method="filter_distance")
 
     class Meta:
         model = models.Branch
         fields = ("restaurant", "restaurant__is_open_buffet")
+
+    def filter_distance(self, queryset, name, value):
+        return queryset.filter(distance__lte=value * 1000)
 
     def annotate_distance(self, queryset, name, value):
         return queryset.annotate_distance(value).order_by("distance")
