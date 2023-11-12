@@ -86,3 +86,41 @@ class OrderMixin(LifecycleModelMixin):
     def update_is_checkout(self):
         self.is_checkout = True
         self.save(skip_hooks=True)
+
+    @hook(BEFORE_UPDATE, when="status", has_changed=True)
+    def send_notification(self):
+        from ..addonsapp.utils import NotificationHandler
+
+        NotificationHandler(
+            users=[self.user],
+            title="your order status has been updated",
+            body="Your order status has been updated",
+            is_in_app=True,
+            is_push_notification=True,
+        )
+
+    def get_provider_admin_id(self):
+        if self.restaurant:
+            return self.restaurant.admin.id
+        elif self.hotel:
+            return self.hotel.admin.id
+        else:
+            return None
+
+    @hook(AFTER_SAVE, when="status", is_now="pending_confirmation")
+    def send_notification(self):
+        from django.db.models import Q
+
+        from ..addonsapp.utils import NotificationHandler
+        from ..userapp.models import User
+
+        users = User.objects.filter(
+            Q(user_type="delivery") | Q(id=self.get_provider_admin_id())
+        )
+        NotificationHandler(
+            users=users,
+            title="your order status has been updated",
+            body="Your order status has been updated",
+            is_in_app=True,
+            is_push_notification=True,
+        )
