@@ -134,7 +134,7 @@ class DetailedOrderSerializer(serializers.ModelSerializer):
         return obj.branch.estimated_mins if obj.branch else None
 
     def get_distance(self, obj) -> float:
-        return obj.distance.km if obj.distance else None
+        return obj.distance.km if "distance" in dir(obj) and obj.distance else None
 
 
 class OrderSerializer(serializers.ModelSerializer):

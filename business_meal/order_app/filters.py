@@ -7,10 +7,14 @@ class OrderFilter(filters.FilterSet):
     status = filters.BaseInFilter(method="filter_by_status")
     location = filters.CharFilter(method="annotate_distance")
     distance = filters.NumberFilter(method="filter_distance")
+    has_delivery_user = filters.BooleanFilter(method="filter_by_delivery_user")
 
     class Meta:
         model = models.Order
-        fields = ["id", "delivery_user"]
+        fields = ["id"]
+
+    def filter_by_delivery_user(self, queryset, name, value):
+        return queryset.exclude(delivery_user__isnull=value)
 
     def filter_by_status(self, queryset, name, value):
         return queryset.filter(status__in=value)
