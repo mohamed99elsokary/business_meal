@@ -118,4 +118,11 @@ class OrderItemOption(OrderItemOptionMixin, models.Model):
         null=True,
         blank=True,
     )
+    hall_option = models.ForeignKey(
+        "hotel_app.HallOptions",
+        on_delete=models.CASCADE,
+        default=None,
+        null=True,
+        blank=True,
+    )
     quantity = models.IntegerField(default=1)
