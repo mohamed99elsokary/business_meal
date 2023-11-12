@@ -110,6 +110,7 @@ class DetailedOrderSerializer(serializers.ModelSerializer):
     client_location = serializers.SerializerMethodField()
     restaurant_location = serializers.SerializerMethodField()
     estimated_mins = serializers.SerializerMethodField()
+    distance = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Order
@@ -131,6 +132,9 @@ class DetailedOrderSerializer(serializers.ModelSerializer):
 
     def get_estimated_mins(self, obj) -> int:
         return obj.branch.estimated_mins if obj.branch else None
+
+    def get_distance(self, obj) -> float:
+        return obj.distance.km if obj.distance else None
 
 
 class OrderSerializer(serializers.ModelSerializer):

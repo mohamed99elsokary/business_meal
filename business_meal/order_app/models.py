@@ -6,6 +6,7 @@ from business_meal.userapp.models import Address, User
 from ..hotel_app.models import Hotel
 from ..resturant_app.models import Branch, Restaurant
 from .conf import ORDER_CHOICES
+from .managers import OrderQuerySet
 from .model_mixins import OrderItemOptionMixin, OrderItemsMixin, OrderMixin
 
 
@@ -69,6 +70,8 @@ class Order(OrderMixin, models.Model):
         default=None, null=True, blank=True
     )
     begin_trip_time = models.DateTimeField(default=None, null=True, blank=True)
+
+    objects: OrderQuerySet = OrderQuerySet.as_manager()
 
 
 class OrderItem(OrderItemsMixin, models.Model):
