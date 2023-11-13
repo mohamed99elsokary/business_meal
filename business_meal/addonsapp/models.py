@@ -164,3 +164,15 @@ class PromoCode(models.Model):
 
     def __str__(self):
         return self.code
+
+
+class OptionsCategory(models.Model):
+    # relations
+    restaurant = models.ForeignKey("resturant_app.Restaurant", on_delete=models.CASCADE)
+    hotel = models.ForeignKey("hotel_app.Hotel", on_delete=models.CASCADE)
+    # fields
+    name = models.CharField(max_length=50)
+    required_quantity = models.IntegerField(null=True, blank=True, default=None)
+
+    def __str__(self):
+        return self.name

@@ -7,6 +7,7 @@ from unfold.admin import ModelAdmin, StackedInline
 from business_meal.addonsapp.forms import SectionContentForm, SliderPictureForm
 from business_meal.addonsapp.models import (
     ContactUs,
+    OptionsCategory,
     PageSection,
     PrivacyPolicy,
     SectionContent,
@@ -83,3 +84,8 @@ class TermsAndConditionsAdmin(ModelAdmin, TranslationAdmin):
 @admin.register(models.About)
 class AboutAdmin(ModelAdmin, TranslationAdmin):
     """Admin View for About"""
+
+
+@admin.register(models.OptionsCategory)
+class OptionsCategoryAdmin(admin.ModelAdmin):
+    """Admin View for OptionsCategory"""

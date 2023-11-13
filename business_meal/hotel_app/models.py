@@ -3,6 +3,8 @@ from django.db import models
 
 from business_meal.userapp.models import User
 
+from ..addonsapp.models import OptionsCategory
+
 
 class Hotel(models.Model):
     name = models.CharField(max_length=50)
@@ -48,6 +50,9 @@ class HallAvailableTime(models.Model):
 
 class HallOptions(models.Model):
     # relations
+    category = models.ForeignKey(
+        OptionsCategory, on_delete=models.CASCADE, null=True, blank=True, default=None
+    )
     hall = models.ForeignKey(Hall, on_delete=models.CASCADE)
     # fields
     option = models.CharField(max_length=50)

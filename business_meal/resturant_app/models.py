@@ -1,7 +1,7 @@
 from django.contrib.gis.db import models as gis_model
 from django.db import models
 
-from ..addonsapp.models import Category, PromoCode
+from ..addonsapp.models import Category, OptionsCategory, PromoCode
 from ..userapp.models import User
 from .managers import BranchQuerySet
 
@@ -66,6 +66,9 @@ class Meal(models.Model):
 class MealOptions(models.Model):
     # relations
     meal = models.ForeignKey(Meal, on_delete=models.CASCADE)
+    category = models.ForeignKey(
+        OptionsCategory, on_delete=models.CASCADE, null=True, blank=True, default=None
+    )
     # fields
     option = models.CharField(max_length=50)
     price = models.IntegerField(default=0)

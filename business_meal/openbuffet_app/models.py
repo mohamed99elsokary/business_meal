@@ -1,6 +1,6 @@
 from django.db import models
 
-from business_meal.addonsapp.models import Category
+from business_meal.addonsapp.models import Category, OptionsCategory
 from business_meal.resturant_app.models import Restaurant
 
 
@@ -24,6 +24,9 @@ class OpenBuffetPackage(models.Model):
 
 class OpenBuffetPackageOptions(models.Model):
     # relations
+    category = models.ForeignKey(
+        OptionsCategory, on_delete=models.CASCADE, null=True, blank=True, default=None
+    )
     package = models.ForeignKey(OpenBuffetPackage, on_delete=models.CASCADE)
 
     # fields
