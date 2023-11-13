@@ -1,7 +1,7 @@
 from django.db.models import Q
 from rest_framework import mixins, viewsets
 
-from business_meal.addonsapp import models, serializers
+from . import filters, models, serializers
 
 """ PageSection """
 
@@ -64,3 +64,9 @@ class PromoCodeViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self):
         return self.queryset.filter(Q(user=self.request.user) | Q(user__isnull=True))
+
+
+class OptionsCategoryViewSet(viewsets.ModelViewSet):
+    queryset = models.OptionsCategory.objects.all()
+    serializer_class = serializers.OptionsCategorySerializer
+    filterset_class = filters.OptionsCategoryFilter

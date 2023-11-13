@@ -70,3 +70,9 @@ class PromoCodeSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.PromoCode
         fields = "__all__"
+
+
+class OptionsCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.OptionsCategory
+        fields = "__all__"
