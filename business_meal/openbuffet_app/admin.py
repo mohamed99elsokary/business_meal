@@ -27,7 +27,7 @@ class OpenBuffetPackageOptionsAdmin(FilterForUserAdmin, ModelAdmin, TranslationA
             )
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
-    list_display = ("option", "package", "restaurant")
+    list_display = ("option", "package", "restaurant", "category")
 
     def restaurant(self, obj):
         return obj.package.restaurant

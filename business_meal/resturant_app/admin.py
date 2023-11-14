@@ -53,7 +53,7 @@ class MealOptionsAdmin(ModelAdmin, TranslationAdmin):
             )
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
-    list_display = ("meal", "restaurant", "option")
+    list_display = ("meal", "restaurant", "option", "category")
 
     def restaurant(self, obj):
         return obj.meal.restaurant

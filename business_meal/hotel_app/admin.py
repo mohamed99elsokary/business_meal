@@ -51,7 +51,7 @@ class HallImagesAdmin(ModelAdmin):
 @admin.register(models.HallOptions)
 class HallOptionsAdmin(ModelAdmin, TranslationAdmin):
     "Admin View for HallOptions"
-    list_display = ("hall", "option")
+    list_display = ("hall", "option", "category")
 
 
 @admin.register(models.HallAvailableTime)
