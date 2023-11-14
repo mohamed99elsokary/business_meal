@@ -1,4 +1,4 @@
-from bit68_notifications.models import ExpoDevice
+from bit68_notifications.models import BulkNotification, ExpoDevice
 from django.contrib import admin
 from modeltranslation.admin import TranslationAdmin
 from solo.admin import SingletonModelAdmin
@@ -19,6 +19,13 @@ from . import models
 
 # SiteConfiguration
 admin.site.unregister(ExpoDevice)
+
+admin.site.unregister(BulkNotification)
+
+
+@admin.register(BulkNotification)
+class BulkNotificationAdmin(ModelAdmin):
+    """Admin View for BulkNotification"""
 
 
 @admin.register(PrivacyPolicy)
