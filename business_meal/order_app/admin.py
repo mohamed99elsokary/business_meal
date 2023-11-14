@@ -1,13 +1,32 @@
 from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
 from unfold.admin import ModelAdmin
+from unfold.contrib.filters.admin import RangeDateFilter
 
 from . import models
 
 
 @admin.register(models.Order)
 class OrderAdmin(ModelAdmin, ImportExportModelAdmin):
-    """Admin View for Order"""
+    list_filter = (
+        "is_checkout",
+        "is_paid",
+        "status",
+        "payment_type",
+        ("ordered_time", RangeDateFilter),
+    )
+    list_filter_submit = True
+    list_display = (
+        "restaurant",
+        "branch",
+        "hotel",
+        "status",
+        "total",
+        "payment_type",
+        "ordered_time",
+        "is_checkout",
+        "is_paid",
+    )
 
 
 @admin.register(models.OrderItem)
