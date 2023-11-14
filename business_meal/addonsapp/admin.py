@@ -89,3 +89,9 @@ class AboutAdmin(ModelAdmin, TranslationAdmin):
 @admin.register(OptionsCategory)
 class OptionsCategoryAdmin(ModelAdmin, TranslationAdmin):
     """Admin View for OptionsCategory"""
+
+
+class FilterForUserAdmin:
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs if request.user.is_superuser else qs.admin_filter(request.user)
