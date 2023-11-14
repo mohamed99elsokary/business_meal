@@ -3,6 +3,13 @@ from rest_framework import serializers
 from business_meal.addonsapp import models
 from business_meal.services.custom_ModelSerializer import ErrorMixin
 
+from ..hotel_app.serializers import HallOptions, HallOptionsSerializer
+from ..openbuffet_app.serializers import (
+    OpenBuffetPackageOptions,
+    OpenBuffetPackageOptionsSerializer,
+)
+from ..resturant_app.serializers import MealOptions, MealOptionsSerializer
+
 """ PageSection """
 
 
@@ -80,22 +87,27 @@ class OptionsCategorySerializer(serializers.ModelSerializer):
         fields = "__all__"
 
     def get_options(self, obj) -> dict:
-        from ..hotel_app.serializers import HallOptions, HallOptionsSerializer
-        from ..openbuffet_app.serializers import (
-            OpenBuffetPackageOptions,
-            OpenBuffetPackageOptionsSerializer,
-        )
-        from ..resturant_app.serializers import MealOptions, MealOptionsSerializer
+        query_prams = self.context["request"].GET
 
-        if hall_options := HallOptions.objects.filter(category=obj):
+        if "hall" in query_prams:
+            hall_options = HallOptions.objects.filter(
+                category=obj, hall=query_prams["hall"]
+            )
             return HallOptionsSerializer(hall_options, many=True).data
-        elif open_buffet_options := OpenBuffetPackageOptions.objects.filter(
-            category=obj
-        ):
+
+        elif "package" in query_prams:
+            open_buffet_options = OpenBuffetPackageOptions.objects.filter(
+                category=obj, package=query_prams["package"]
+            )
             return OpenBuffetPackageOptionsSerializer(
                 open_buffet_options, many=True
             ).data
-        elif meal_options := MealOptions.objects.filter(category=obj):
+
+        elif "meal" in query_prams:
+            meal_options = MealOptions.objects.filter(
+                category=obj, meal=query_prams["meal"]
+            )
             return MealOptionsSerializer(meal_options, many=True).data
+
         else:
             return None
