@@ -9,11 +9,6 @@ from rest_framework.authentication import SessionAuthentication
 
 from business_meal.swagger import CustomOpenAPISchemaGenerator
 
-# Admin settings
-admin.site.site_header = "business_meal"
-admin.site.site_title = "business_meal site admin"
-admin.site.index_title = "business_meal site administration"
-
 # URL settings
 
 main_patterns = i18n_patterns(

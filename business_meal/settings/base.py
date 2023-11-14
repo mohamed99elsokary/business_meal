@@ -261,8 +261,25 @@ ACCOUNT_UNIQUE_EMAIL = True
 PUSH_NOTIFICATION_DEVICE_TYPES = [EXPO_NOTIFICATION]
 MAP_WIDGETS = {
     "GooglePointFieldWidget": (
-        ("zoom", 15),
-        ("mapCenterLocationName", "egypt"),
+        ("zoom", 8),
+        ("mapCenterLocationName", "saudi_arabia"),
     ),
     "GOOGLE_MAP_API_KEY": "AIzaSyDjUKMdu-lMuWjfFTWrh7AStbazp-Vnoww",
 }
+
+
+UNFOLD = {
+    "SITE_TITLE": "Business Meal",
+    "SITE_HEADER": "Business Meal",
+    "SITE_ICON": "https://www.businessmeal-sa.com/images/Logo.svg",
+    "ENVIRONMENT": "business_meal.settings.local.environment_callback",
+    "SIDEBAR": {"show_search": True},
+}
+
+
+def environment_callback(request):
+    is_live = config("PRODUCTION", default=False, cast=bool)
+
+    return (
+        ["Production", "danger"] if is_live else ["local", "success"]
+    )  # info, danger, warning, success
