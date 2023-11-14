@@ -52,6 +52,9 @@ class HallImagesAdmin(ModelAdmin):
 class HallOptionsAdmin(ModelAdmin, TranslationAdmin):
     list_display = ("option", "hall", "hotel", "category")
 
+    def hotel(self, obj):
+        return obj.hall.hotel
+
 
 @admin.register(models.HallAvailableTime)
 class HallAvailableTimeAdmin(ModelAdmin, TranslationAdmin):
