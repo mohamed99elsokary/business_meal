@@ -88,7 +88,7 @@ class AboutAdmin(ModelAdmin, TranslationAdmin):
 
 @admin.register(OptionsCategory)
 class OptionsCategoryAdmin(ModelAdmin, TranslationAdmin):
-    """Admin View for OptionsCategory"""
+    list_display = ("restaurant", "hotel", "name")
 
 
 class FilterForUserAdmin:
