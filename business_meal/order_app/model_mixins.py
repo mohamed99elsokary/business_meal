@@ -1,4 +1,5 @@
 from django.contrib.gis.db.models.functions import Distance
+from django.db.models import Q
 from django.utils import timezone
 from django_lifecycle import (
     AFTER_CREATE,
@@ -9,6 +10,7 @@ from django_lifecycle import (
     hook,
 )
 
+from ..addonsapp.utils import NotificationHandler
 from .utils import payment_refund
 
 
@@ -96,18 +98,6 @@ class OrderMixin(LifecycleModelMixin):
 
         self.save(skip_hooks=True)
 
-    @hook(BEFORE_UPDATE, when="status", has_changed=True)
-    def send_notification(self):
-        from ..addonsapp.utils import NotificationHandler
-
-        NotificationHandler(
-            users=[self.user],
-            title="your order status has been updated",
-            body="Your order status has been updated",
-            is_in_app=True,
-            is_push_notification=True,
-        )
-
     def get_provider_admin_id(self):
         if self.restaurant:
             return self.restaurant.admin.id
@@ -116,11 +106,8 @@ class OrderMixin(LifecycleModelMixin):
         else:
             return None
 
-    @hook(AFTER_SAVE, when="status", is_now="pending_confirmation")
-    def send_notification(self):
-        from django.db.models import Q
-
-        from ..addonsapp.utils import NotificationHandler
+    @hook(BEFORE_UPDATE, when="status", has_changed=True, is_now="pending_confirmation")
+    def send_pending_confirmation_notification(self):
         from ..userapp.models import User
 
         users = User.objects.filter(
@@ -134,6 +121,29 @@ class OrderMixin(LifecycleModelMixin):
             is_push_notification=True,
         )
 
-    @hook(AFTER_SAVE, when="status", was_not="cancelled", is_now="cancelled")
+    @hook(
+        AFTER_SAVE,
+        when="status",
+        has_changed=True,
+        was_not="cancelled",
+        is_now="cancelled",
+    )
     def send_notification(self):
         payment_refund(id=self.gate_way_id, amount=self.total)
+        NotificationHandler(
+            users=[self.user],
+            title="your order status has been cancelled",
+            body="Your order status has been cancelled",
+            is_in_app=True,
+            is_push_notification=True,
+        )
+
+    @hook(BEFORE_UPDATE, when="status", has_changed=True, is_not="cancelled")
+    def send_notification_to_order_user(self):
+        NotificationHandler(
+            users=[self.user],
+            title="your order status has been updated",
+            body="Your order status has been updated",
+            is_in_app=True,
+            is_push_notification=True,
+        )
