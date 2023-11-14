@@ -87,5 +87,5 @@ class AboutAdmin(ModelAdmin, TranslationAdmin):
 
 
 @admin.register(OptionsCategory)
-class OptionsCategoryAdmin(ModelAdmin):
+class OptionsCategoryAdmin(ModelAdmin, TranslationAdmin):
     """Admin View for OptionsCategory"""

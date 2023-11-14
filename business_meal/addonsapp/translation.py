@@ -1,6 +1,13 @@
 from modeltranslation.translator import TranslationOptions, register
 
-from .models import About, Ads, Category, PrivacyPolicy, TermsAndConditions
+from .models import (
+    About,
+    Ads,
+    Category,
+    OptionsCategory,
+    PrivacyPolicy,
+    TermsAndConditions,
+)
 
 
 @register(Category)
@@ -26,3 +33,8 @@ class PrivacyPolicyTranslationOptions(TranslationOptions):
 @register(TermsAndConditions)
 class TermsAndConditionsTranslationOptions(TranslationOptions):
     fields = ("text",)
+
+
+@register(OptionsCategory)
+class TermsAndConditionsTranslationOptions(TranslationOptions):
+    fields = ("name",)
