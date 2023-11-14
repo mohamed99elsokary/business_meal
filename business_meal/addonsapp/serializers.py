@@ -73,6 +73,29 @@ class PromoCodeSerializer(serializers.ModelSerializer):
 
 
 class OptionsCategorySerializer(serializers.ModelSerializer):
+    options = serializers.SerializerMethodField()
+
     class Meta:
         model = models.OptionsCategory
         fields = "__all__"
+
+    def get_options(self, obj) -> dict:
+        from ..hotel_app.serializers import HallOptions, HallOptionsSerializer
+        from ..openbuffet_app.serializers import (
+            OpenBuffetPackageOptions,
+            OpenBuffetPackageOptionsSerializer,
+        )
+        from ..resturant_app.serializers import MealOptions, MealOptionsSerializer
+
+        if hall_options := HallOptions.objects.filter(category=obj):
+            return HallOptionsSerializer(hall_options, many=True).data
+        elif open_buffet_options := OpenBuffetPackageOptions.objects.filter(
+            category=obj
+        ):
+            return OpenBuffetPackageOptionsSerializer(
+                open_buffet_options, many=True
+            ).data
+        elif meal_options := MealOptions.objects.filter(category=obj):
+            return MealOptionsSerializer(meal_options, many=True).data
+        else:
+            return None

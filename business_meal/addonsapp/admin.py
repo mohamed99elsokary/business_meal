@@ -86,6 +86,6 @@ class AboutAdmin(ModelAdmin, TranslationAdmin):
     """Admin View for About"""
 
 
-@admin.register(models.OptionsCategory)
-class OptionsCategoryAdmin(admin.ModelAdmin):
+@admin.register(OptionsCategory)
+class OptionsCategoryAdmin(ModelAdmin):
     """Admin View for OptionsCategory"""

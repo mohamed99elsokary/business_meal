@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from . import models
+from .models import HallOptions
 
 
 class HallAvailableTimeSerializer(serializers.ModelSerializer):
@@ -45,5 +46,5 @@ class HotelHallSerializer(serializers.ModelSerializer):
 
 class HallOptionsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.HallOptions
+        model = HallOptions
         fields = "__all__"

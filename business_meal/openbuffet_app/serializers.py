@@ -1,13 +1,13 @@
 from rest_framework import serializers
 
-from . import models
+from .models import OpenBuffetPackage, OpenBuffetPackageOptions
 
 
 class OpenBuffetPackageSerializer(serializers.ModelSerializer):
     category_name = serializers.SerializerMethodField()
 
     class Meta:
-        model = models.OpenBuffetPackage
+        model = OpenBuffetPackage
         fields = "__all__"
 
     def get_category_name(self, obj):
@@ -16,5 +16,5 @@ class OpenBuffetPackageSerializer(serializers.ModelSerializer):
 
 class OpenBuffetPackageOptionsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.OpenBuffetPackageOptions
+        model = OpenBuffetPackageOptions
         fields = "__all__"

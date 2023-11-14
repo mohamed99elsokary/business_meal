@@ -168,8 +168,16 @@ class PromoCode(models.Model):
 
 class OptionsCategory(models.Model):
     # relations
-    restaurant = models.ForeignKey("resturant_app.Restaurant", on_delete=models.CASCADE)
-    hotel = models.ForeignKey("hotel_app.Hotel", on_delete=models.CASCADE)
+    restaurant = models.ForeignKey(
+        "resturant_app.Restaurant",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        default=None,
+    )
+    hotel = models.ForeignKey(
+        "hotel_app.Hotel", on_delete=models.CASCADE, null=True, blank=True, default=None
+    )
     # fields
     name = models.CharField(max_length=50)
     required_quantity = models.IntegerField(null=True, blank=True, default=None)

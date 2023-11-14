@@ -1,11 +1,11 @@
 from rest_framework import serializers
 
-from . import models
+from .models import Branch, Meal, MealOptions, Restaurant
 
 
 class TinyRestaurantSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.Restaurant
+        model = Restaurant
         fields = ("id", "name", "phone")
 
 
@@ -13,11 +13,11 @@ class RestaurantSerializer(serializers.ModelSerializer):
     lowest_meal_price = serializers.SerializerMethodField()
 
     class Meta:
-        model = models.Restaurant
+        model = Restaurant
         fields = "__all__"
 
     def get_lowest_meal_price(self, obj) -> int:
-        if meals := models.Meal.objects.filter(restaurant=obj):
+        if meals := Meal.objects.filter(restaurant=obj):
             return meals.order_by("price").first().price
         return None
 
@@ -26,7 +26,7 @@ class MealSerializer(serializers.ModelSerializer):
     category_name = serializers.SerializerMethodField()
 
     class Meta:
-        model = models.Meal
+        model = Meal
         fields = "__all__"
 
     def get_category_name(self, obj) -> str:
@@ -35,7 +35,7 @@ class MealSerializer(serializers.ModelSerializer):
 
 class MealOptionsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.MealOptions
+        model = MealOptions
         fields = "__all__"
 
 
@@ -45,7 +45,7 @@ class BranchSerializer(serializers.ModelSerializer):
     restaurant = RestaurantSerializer()
 
     class Meta:
-        model = models.Branch
+        model = Branch
         fields = "__all__"
 
     def get_distance(self, obj) -> float:
