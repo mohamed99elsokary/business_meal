@@ -3,7 +3,7 @@ from django.db import models
 from business_meal.addonsapp.models import Category, OptionsCategory
 from business_meal.resturant_app.models import Restaurant
 
-from .managers import OpenBuffetPackageQuerySet
+from .managers import OpenBuffetPackageOptionsQuerySet, OpenBuffetPackageQuerySet
 
 
 class OpenBuffetPackage(models.Model):
@@ -36,3 +36,6 @@ class OpenBuffetPackageOptions(models.Model):
     option = models.CharField(max_length=50)
     is_additional = models.BooleanField(default=False)
     price = models.IntegerField(default=None, null=True, blank=True)
+    objects: OpenBuffetPackageOptionsQuerySet = (
+        OpenBuffetPackageOptionsQuerySet.as_manager()
+    )

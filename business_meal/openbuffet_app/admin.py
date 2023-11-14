@@ -19,13 +19,7 @@ class OpenBuffetPackage(FilterForUserAdmin, ModelAdmin, TranslationAdmin):
 
 
 @admin.register(models.OpenBuffetPackageOptions)
-class OpenBuffetPackageOptionsAdmin(ModelAdmin, TranslationAdmin):
-    def get_queryset(self, request):
-        qs = super().get_queryset(request)
-        if request.user.is_superuser:
-            return qs
-        return qs.filter(package__restaurant__admin=request.user)
-
+class OpenBuffetPackageOptionsAdmin(FilterForUserAdmin, ModelAdmin, TranslationAdmin):
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if not request.user.is_superuser and db_field.name == "package":
             kwargs["queryset"] = models.OpenBuffetPackage.objects.filter(
