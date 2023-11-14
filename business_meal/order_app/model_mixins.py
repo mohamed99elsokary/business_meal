@@ -1,4 +1,5 @@
 from django.contrib.gis.db.models.functions import Distance
+from django.utils import timezone
 from django_lifecycle import (
     AFTER_CREATE,
     AFTER_SAVE,
@@ -87,6 +88,12 @@ class OrderMixin(LifecycleModelMixin):
     @hook(BEFORE_UPDATE, when="payment_type", has_changed=True)
     def update_is_checkout(self):
         self.is_checkout = True
+        self.ordered_time = timezone.now()
+        if self.payment_type == "online_payment":
+            self.status = "pending_payment"
+        else:
+            self.status = "pending_confirmation"
+
         self.save(skip_hooks=True)
 
     @hook(BEFORE_UPDATE, when="status", has_changed=True)

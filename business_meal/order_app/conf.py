@@ -1,5 +1,3 @@
-from django.db.models import Choices
-
 PENDING_PAYMENT = "pending_payment"
 PENDING_CONFIRMATION = "pending_confirmation"
 CONFIRMED = "confirmed"
