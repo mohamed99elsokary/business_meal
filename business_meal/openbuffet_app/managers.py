@@ -1,4 +1,7 @@
 from django.db import models
 from django.db.models import Count, F, Q
 
-from scoutx.services.queryset_utils import QuerySetDateHelper
+
+class OpenBuffetPackageQuerySet(models.QuerySet):
+    def admin_filter(self, user):
+        return self.filter(restaurant__admin=user)

@@ -3,6 +3,8 @@ from django.db import models
 from business_meal.addonsapp.models import Category, OptionsCategory
 from business_meal.resturant_app.models import Restaurant
 
+from .managers import OpenBuffetPackageQuerySet
+
 
 class OpenBuffetPackage(models.Model):
     # relations
@@ -17,6 +19,7 @@ class OpenBuffetPackage(models.Model):
     clients_count = models.IntegerField()
     image = models.ImageField()
     price = models.IntegerField()
+    objects: OpenBuffetPackageQuerySet = OpenBuffetPackageQuerySet.as_manager()
 
     def __str__(self):
         return f"{self.restaurant.name}"
