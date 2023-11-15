@@ -209,9 +209,16 @@ class CheckoutSerializer(serializers.ModelSerializer):
         model = models.Order
         fields = ("id", "payment_type")
 
+    def validate_branch_is_busy(self, order):
+        if order.branch and not order.branch.is_available:
+            raise serializers.ValidationError(
+                {"detail": "sorry the restaurant is busy at this time"}
+            )
+
     def create(self, validated_data):
         user = self.context["request"].user
         order = get_object_or_404(models.Order, id=validated_data["id"], user=user)
+        self.validate_branch_is_busy(order)
         order.payment_type = validated_data["payment_type"]
         if validated_data["payment_type"] == "online_payment":
             base_url = config("BASE_URL", default=False, cast=str)
