@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 
 from ..addonsapp.serializers import PromoCodeSerializer
+from ..hotel_app.models import HallBusyDate
 from ..hotel_app.serializers import HotelHallSerializer
 from ..openbuffet_app.serializers import OpenBuffetPackageSerializer
 from ..resturant_app.serializers import MealSerializer, TinyRestaurantSerializer
@@ -169,24 +170,31 @@ class UpdateOrderSerializer(serializers.ModelSerializer):
 
     def validate_hall_time(self, instance, validated_data):
         scheduled_time = validated_data["scheduled_time"]
-        same_time_orders = (
-            models.Order.objects.filter(
-                scheduled_time__year=scheduled_time.year,
-                scheduled_time__month=scheduled_time.month,
-                scheduled_time__day=scheduled_time.day,
-                hotel=instance.hotel,
-            )
-            .exclude(id=instance.id)
-            .values_list("id", flat=True)
+        hall = models.OrderItem.objects.filter(order=instance).values("hall")
+        if hall:
+            hall = hall.first()["hall"]
+        same_time_halls = models.OrderItem.objects.filter(
+            hall=hall,
+            order__scheduled_time__year=scheduled_time.year,
+            order__scheduled_time__month=scheduled_time.month,
+            order__scheduled_time__day=scheduled_time.day,
         )
-        if same_time_orders.count() > 0:
-            same_time_halls = models.OrderItem.objects.filter(
-                order__in=same_time_orders, hall=instance.hall
+
+        if same_time_halls.count() > 0:
+            raise serializers.ValidationError(
+                {"detail": "sorry this time is reserved already"}
             )
-            if same_time_halls.count() > 0:
-                raise serializers.ValidationError(
-                    {"detail": "sorry this time is reserved already"}
-                )
+
+        busy_hall_times = HallBusyDate.objects.filter(
+            Hall=hall,
+            date__year=scheduled_time.year,
+            date__month=scheduled_time.month,
+            date__day=scheduled_time.day,
+        )
+        if busy_hall_times.count() > 0:
+            raise serializers.ValidationError(
+                {"detail": "sorry hall is busy at this time"}
+            )
 
     def update(self, instance, validated_data):
         if instance.hotel and "scheduled_time" in validated_data:
