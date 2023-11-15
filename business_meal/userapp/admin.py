@@ -6,6 +6,7 @@ from django.utils.translation import gettext_lazy as _
 from mapwidgets.widgets import GooglePointFieldWidget
 from modeltranslation.admin import TranslationAdmin
 from unfold.admin import ModelAdmin, StackedInline
+from unfold.decorators import display
 
 from business_meal.userapp import models
 
@@ -25,12 +26,7 @@ class AddressInline(StackedInline):
 
 @admin.register(models.User)
 class UserAdmin(BaseUserAdmin):
-    list_display = [
-        "id",
-        "email",
-        "first_name",
-        "last_name",
-    ]
+    list_display = ["user", "id"]
     fieldsets = (
         (None, {"fields": ("username", "password", "is_development_api_user")}),
         (
@@ -51,6 +47,15 @@ class UserAdmin(BaseUserAdmin):
         ),
         (_("Important dates"), {"fields": ("last_login", "date_joined")}),
     )
+
+    @display(header=True)
+    def user(self, obj):
+        initials = (
+            obj.first_name[0] + obj.last_name[0]
+            if obj.first_name and obj.last_name
+            else "BM"
+        )
+        return obj.email, f"{obj.first_name} {obj.last_name}", initials
 
 
 """ Address """
