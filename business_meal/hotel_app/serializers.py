@@ -48,3 +48,7 @@ class HallOptionsSerializer(serializers.ModelSerializer):
     class Meta:
         model = HallOptions
         fields = "__all__"
+
+
+class UnavailableHallDatesSerializer(serializers.Serializer):
+    date = serializers.ListField()
