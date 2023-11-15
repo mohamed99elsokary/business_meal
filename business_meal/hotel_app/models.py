@@ -48,6 +48,16 @@ class HallAvailableTime(models.Model):
         return str(self.pk)
 
 
+class HallBusyDate(models.Model):
+    # relations
+    Hall = models.ForeignKey(Hall, on_delete=models.CASCADE)
+    # fields
+    date = models.DateField(auto_now=False, auto_now_add=False)
+
+    def __str__(self):
+        return str(self.pk)
+
+
 class HallOptions(models.Model):
     # relations
     category = models.ForeignKey(

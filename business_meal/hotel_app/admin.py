@@ -59,3 +59,8 @@ class HallOptionsAdmin(ModelAdmin, TranslationAdmin):
 @admin.register(models.HallAvailableTime)
 class HallAvailableTimeAdmin(ModelAdmin, TranslationAdmin):
     list_display = ("Hall", "name")
+
+
+@admin.register(models.HallBusyDate)
+class HallAvailableTimeAdmin(ModelAdmin):
+    ...
