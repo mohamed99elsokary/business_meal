@@ -63,4 +63,4 @@ class HallAvailableTimeAdmin(ModelAdmin, TranslationAdmin):
 
 @admin.register(models.HallBusyDate)
 class HallAvailableTimeAdmin(ModelAdmin):
-    ...
+    list_display = ("Hall", "date")
