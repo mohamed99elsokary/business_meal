@@ -144,7 +144,7 @@ class OrderMixin(LifecycleModelMixin):
                     * F("quantity")
                 )
             ).aggregate(total_price=Sum("price"))
-        )["total_price"]
+        )["total_price"] or 0
         items_options_price = (
             (
                 OrderItemOption.objects.filter(order_item__order=self).annotate(
@@ -156,7 +156,9 @@ class OrderMixin(LifecycleModelMixin):
                     * F("quantity")
                 )
             ).aggregate(total_price=Sum("price"))
-        )["total_price"]
+        )["total_price"] or 0
+
+        print("___________________________________")
         total_before_promo = order_items_price + items_options_price + self.delivery_fee
         if promo := self.promo:
             if promo.discount_type == "amount":
