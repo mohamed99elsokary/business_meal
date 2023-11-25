@@ -19,6 +19,12 @@ class BranchAdmin(ModelAdmin):
     formfield_overrides = {db_models.PointField: {"widget": GooglePointFieldWidget}}
     list_display = ("restaurant",)
 
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(restaurant__admin=request.user)
+
 
 @admin.register(models.Meal)
 class MealAdmin(ModelAdmin, TranslationAdmin):
