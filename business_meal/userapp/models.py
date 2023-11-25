@@ -24,6 +24,7 @@ class User(UserMixin, CustomModel, AbstractUser):
         max_length=150,
     )
     phone = models.CharField(_("Phone"), max_length=50, null=True, blank=True)
+    new_phone = models.CharField(_("Phone"), max_length=50, null=True, blank=True)
     user_type = models.CharField(
         max_length=50,
         choices=[
