@@ -33,6 +33,8 @@ class OrderAdmin(ModelAdmin, ImportExportModelAdmin):
 class OrderItemAdmin(ModelAdmin):
     """Admin View for OrderMeal"""
 
+    list_display = ("id", "order_id")
+
 
 @admin.register(models.PromoCode)
 class PromoCodeAdmin(ModelAdmin):
