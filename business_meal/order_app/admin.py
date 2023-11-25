@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.db.models import Q
 from import_export.admin import ImportExportModelAdmin
 from unfold.admin import ModelAdmin
 from unfold.contrib.filters.admin import RangeDateFilter
@@ -29,6 +30,14 @@ class OrderAdmin(ModelAdmin, ImportExportModelAdmin):
         "is_paid",
     )
     search_fields = ("id",)
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(
+            Q(Q(restaurant__admin=request.user) | Q(hotel__admin=request.user))
+        )
 
 
 @admin.register(models.OrderItem)
