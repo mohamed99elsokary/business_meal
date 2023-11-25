@@ -157,7 +157,7 @@ class OrderMixin(LifecycleModelMixin):
                 )
             ).aggregate(total_price=Sum("price"))
         )["total_price"]
-        total_before_promo = order_items_price + items_options_price
+        total_before_promo = order_items_price + items_options_price + self.delivery_fee
         if promo := self.promo:
             if promo.discount_type == "amount":
                 total_after_promo = total_before_promo - promo.discount
