@@ -40,7 +40,7 @@ class HallImagesAdmin(ModelAdmin):
         qs = super().get_queryset(request)
         if request.user.is_superuser:
             return qs
-        return qs.filter(hotel__admin=request.user)
+        return qs.filter(hall__hotel__admin=request.user)
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if not request.user.is_superuser and db_field.name == "hotel":
@@ -55,12 +55,30 @@ class HallOptionsAdmin(ModelAdmin, TranslationAdmin):
     def hotel(self, obj):
         return obj.hall.hotel
 
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(hall__hotel__admin=request.user)
+
 
 @admin.register(models.HallAvailableTime)
 class HallAvailableTimeAdmin(ModelAdmin, TranslationAdmin):
     list_display = ("Hall", "name")
 
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(Hall__hotel__admin=request.user)
+
 
 @admin.register(models.HallBusyDate)
 class HallAvailableTimeAdmin(ModelAdmin):
     list_display = ("Hall", "date")
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(Hall__hotel__admin=request.user)

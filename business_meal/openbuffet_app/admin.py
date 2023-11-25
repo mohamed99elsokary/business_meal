@@ -17,6 +17,12 @@ class OpenBuffetPackage(FilterForUserAdmin, ModelAdmin, TranslationAdmin):
 
     list_display = ("name", "restaurant")
 
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(restaurant__admin=request.user)
+
 
 @admin.register(models.OpenBuffetPackageOptions)
 class OpenBuffetPackageOptionsAdmin(FilterForUserAdmin, ModelAdmin, TranslationAdmin):
@@ -31,3 +37,9 @@ class OpenBuffetPackageOptionsAdmin(FilterForUserAdmin, ModelAdmin, TranslationA
 
     def restaurant(self, obj):
         return obj.package.restaurant
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(package__restaurant__admin=request.user)

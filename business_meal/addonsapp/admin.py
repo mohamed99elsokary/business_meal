@@ -1,5 +1,6 @@
 from bit68_notifications.models import BulkNotification, ExpoDevice
 from django.contrib import admin
+from django.db.models import Q
 from modeltranslation.admin import TranslationAdmin
 from solo.admin import SingletonModelAdmin
 from unfold.admin import ModelAdmin, StackedInline
@@ -96,6 +97,14 @@ class AboutAdmin(ModelAdmin, TranslationAdmin):
 @admin.register(OptionsCategory)
 class OptionsCategoryAdmin(ModelAdmin, TranslationAdmin):
     list_display = ("restaurant", "hotel", "name")
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(
+            Q(Q(restaurant__admin=request.user) | Q(hotel__admin=request.user))
+        )
 
 
 class FilterForUserAdmin:

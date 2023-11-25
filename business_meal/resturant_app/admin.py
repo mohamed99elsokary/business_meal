@@ -11,6 +11,12 @@ from . import models
 class RestaurantAdmin(ModelAdmin, TranslationAdmin):
     """Admin View for Restaurant"""
 
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(admin=request.user)
+
 
 @admin.register(models.Branch)
 class BranchAdmin(ModelAdmin):
