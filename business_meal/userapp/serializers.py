@@ -90,6 +90,16 @@ class LoginSerializer(UserToken, serializers.Serializer):
         raise serializers.ValidationError("email or password wrong")
 
 
+class UpdatePhoneSerializer(UserToken, serializers.Serializer):
+    phone = serializers.CharField(write_only=True)
+
+    def create(self, validated_data):
+        user: User = self.context["request"].user
+        user.new_phone = validated_data["phone"]
+        user.send_otp(validated_data["phone"])
+        user.save()
+
+
 class UserDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
