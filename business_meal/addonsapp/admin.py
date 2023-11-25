@@ -39,7 +39,7 @@ class ExpoDeviceAdmin(ModelAdmin):
 
 
 @admin.register(SiteConfiguration)
-class SiteConfigurationAdmin(ModelAdmin, SingletonModelAdmin):
+class SiteConfigurationAdmin(ModelAdmin):
     pass
 
 
