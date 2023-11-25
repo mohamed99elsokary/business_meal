@@ -23,7 +23,8 @@ class UserMixin:
             user = cls.objects.create(
                 phone=validated_data["phone"], email=f"{latest_user.id+1}@email.com"
             )
-        is_send_msg = SiteConfiguration.is_send_msg
+        is_send_msg = SiteConfiguration.objects.first().is_send_msg
+        print(is_send_msg)
 
         user.send_otp(is_send_msg=is_send_msg)
         return user
