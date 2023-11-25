@@ -199,6 +199,7 @@ class UpdateOrderSerializer(serializers.ModelSerializer):
             order__scheduled_time__year=scheduled_time.year,
             order__scheduled_time__month=scheduled_time.month,
             order__scheduled_time__day=scheduled_time.day,
+            order__is_checkout=True,
         )
 
         if same_time_halls.count() > 0:
