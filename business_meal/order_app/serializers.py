@@ -29,8 +29,33 @@ class OrderItemOptionsSerializer(serializers.ModelSerializer):
         exclude = ("order_item",)
 
 
+class TinyOrderItemOptionsSerializer(serializers.ModelSerializer):
+    name = serializers.SerializerMethodField()
+    price = serializers.SerializerMethodField()
+
+    class Meta:
+        model = models.OrderItemOption
+        exclude = ("order_item", "meal_option", "package_option", "hall_option")
+
+    def get_name(self, obj) -> str:
+        if obj.meal_option:
+            return obj.meal_option.option
+        elif obj.package_option:
+            return obj.package_option.option
+        elif obj.hall_option:
+            return obj.hall_option.option
+
+    def get_price(self, obj) -> int:
+        if obj.meal_option:
+            return obj.meal_option.price
+        elif obj.package_option:
+            return obj.package_option.price
+        elif obj.hall_option:
+            return obj.hall_option.price
+
+
 class OrderItemSerializer(serializers.ModelSerializer):
-    options = OrderItemOptionsSerializer(many=True, source="orderitemoption_set")
+    options = TinyOrderItemOptionsSerializer(many=True, source="orderitemoption_set")
     meal = MealSerializer()
     hall = HotelHallSerializer()
     package = OpenBuffetPackageSerializer()
