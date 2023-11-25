@@ -85,17 +85,13 @@ class AddOrderItemSerializer(serializers.ModelSerializer):
             options_data = None
         order_item = super().create(validated_data)
         if options_data:
-            # working code but doesn't execute the order pricing calculation TODO make it bulk again but call the price calculation method
-            #     models.OrderItemOption.objects.bulk_create(
-            #         [
-            #             models.OrderItemOption(order_item=order_item, **option_data)
-            #             for option_data in options_data
-            #         ]
-            #     )
-            for option_data in options_data:
-                models.OrderItemOption.objects.create(
-                    order_item=order_item, **option_data
-                )
+            models.OrderItemOption.objects.bulk_create(
+                [
+                    models.OrderItemOption(order_item=order_item, **option_data)
+                    for option_data in options_data
+                ]
+            )
+            validated_data["order"].recalculate_price()
 
         return order_item
 
