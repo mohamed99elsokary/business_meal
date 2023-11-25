@@ -1,5 +1,6 @@
 from django.contrib.gis.db.models.functions import Distance
-from django.db.models import Q
+from django.db.models import F, Q, Sum, Value
+from django.db.models.functions import Coalesce
 from django.utils import timezone
 from django_lifecycle import (
     AFTER_CREATE,
@@ -28,29 +29,15 @@ class OrderItemsMixin(LifecycleModelMixin):
         order.save()
 
     @hook(AFTER_CREATE)
-    def recalculate_order_price(self):
-        price = 0
-        if self.meal:
-            price = self.meal.price
-        elif self.package:
-            price = self.package.price
-        elif self.hall:
-            price = self.hall.price
-        self.order.total += price * self.quantity
-        self.order.save()
+    def order_price(self):
+        self.order.recalculate_order_price()
 
 
 class OrderItemOptionMixin(LifecycleModelMixin):
     @hook(AFTER_CREATE)
-    def recalculate_order_price(self):
+    def order_price(self):
         order = self.order_item.order
-        price = 0
-        if self.meal_option:
-            price = self.meal_option.price
-        elif self.package_option:
-            price = self.package_option.price
-        order.total += price * self.quantity
-        order.save()
+        order.recalculate_order_price()
 
 
 def get_branch_location(order):
@@ -66,13 +53,8 @@ def get_branch_location(order):
 
 class OrderMixin(LifecycleModelMixin):
     @hook(AFTER_CREATE, when="promo", has_changed=True)
-    def recalculate_order_price(self):
-        if self.promo.discount_type == "amount":
-            self.total -= self.promo.discount
-        else:
-            discount_amount = self.total * (self.promo.discount / 100)
-            self.total -= discount_amount
-        self.save()
+    def order_price(self):
+        self.recalculate_order_price()
 
     @hook(AFTER_SAVE, when="user_address", has_changed=True)
     def calculate_delivery_fees(self):
@@ -147,3 +129,43 @@ class OrderMixin(LifecycleModelMixin):
             is_in_app=True,
             is_push_notification=True,
         )
+
+    def recalculate_order_price(self):
+        from .models import OrderItem, OrderItemOption
+
+        order_items_price = (
+            (
+                OrderItem.objects.filter(order=self).annotate(
+                    price=(
+                        Coalesce(F("meal__price"), Value(0))
+                        + Coalesce(F("package__price"), Value(0))
+                        + Coalesce(F("hall__price"), Value(0))
+                    )
+                    * F("quantity")
+                )
+            ).aggregate(total_price=Sum("price"))
+        )["total_price"]
+        items_options_price = (
+            (
+                OrderItemOption.objects.filter(order_item__order=self).annotate(
+                    price=(
+                        Coalesce(F("meal_option__price"), Value(0))
+                        + Coalesce(F("package_option__price"), Value(0))
+                        + Coalesce(F("hall_option__price"), Value(0))
+                    )
+                    * F("quantity")
+                )
+            ).aggregate(total_price=Sum("price"))
+        )["total_price"]
+        total_before_promo = order_items_price + items_options_price
+        if promo := self.promo:
+            if promo.discount_type == "amount":
+                total_after_promo = total_before_promo - promo.discount
+            else:
+                total_after_promo = (
+                    total_before_promo - promo.discount * total_before_promo
+                )
+            self.total = total_after_promo
+            return self.save()
+        self.total = total_before_promo
+        return self.save()
