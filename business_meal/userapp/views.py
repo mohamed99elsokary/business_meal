@@ -82,11 +82,11 @@ class UserViewSet(
 
     @action(methods=["post"], detail=False)
     def update_phone(self, request, *args, **kwargs):
-        return super().create_clone(request, *args, **kwargs)
+        return super().create_clone(request, data=False, *args, **kwargs)
 
     @action(methods=["post"], detail=False)
     def validate_new_phone(self, request, *args, **kwargs):
-        return super().create_clone(request, *args, **kwargs)
+        return super().create_clone(request, data=False, *args, **kwargs)
 
     @action(methods=["post"], detail=False)
     def verify(self, request, *args, **kwargs):

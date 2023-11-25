@@ -98,6 +98,7 @@ class UpdatePhoneSerializer(UserToken, serializers.Serializer):
         user.new_phone = validated_data["phone"]
         user.send_otp(validated_data["phone"])
         user.save()
+        return {"detail": "otp send successfully"}
 
 
 class UserDataSerializer(serializers.ModelSerializer):
@@ -172,6 +173,7 @@ class ValidateNewPhone(serializers.Serializer):
         user.phone = user.new_phone
         user.new_phone = None
         user.save()
+        return {"detail": "phone changed successfully"}
 
 
 class RegisterLoginSerializer(serializers.ModelSerializer):
