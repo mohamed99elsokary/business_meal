@@ -163,7 +163,7 @@ class ValidateNewPhone(serializers.Serializer):
 
     def validate(self, attrs):
         user = self.context["request"].user
-        if user.otp != attrs["otp"]:
+        if user.verification_code != attrs["otp"]:
             raise serializers.ValidationError({"detail": "wrong otp"})
         return super().validate(attrs)
 
