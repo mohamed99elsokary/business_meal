@@ -17,6 +17,7 @@ class OrderAdmin(ModelAdmin, ImportExportModelAdmin):
     )
     list_filter_submit = True
     list_display = (
+        "id",
         "restaurant",
         "branch",
         "hotel",
@@ -27,6 +28,7 @@ class OrderAdmin(ModelAdmin, ImportExportModelAdmin):
         "is_checkout",
         "is_paid",
     )
+    search_fields = ("id",)
 
 
 @admin.register(models.OrderItem)
