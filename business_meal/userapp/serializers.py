@@ -157,6 +157,23 @@ class VerifySerializer(UserToken, serializers.Serializer):
         return self.create_user_token(user)
 
 
+class ValidateNewPhone(serializers.Serializer):
+    otp = serializers.CharField(write_only=True, default=1234)
+
+    def validate(self, attrs):
+        user = self.context["request"].user
+        if user.otp != attrs["otp"]:
+            raise serializers.ValidationError({"detail": "wrong otp"})
+        return super().validate(attrs)
+
+    def create(self, validated_data):
+        user: User = self.context["request"].user
+        user.otp = None
+        user.phone = user.new_phone
+        user.new_phone = None
+        user.save()
+
+
 class RegisterLoginSerializer(serializers.ModelSerializer):
     phone = serializers.CharField(write_only=True, default="01111155856")
 

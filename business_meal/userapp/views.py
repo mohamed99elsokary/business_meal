@@ -18,6 +18,7 @@ from .serializers import (
     UpdatePhoneSerializer,
     UserDataSerializer,
     UserSerializer,
+    ValidateNewPhone,
     VerifySerializer,
 )
 
@@ -41,7 +42,8 @@ class UserViewSet(
             return GenerateUserSerializer
         elif self.action == "update_phone":
             return UpdatePhoneSerializer
-
+        elif self.action == "validate_new_phone":
+            return ValidateNewPhone
         return super().get_serializer_class()
 
     @action(methods=["post"], detail=False)
@@ -80,6 +82,10 @@ class UserViewSet(
 
     @action(methods=["post"], detail=False)
     def update_phone(self, request, *args, **kwargs):
+        return super().create_clone(request, *args, **kwargs)
+
+    @action(methods=["post"], detail=False)
+    def validate_new_phone(self, request, *args, **kwargs):
         return super().create_clone(request, *args, **kwargs)
 
     @action(methods=["post"], detail=False)
