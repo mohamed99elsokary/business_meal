@@ -52,7 +52,7 @@ def get_branch_location(order):
 
 
 class OrderMixin(LifecycleModelMixin):
-    @hook(AFTER_CREATE, when="promo", has_changed=True)
+    @hook(AFTER_SAVE, when="promo", has_changed=True)
     def order_price(self):
         self.recalculate_order_price()
 
