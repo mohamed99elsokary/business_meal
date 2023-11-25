@@ -1,5 +1,6 @@
 from django.utils.crypto import get_random_string
 
+from ..addonsapp.models import SiteConfiguration
 from .utils import send_sms
 
 
@@ -14,11 +15,11 @@ class UserMixin:
 
     @classmethod
     def create_user_or_login(cls, validated_data):
-        latest_user = cls.objects.last()
         user = cls.objects.filter(phone=validated_data["phone"])
         if user.count() > 0:
             user = user.first()
         else:
+            latest_user = cls.objects.last()
             user = cls.objects.create(
                 phone=validated_data["phone"], email=f"{latest_user.id+1}@email.com"
             )
@@ -26,10 +27,11 @@ class UserMixin:
         return user
 
     def send_otp(self, phone=None):
-        phone = self.phone if phone is None else phone
-        otp = self.set_otp()
-        text = f"Your one time password (OTP) for Business Meal is {otp}"
-        # send_sms(self.phone, text)
+        if SiteConfiguration.is_send_msg:
+            phone = self.phone if phone is None else phone
+            otp = self.set_otp()
+            text = f"Your one time password (OTP) for Business Meal is {otp}"
+            send_sms(self.phone, text)
 
     def set_otp(self):
         otp = get_random_string(length=4, allowed_chars="0123456789")
