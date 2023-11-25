@@ -116,7 +116,8 @@ class AddOrderItemSerializer(serializers.ModelSerializer):
                     for option_data in options_data
                 ]
             )
-            validated_data["order"].recalculate_price()
+            order: models.Order = validated_data["order"]
+            order.recalculate_order_price()
 
         return order_item
 
