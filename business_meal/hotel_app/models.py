@@ -4,6 +4,7 @@ from django.db import models
 from business_meal.userapp.models import User
 
 from ..addonsapp.models import OptionsCategory
+from .managers import HotelQuerySet
 
 
 class Hotel(models.Model):
@@ -19,6 +20,7 @@ class Hotel(models.Model):
     )
     rate = models.IntegerField(default=0)
     location = gis_model.PointField(srid=4326, blank=True, null=True)
+    objects: HotelQuerySet = HotelQuerySet.as_manager()
 
     def __str__(self):
         return self.name

@@ -4,13 +4,13 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 
 from ..order_app.models import OrderItem
-from . import models, serializers
+from . import models, serializers,filters
 
 
 class HotelViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = models.Hotel.objects.all().prefetch_related("hall_set")
     serializer_class = serializers.HotelSerializer
-
+    filterset_class = filters.HotelFilter
 
 class HotelHallViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = (
