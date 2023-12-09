@@ -35,7 +35,7 @@ class Hall(models.Model):
     description = models.TextField(default=None, null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return f"{self.name} {self.hotel.name}"
 
 
 class HallAvailableTime(models.Model):

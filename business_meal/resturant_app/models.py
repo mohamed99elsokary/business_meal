@@ -60,7 +60,7 @@ class Meal(models.Model):
     is_share_box = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.name
+        return f"{self.name} {self.restaurant.name}"
 
 
 class MealOptions(models.Model):
