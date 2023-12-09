@@ -223,8 +223,8 @@ REST_FRAMEWORK = {
 """ JWT Settings"""
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=30),
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=300000),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=300000),
     "AUTH_HEADER_TYPES": ("Token",),
     "USER_ID_FIELD": "id",
     "USER_ID_CLAIM": "user_id",
