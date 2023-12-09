@@ -29,7 +29,17 @@ class OrderAdmin(ModelAdmin, ImportExportModelAdmin):
         "is_checkout",
         "is_paid",
     )
-    search_fields = ("id",)
+    search_fields = (
+        "id",
+        "hotel__id",
+        "hotel__name",
+        "restaurant__id",
+        "restaurant__name",
+        "delivery_user__id",
+        "delivery_user__username",
+        "user__id",
+        "user__username",
+    )
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
