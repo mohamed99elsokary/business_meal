@@ -101,7 +101,7 @@ class AddOrderItemSerializer(serializers.ModelSerializer):
                         "detail": "you can't order from two different hotels in the same order"
                     }
                 )
-        if meal and meal.min_quantity < attrs["quantity"]:
+        if meal and meal.min_quantity > attrs["quantity"]:
             raise serializers.ValidationError(
                 {
                     "detail": "you have to take more quantity to be able to order this item"
