@@ -55,6 +55,9 @@ class Meal(models.Model):
     image = models.ImageField(upload_to="media/")
     description = models.CharField(max_length=50)
     price = models.IntegerField()
+    min_quantity = models.IntegerField(
+        default=1, help_text="min quantity to add the meal to the cart"
+    )
     is_available = models.BooleanField(default=True)
     is_top_dish = models.BooleanField(default=False)
     is_share_box = models.BooleanField(default=False)
