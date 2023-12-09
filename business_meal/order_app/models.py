@@ -70,7 +70,9 @@ class Order(OrderMixin, models.Model):
         default=None, null=True, blank=True
     )
     begin_trip_time = models.DateTimeField(default=None, null=True, blank=True)
-
+    has_sent_mony_to_provider = models.BooleanField(default=False)
+    has_sent_mony_to_driver = models.BooleanField(default=False)
+    invoice_details = models.TextField(null=True, default=None)
     objects: OrderQuerySet = OrderQuerySet.as_manager()
 
 
