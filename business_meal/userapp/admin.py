@@ -2,6 +2,7 @@ from allauth.account.models import EmailAddress
 from django.contrib import admin
 from django.contrib.gis.db import models as db_models
 from django.utils.translation import gettext_lazy as _
+from import_export.admin import ImportExportModelAdmin
 from mapwidgets.widgets import GooglePointFieldWidget
 from modeltranslation.admin import TranslationAdmin
 from unfold.admin import ModelAdmin, StackedInline
@@ -24,7 +25,7 @@ class AddressInline(StackedInline):
 
 
 @admin.register(models.User)
-class UserAdmin(BaseUserAdmin):
+class UserAdmin(BaseUserAdmin, ImportExportModelAdmin):
     list_display = ["user", "id"]
     fieldsets = (
         (None, {"fields": ("username", "password", "is_development_api_user")}),
