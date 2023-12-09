@@ -22,7 +22,7 @@ class OpenBuffetPackage(models.Model):
     objects: OpenBuffetPackageQuerySet = OpenBuffetPackageQuerySet.as_manager()
 
     def __str__(self):
-        return f"{self.restaurant.name}"
+        return f"{self.name}"
 
 
 class OpenBuffetPackageOptions(models.Model):
