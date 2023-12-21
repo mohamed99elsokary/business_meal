@@ -1,4 +1,7 @@
+from django.db.models import Q
 from rest_framework import viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
 
 from . import filters, models, serializers
 
@@ -29,3 +32,15 @@ class BranchViewSet(viewsets.ModelViewSet):
     queryset = models.Branch.objects.all()
     serializer_class = serializers.BranchSerializer
     filterset_class = filters.BranchFilter
+
+    def get_queryset(self):
+        if self.action == "my_branches":
+            return self.queryset.filter(
+                Q(restaurant__admin=self.user) | Q(admin=self.user)
+            )
+        return super().get_queryset()
+
+    @action(methods=["get"], detail=False)
+    def my_branches(self, request, *args, **kwargs):
+        serializer = self.get_serializer(self.get_object())
+        return Response(serializer.data)
