@@ -10,7 +10,7 @@ class Restaurant(models.Model):
     # relations
     admin = models.ForeignKey(User, on_delete=models.CASCADE)
     # fields
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=250)
     phone = models.CharField(max_length=50)
     logo = models.ImageField(upload_to="media/")
     cover_photo = models.ImageField(
@@ -51,7 +51,7 @@ class Meal(models.Model):
         Category, on_delete=models.CASCADE, null=True, blank=True, default=None
     )
     # fields
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=250)
     image = models.ImageField(upload_to="media/")
     description = models.CharField(max_length=50)
     price = models.IntegerField()

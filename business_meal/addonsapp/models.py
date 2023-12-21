@@ -113,7 +113,7 @@ class ContactUs(ContactUsMixin, models.Model):
 
 
 class Ads(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=250)
     photo = models.ImageField(upload_to="media/")
     description = models.CharField(max_length=50)
     link = models.URLField(max_length=500)
@@ -142,7 +142,7 @@ class About(models.Model):
 class Category(models.Model):
     # relations
     image = models.ImageField(upload_to="media/", null=True, blank=True, default=None)
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=250)
     # fields
 
     def __str__(self):
@@ -181,7 +181,7 @@ class OptionsCategory(models.Model):
         "hotel_app.Hotel", on_delete=models.CASCADE, null=True, blank=True, default=None
     )
     # fields
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=250)
     required_quantity = models.IntegerField(null=True, blank=True, default=None)
 
     def __str__(self):

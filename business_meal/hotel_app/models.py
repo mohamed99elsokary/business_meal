@@ -8,7 +8,7 @@ from .managers import HotelQuerySet
 
 
 class Hotel(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=250)
     image = models.ImageField(upload_to="media/", null=True, blank=True, default=None)
     cover_photo = models.ImageField(
         upload_to="media/", null=True, blank=True, default=None
@@ -31,7 +31,7 @@ class Hall(models.Model):
     min = models.IntegerField(help_text="number of guests", default=0)
     max = models.IntegerField(help_text="number of guests", default=0)
     price = models.IntegerField()
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=250)
     description = models.TextField(default=None, null=True, blank=True)
 
     def __str__(self):
@@ -42,7 +42,7 @@ class HallAvailableTime(models.Model):
     # relations
     Hall = models.ForeignKey(Hall, on_delete=models.CASCADE)
     # fields
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=250)
     start_time = models.TimeField(auto_now=False, auto_now_add=False)
     end_time = models.TimeField(auto_now=False, auto_now_add=False)
 

@@ -63,7 +63,7 @@ class User(UserMixin, CustomModel, AbstractUser):
 class Address(models.Model):
     phone = models.CharField(max_length=50)
     location = gis_model.PointField(srid=4326, blank=True, null=True)
-    name = models.CharField(max_length=50, default=None, null=True, blank=True)
+    name = models.CharField(max_length=250, default=None, null=True, blank=True)
     user = models.ForeignKey(
         "User",
         verbose_name=_("User"),

@@ -14,7 +14,7 @@ class OpenBuffetPackage(models.Model):
     )
 
     # fields
-    name = models.CharField(max_length=50, default=None, null=True, blank=True)
+    name = models.CharField(max_length=250, default=None, null=True, blank=True)
     description = models.TextField()
     clients_count = models.IntegerField()
     image = models.ImageField()
