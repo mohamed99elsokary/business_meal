@@ -185,4 +185,8 @@ class OptionsCategory(models.Model):
     required_quantity = models.IntegerField(null=True, blank=True, default=None)
 
     def __str__(self):
-        return self.name
+        if self.restaurant:
+            provider_name = self.restaurant.name
+        elif self.hotel:
+            provider_name = self.hotel.name
+        return f"{self.name} {provider_name}"
