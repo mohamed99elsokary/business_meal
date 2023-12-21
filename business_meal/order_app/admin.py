@@ -14,6 +14,8 @@ class OrderAdmin(ModelAdmin, ImportExportModelAdmin):
         "is_paid",
         "status",
         "payment_type",
+        "has_sent_mony_to_provider",
+        "has_sent_mony_to_driver",
         ("ordered_time", RangeDateFilter),
     )
     list_filter_submit = True
