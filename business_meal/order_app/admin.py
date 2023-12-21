@@ -32,9 +32,11 @@ class OrderAdmin(ModelAdmin, ImportExportModelAdmin):
     search_fields = (
         "id",
         "hotel__id",
-        "hotel__name",
+        "hotel__name_en",
+        "hotel__name_ar",
         "restaurant__id",
-        "restaurant__name",
+        "restaurant__name_en",
+        "restaurant__name_ar",
         "delivery_user__id",
         "delivery_user__username",
         "user__id",
