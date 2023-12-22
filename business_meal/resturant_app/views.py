@@ -35,12 +35,12 @@ class BranchViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         if self.action == "my_branches":
-            return self.queryset.filter(
+            return models.Branch.filter(
                 Q(restaurant__admin=self.request.user) | Q(admin=self.request.user)
             )
         return super().get_queryset()
 
     @action(methods=["get"], detail=False)
     def my_branches(self, request, *args, **kwargs):
-        serializer = self.get_serializer(self.get_queryset())
+        serializer = self.get_serializer(self.get_queryset(), many=True)
         return Response(serializer.data)
