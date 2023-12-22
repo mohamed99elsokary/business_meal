@@ -239,7 +239,12 @@ class CheckoutSerializer(serializers.ModelSerializer):
         fields = ("id", "payment_type")
 
     def validate_branch_is_busy(self, order):
-        if order.branch and not order.branch.is_available:
+        branch = (
+            order.branch
+            if order.branch
+            else models.Branch.objects.filter(restaurant=order.restaurant).first()
+        )
+        if not branch.is_available:
             raise serializers.ValidationError(
                 {"detail": "sorry the restaurant is busy at this time"}
             )
