@@ -35,7 +35,7 @@ class BranchViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         if self.action == "my_branches":
-            return models.Branch.filter(
+            return models.Branch.objects.filter(
                 Q(restaurant__admin=self.request.user) | Q(admin=self.request.user)
             )
         return super().get_queryset()
