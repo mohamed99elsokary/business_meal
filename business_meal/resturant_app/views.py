@@ -42,5 +42,5 @@ class BranchViewSet(viewsets.ModelViewSet):
 
     @action(methods=["get"], detail=False)
     def my_branches(self, request, *args, **kwargs):
-        serializer = self.get_serializer(self.get_object())
+        serializer = self.get_serializer(self.get_queryset())
         return Response(serializer.data)
