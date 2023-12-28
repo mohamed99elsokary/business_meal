@@ -115,7 +115,7 @@ class ContactUs(ContactUsMixin, models.Model):
 class Ads(models.Model):
     name = models.CharField(max_length=250)
     photo = models.ImageField(upload_to="media/")
-    description = models.CharField(max_length=50)
+    description = models.CharField(max_length=250)
     link = models.URLField(max_length=500)
 
     def __str__(self):

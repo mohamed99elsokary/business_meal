@@ -16,7 +16,7 @@ class Restaurant(models.Model):
     cover_photo = models.ImageField(
         upload_to="media/", null=True, blank=True, default=None
     )
-    description = models.CharField(max_length=50)
+    description = models.CharField(max_length=250)
     is_open_buffet = models.BooleanField(default=False)
     is_available = models.BooleanField(default=True)
     rate = models.IntegerField(default=0)
@@ -53,7 +53,7 @@ class Meal(models.Model):
     # fields
     name = models.CharField(max_length=250)
     image = models.ImageField(upload_to="media/")
-    description = models.CharField(max_length=50)
+    description = models.CharField(max_length=250)
     price = models.IntegerField()
     min_quantity = models.IntegerField(
         default=1, help_text="min quantity to add the meal to the cart"
