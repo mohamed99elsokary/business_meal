@@ -29,7 +29,7 @@ class MealOptionsViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class BranchViewSet(viewsets.ModelViewSet):
-    queryset = models.Branch.objects.all().distinct("id")
+    queryset = models.Branch.objects.all().distinct()
     serializer_class = serializers.BranchSerializer
     filterset_class = filters.BranchFilter
 
