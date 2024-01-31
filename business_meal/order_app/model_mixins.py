@@ -69,10 +69,15 @@ class OrderMixin(LifecycleModelMixin):
                 self.total += self.delivery_fee
                 self.save(skip_hooks=True)
 
+    def calculate_loyalty_points(self):
+        self.user.loyalty_points += int(self.price / 8)
+        self.user.save(skip_hooks=True)
+
     @hook(BEFORE_UPDATE, when="payment_type", has_changed=True)
     def update_is_checkout(self):
         self.is_checkout = True
         self.ordered_time = timezone.now()
+        self.calculate_loyalty_points()
         if self.payment_type == "online_payment":
             self.status = "pending_payment"
         else:

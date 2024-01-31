@@ -20,6 +20,11 @@ from . import models
 # SiteConfiguration
 
 
+@admin.register(models.LoyaltyPointsPromoCode)
+class LoyaltyPointsPromoCodeAdmin(ModelAdmin):
+    """Admin View for LoyaltyPointsPromoCode"""
+
+
 @admin.register(PrivacyPolicy)
 class PrivacyPolicyAdmin(ModelAdmin, TranslationAdmin):
     """Admin View for PrivacyPolicy"""

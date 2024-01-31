@@ -150,7 +150,7 @@ class Category(models.Model):
 
 
 class PromoCode(models.Model):
-    code = models.CharField(max_length=50)
+    code = models.CharField(max_length=50, unique=True)
     times_to_use = models.IntegerField()
     used_times = models.IntegerField(default=0)
     is_active = models.BooleanField(default=True)
@@ -190,3 +190,13 @@ class OptionsCategory(models.Model):
         elif self.hotel:
             provider_name = self.hotel.name
         return f"{self.name} {provider_name}"
+
+
+class LoyaltyPointsPromoCode(models.Model):
+    price = models.IntegerField()
+    discount = models.IntegerField()
+    image = models.ImageField(null=True, blank=True, default=None)
+    name = models.CharField(max_length=50, null=True, blank=True, default=None)
+
+    def __str__(self):
+        return self.name

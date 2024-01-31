@@ -31,7 +31,15 @@ class UserAdmin(BaseUserAdmin, ImportExportModelAdmin):
         (None, {"fields": ("username", "password", "is_development_api_user")}),
         (
             _("Personal info"),
-            {"fields": ("first_name", "last_name", "email", "user_type")},
+            {
+                "fields": (
+                    "first_name",
+                    "last_name",
+                    "email",
+                    "user_type",
+                    "loyalty_points",
+                )
+            },
         ),
         (
             _("Permissions"),

@@ -12,7 +12,9 @@ router.register("promocode", views.PromoCodeViewSet)
 router.register("privacy-policy", views.PrivacyPolicyViewSet)
 router.register("about", views.AboutViewSet)
 router.register("terms-and-conditions", views.TermsAndConditionsViewSet)
-router.register('options-categories',views.OptionsCategoryViewSet)
+router.register("options-categories", views.OptionsCategoryViewSet)
+router.register("loyalty-points", views.LoyaltyPointsPromoCodeViewSet)
+
 urlpatterns = [
     path("", include(router.urls)),
 ]

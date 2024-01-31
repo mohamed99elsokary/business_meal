@@ -53,6 +53,7 @@ class User(UserMixin, CustomModel, AbstractUser):
     birth_date = models.DateField(
         auto_now=False, auto_now_add=False, blank=True, null=True, default=None
     )
+    loyalty_points = models.IntegerField(default=0)
     objects = CustomUserManager()
 
     EMAIL_FIELD = "email"

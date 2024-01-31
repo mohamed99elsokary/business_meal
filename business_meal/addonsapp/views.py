@@ -1,6 +1,9 @@
 from django.db.models import Q
 from rest_framework import mixins, viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
 
+from ..services.views import ModelViewSetClones
 from . import filters, models, serializers
 
 """ PageSection """
@@ -70,3 +73,17 @@ class OptionsCategoryViewSet(viewsets.ModelViewSet):
     queryset = models.OptionsCategory.objects.all()
     serializer_class = serializers.OptionsCategorySerializer
     filterset_class = filters.OptionsCategoryFilter
+
+
+class LoyaltyPointsPromoCodeViewSet(viewsets.ReadOnlyModelViewSet, ModelViewSetClones):
+    queryset = models.LoyaltyPointsPromoCode.objects.all()
+    serializer_class = serializers.LoyaltyPointsPromoCodeSerializer
+
+    def get_serializer_class(self):
+        if self.action == "buy_promo":
+            return serializers.BuyPromoSerializer
+        return super().get_serializer_class()
+
+    @action(methods=["post"], detail=False)
+    def buy_promo(self, request, *args, **kwargs):
+        return super().create_clone(request, data=False, *args, **kwargs)
