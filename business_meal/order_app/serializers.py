@@ -202,15 +202,14 @@ class UpdateOrderSerializer(serializers.ModelSerializer):
         hall = models.OrderItem.objects.filter(order=instance).values("hall")
         if hall:
             hall = hall.first()["hall"]
-        same_time_halls = models.OrderItem.objects.filter(
+        if same_time_halls := models.OrderItem.objects.filter(
             hall=hall,
             order__scheduled_time__year=scheduled_time.year,
             order__scheduled_time__month=scheduled_time.month,
             order__scheduled_time__day=scheduled_time.day,
+            order__scheduled_time__hour=scheduled_time.hour,
             order__is_checkout=True,
-        )
-
-        if same_time_halls.count() > 0:
+        ).exists():
             raise serializers.ValidationError(
                 {"detail": "sorry this time is reserved already"}
             )
