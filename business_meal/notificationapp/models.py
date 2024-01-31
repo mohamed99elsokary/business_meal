@@ -19,7 +19,9 @@ class Notification(models.Model):
 
 class UpdatedExpoDevice(ExpoDevice):
     type = models.CharField(
-        max_length=50, choices=[("driver", "driver"), ("customer", "customer")]
+        max_length=50,
+        choices=[("driver", "driver"), ("customer", "customer")],
+        default="customer",
     )
 
     def __str__(self):
