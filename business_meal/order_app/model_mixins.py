@@ -70,7 +70,7 @@ class OrderMixin(LifecycleModelMixin):
                 self.save(skip_hooks=True)
 
     def calculate_loyalty_points(self):
-        self.user.loyalty_points += int(self.price / 8)
+        self.user.loyalty_points += int(self.total / 8)
         self.user.save(skip_hooks=True)
 
     @hook(BEFORE_UPDATE, when="payment_type", has_changed=True)
