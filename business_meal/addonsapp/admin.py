@@ -1,4 +1,3 @@
-from bit68_notifications.models import BulkNotification, ExpoDevice
 from django.contrib import admin
 from django.db.models import Q
 from modeltranslation.admin import TranslationAdmin
@@ -19,24 +18,11 @@ from business_meal.addonsapp.models import (
 from . import models
 
 # SiteConfiguration
-admin.site.unregister(ExpoDevice)
-
-admin.site.unregister(BulkNotification)
-
-
-@admin.register(BulkNotification)
-class BulkNotificationAdmin(ModelAdmin):
-    """Admin View for BulkNotification"""
 
 
 @admin.register(PrivacyPolicy)
 class PrivacyPolicyAdmin(ModelAdmin, TranslationAdmin):
     """Admin View for PrivacyPolicy"""
-
-
-@admin.register(ExpoDevice)
-class ExpoDeviceAdmin(ModelAdmin):
-    """Admin View for ExpoDevice"""
 
 
 @admin.register(SiteConfiguration)

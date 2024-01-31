@@ -1,10 +1,11 @@
-from bit68_notifications.models import ExpoDevice
 from django.contrib.auth import authenticate
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from business_meal.userapp.models import Address, User
+
+from ..notificationapp.models import UpdatedExpoDevice
 
 
 class UserToken(serializers.Serializer):
@@ -24,10 +25,11 @@ class UserToken(serializers.Serializer):
 
 class ExpoDeviceSerializer(serializers.Serializer):
     registration_id = serializers.CharField(write_only=True)
+    type = serializers.CharField(write_only=True)
 
     class Meta:
-        model = ExpoDevice
-        fields = ("registration_id",)
+        model = UpdatedExpoDevice
+        fields = ("registration_id", "type")
 
     def create(self, validated_data):
         user = self.context["request"].user
@@ -37,12 +39,13 @@ class ExpoDeviceSerializer(serializers.Serializer):
         else:
             user = None
 
-        device = ExpoDevice.objects.filter(
+        device = UpdatedExpoDevice.objects.filter(
             registration_id=validated_data["registration_id"]
         ).first()
         if not device:
-            device = ExpoDevice.objects.create(
-                registration_id=validated_data["registration_id"]
+            device = UpdatedExpoDevice.objects.create(
+                registration_id=validated_data["registration_id"],
+                type=validated_data["type"],
             )
         device.user = user
         device.save()

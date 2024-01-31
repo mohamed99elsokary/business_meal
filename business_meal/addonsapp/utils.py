@@ -1,6 +1,4 @@
-from bit68_notifications.models import ExpoDevice
-
-from ..notificationapp.models import Notification
+from ..notificationapp.models import Notification, UpdatedExpoDevice
 
 
 class NotificationHandler:
@@ -14,7 +12,7 @@ class NotificationHandler:
         extra: dict = None,
     ):
         self.users = users
-        self.devices = ExpoDevice.objects.filter(user__in=users)
+        self.devices = UpdatedExpoDevice.objects.filter(user__in=users)
         self.title = title
         self.body = body
         self.extra = extra
