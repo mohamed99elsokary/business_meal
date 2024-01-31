@@ -1,5 +1,6 @@
 from decouple import config
 from django.shortcuts import get_object_or_404
+from django.utils import timezone
 from rest_framework import serializers
 
 from ..addonsapp.serializers import PromoCodeSerializer
@@ -238,6 +239,18 @@ class CheckoutSerializer(serializers.ModelSerializer):
         model = models.Order
         fields = ("id", "payment_type")
 
+    def validate_max_orders(self, order):
+        if order.branch:
+            branch_orders = models.Order.objects.filter(
+                branch=order.branch, ordered_time__date=timezone.now()
+            ).count()
+            if branch_orders >= order.branch.max_orders:
+                raise serializers.ValidationError(
+                    {
+                        "detail": "sorry the the nearest branch has reached the max number of orders"
+                    }
+                )
+
     def validate_branch_is_busy(self, order):
         branch = (
             order.branch
@@ -253,6 +266,7 @@ class CheckoutSerializer(serializers.ModelSerializer):
         user = self.context["request"].user
         order = get_object_or_404(models.Order, id=validated_data["id"], user=user)
         self.validate_branch_is_busy(order)
+        self.validate_max_orders(order)
         order.payment_type = validated_data["payment_type"]
         if validated_data["payment_type"] == "online_payment":
             base_url = config("BASE_URL", default=False, cast=str)
