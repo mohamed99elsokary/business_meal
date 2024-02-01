@@ -104,10 +104,31 @@ class UpdatePhoneSerializer(UserToken, serializers.Serializer):
         return {"detail": "otp send successfully"}
 
 
+class UpdateUserDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = (
+            "id",
+            "username",
+            "phone",
+            "email",
+            "is_new",
+            "birth_date",
+        )
+
+
 class UserDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ("id", "username", "phone", "email", "is_new", "birth_date")
+        fields = (
+            "id",
+            "username",
+            "phone",
+            "email",
+            "is_new",
+            "birth_date",
+            "loyalty_points",
+        )
 
 
 class GenerateUserSerializer(UserToken):

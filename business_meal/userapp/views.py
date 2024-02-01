@@ -16,6 +16,7 @@ from .serializers import (
     LoginSerializer,
     RegisterLoginSerializer,
     UpdatePhoneSerializer,
+    UpdateUserDataSerializer,
     UserDataSerializer,
     UserSerializer,
     ValidateNewPhone,
@@ -32,8 +33,10 @@ class UserViewSet(
     def get_serializer_class(self):
         if self.action == "login":
             return LoginSerializer
-        elif self.action in ["update_me", "get_me"]:
+        elif self.action == "get_me":
             return UserDataSerializer
+        elif self.action == "update_me":
+            return UpdateUserDataSerializer
         elif self.action == "register_login":
             return RegisterLoginSerializer
         elif self.action == "verify":
