@@ -93,6 +93,19 @@ class OrderMixin(LifecycleModelMixin):
         else:
             return None
 
+    @hook(BEFORE_UPDATE, when="status", has_changed=True, is_now="ready_for_pickup")
+    def send_ready_for_pickup_notification(self):
+        from ..userapp.models import User
+
+        users = User.objects.filter(user_type="delivery")
+        NotificationHandler(
+            users=users,
+            title="there are orders waiting for your service",
+            body="there are orders waiting for your service",
+            is_in_app=True,
+            is_push_notification=True,
+        )
+
     @hook(BEFORE_UPDATE, when="status", has_changed=True, is_now="pending_confirmation")
     def send_pending_confirmation_notification(self):
         from ..userapp.models import User
