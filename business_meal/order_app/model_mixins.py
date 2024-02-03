@@ -95,6 +95,8 @@ class OrderMixin(LifecycleModelMixin):
         self.save(skip_hooks=True)
 
     @hook(AFTER_SAVE, when="status", has_changed=True, is_now="pending_confirmation")
+    def send_pending_confirmation_notification_hook(self):
+        self.send_pending_confirmation_notification()
     def send_pending_confirmation_notification(self):
         from ..userapp.models import User
 
