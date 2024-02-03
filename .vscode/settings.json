@@ -13,7 +13,7 @@
   "editor.formatOnSave": true,
   "[python]": {
     "editor.codeActionsOnSave": {
-      "source.organizeImports": true
+      "source.organizeImports": "explicit"
     }
   },
   "liveServer.settings.port": 5501,
