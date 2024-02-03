@@ -99,7 +99,7 @@ class OrderMixin(LifecycleModelMixin):
         self.send_pending_confirmation_notification()
     def send_pending_confirmation_notification(self):
         from ..userapp.models import User
-
+        print(self.get_provider_admin_id())
         users = User.objects.filter(
              id=self.get_provider_admin_id()
         )
