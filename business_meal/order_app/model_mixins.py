@@ -82,15 +82,15 @@ class OrderMixin(LifecycleModelMixin):
             return None
     @hook(BEFORE_UPDATE, when="payment_type", has_changed=True)
     def update_is_checkout(self):
-        self.is_checkout = True
-        self.ordered_time = timezone.now()
         self.calculate_loyalty_points()
+
         if self.payment_type == "online_payment":
             self.status = "pending_payment"
         else:
             self.status = "pending_confirmation"
-
-        self.save()
+        self.ordered_time = timezone.now()
+        self.is_checkout = True
+        self.save(skip_hooks=True)
 
     @hook(AFTER_SAVE, when="status", has_changed=True, is_now="pending_confirmation")
     def send_pending_confirmation_notification(self):
