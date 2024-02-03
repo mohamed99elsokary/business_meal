@@ -111,12 +111,12 @@ class OrderMixin(LifecycleModelMixin):
         from ..userapp.models import User
 
         users = User.objects.filter(
-            Q(user_type="delivery") | Q(id=self.get_provider_admin_id())
+             id=self.get_provider_admin_id()
         )
         NotificationHandler(
             users=users,
-            title="your order status has been updated",
-            body="Your order status has been updated",
+            title="there is an order that waiting your confirmation",
+            body="there is an order that waiting your confirmation",
             is_in_app=True,
             is_push_notification=True,
         )
@@ -140,10 +140,11 @@ class OrderMixin(LifecycleModelMixin):
 
     @hook(BEFORE_UPDATE, when="status", has_changed=True, is_not="cancelled")
     def send_notification_to_order_user(self):
+        notification_data = f"your order status has been updated to {self.status}"
         NotificationHandler(
             users=[self.user],
-            title="your order status has been updated",
-            body="Your order status has been updated",
+            title=notification_data,
+            body=notification_data,
             is_in_app=True,
             is_push_notification=True,
         )
