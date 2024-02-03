@@ -5,6 +5,7 @@ from django.utils import timezone
 from django_lifecycle import (
     AFTER_CREATE,
     AFTER_SAVE,
+    AFTER_UPDATE,
     BEFORE_CREATE,
     BEFORE_SAVE,
     BEFORE_UPDATE,
@@ -80,7 +81,7 @@ class OrderMixin(LifecycleModelMixin):
             return self.hotel.admin.id
         else:
             return None
-    @hook(BEFORE_UPDATE, when="payment_type", has_changed=True)
+    @hook(AFTER_UPDATE, when="payment_type", has_changed=True)
     def update_is_checkout(self):
         self.calculate_loyalty_points()
 
@@ -90,7 +91,8 @@ class OrderMixin(LifecycleModelMixin):
             self.status = "pending_confirmation"
         self.ordered_time = timezone.now()
         self.is_checkout = True
-        self.save(skip_hooks=True)
+        # self.save(skip_hooks=True)
+        self.save()
 
     @hook(AFTER_SAVE, when="status", has_changed=True, is_now="pending_confirmation")
     def send_pending_confirmation_notification(self):
