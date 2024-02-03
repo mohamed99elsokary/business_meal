@@ -123,4 +123,12 @@ def update_order_gate_way_id(request, id):
         )
     else:
         models.Order.objects.filter(id=id).update(gate_way_id=data["id"])
-    return Response({})
+    return render(
+        request,
+        "payment.html",
+        {
+            "total": 100,
+            "url": "en/api/gate-way-id/{id}",
+            "api_key": "sdf",
+        },
+    )
