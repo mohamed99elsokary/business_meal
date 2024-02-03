@@ -6,6 +6,7 @@ from django_lifecycle import (
     AFTER_CREATE,
     AFTER_SAVE,
     BEFORE_CREATE,
+    BEFORE_SAVE,
     BEFORE_UPDATE,
     LifecycleModelMixin,
     hook,
@@ -106,7 +107,7 @@ class OrderMixin(LifecycleModelMixin):
             is_push_notification=True,
         )
 
-    @hook(BEFORE_UPDATE, when="status", has_changed=True, is_now="pending_confirmation")
+    @hook(BEFORE_SAVE, when="status", has_changed=True, is_now="pending_confirmation")
     def send_pending_confirmation_notification(self):
         from ..userapp.models import User
 
