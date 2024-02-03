@@ -84,7 +84,7 @@ class OrderMixin(LifecycleModelMixin):
         else:
             self.status = "pending_confirmation"
 
-        self.save(skip_hooks=True)
+        self.save()
 
     def get_provider_admin_id(self):
         if self.restaurant:
