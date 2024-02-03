@@ -9,8 +9,9 @@ class NotificationHandler:
         body: str,
         is_in_app: bool = False,
         is_push_notification: bool = False,
-        extra: dict = None,
+        extra: dict = {},
     ):
+        extra['sound']='default'
         self.users = users
         self.devices = UpdatedExpoDevice.objects.filter(user__in=users)
         self.title = title
