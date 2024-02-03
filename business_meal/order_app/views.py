@@ -7,7 +7,7 @@ from rest_framework.response import Response
 
 from ..services.views import ModelViewSetClones
 from . import models, serializers
-from .conf import CANCELLED_BY_USER
+from .conf import CANCELLED, CANCELLED_BY_USER
 from .filters import OrderFilter
 from .utils import confirm_payment
 
@@ -55,7 +55,11 @@ class OrderViewSet(
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
         if instance.is_checkout:
-            instance.status = CANCELLED_BY_USER
+            if request.user == instance.user:
+                instance.status = CANCELLED_BY_USER
+            else:
+                instance.status = CANCELLED
+
             instance.save()
         else:
             instance.delete()
