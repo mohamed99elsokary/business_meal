@@ -11,7 +11,6 @@ class NotificationHandler:
         is_push_notification: bool = False,
         extra: dict = {},
     ):
-        extra['sound']='default'
         self.users = users
         self.devices = UpdatedExpoDevice.objects.filter(user__in=users)
         self.title = title
@@ -35,4 +34,6 @@ class NotificationHandler:
 
     def push_notifications(self):
         devices = self.devices.distinct("registration_id")
-        return devices.send_message(title=self.title, body=self.body, extra=self.extra)
+        return devices.send_message(
+            title=self.title, body=self.body, sound="default", extra=self.extra
+        )
