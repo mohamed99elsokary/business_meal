@@ -35,7 +35,7 @@ class UpdatedBulkNotification(BulkNotification):
 
     def send_expo(self):
         handler = UpdatedExpoDevice.objects.filter(type=self.user_type).send_message(
-            self.title, self.body
+            self.title, self.body, sound="default"
         )
 
         if not handler:
