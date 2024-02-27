@@ -7,6 +7,11 @@ from unfold.contrib.filters.admin import RangeDateFilter
 from . import models
 
 
+@admin.register(models.Rates)
+class RatesAdmin(admin.ModelAdmin):
+    """Admin View for Rates"""
+
+
 @admin.register(models.Order)
 class OrderAdmin(ModelAdmin, ImportExportModelAdmin):
     list_filter = (

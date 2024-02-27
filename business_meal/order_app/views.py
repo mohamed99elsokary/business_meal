@@ -119,9 +119,9 @@ def update_order_gate_way_id(request, id):
     data = request.GET
     if confirm_payment(data["id"]):
         order = models.Order.objects.get(id=id)
-        order.is_paid=True
-        order.gate_way_id=data["id"]
-        order.status="pending_confirmation"
+        order.is_paid = True
+        order.gate_way_id = data["id"]
+        order.status = "pending_confirmation"
         order.save()
     else:
         models.Order.objects.filter(id=id).update(gate_way_id=data["id"])
@@ -134,3 +134,8 @@ def update_order_gate_way_id(request, id):
             "api_key": "sdf",
         },
     )
+
+
+class RatesViewSet(viewsets.ModelViewSet):
+    queryset = models.Rates.objects.all()
+    serializer_class = serializers.RatesSerializer

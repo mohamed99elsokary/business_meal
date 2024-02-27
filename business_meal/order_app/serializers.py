@@ -172,6 +172,12 @@ class DetailedOrderSerializer(serializers.ModelSerializer):
         return obj.distance.km if "distance" in dir(obj) and obj.distance else None
 
 
+class RatesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Order
+        fields = "__all__"
+
+
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Order

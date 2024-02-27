@@ -6,6 +6,9 @@ from . import views
 router = DefaultRouter()
 router.register("order", views.OrderViewSet)
 router.register("order-item", views.OrderItemViewSet)
+router.register("rates", views.RatesViewSet)
+
+
 urlpatterns = [
     path("", include(router.urls)),
     path("payment/<int:id>", views.payment),

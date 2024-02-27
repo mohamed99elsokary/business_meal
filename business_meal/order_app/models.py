@@ -131,3 +131,15 @@ class OrderItemOption(OrderItemOptionMixin, models.Model):
         blank=True,
     )
     quantity = models.IntegerField(default=1)
+
+
+class Rates(models.Model):
+    # relations
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    # fields
+    food_rate = models.IntegerField()
+    delivery_rate = models.IntegerField()
+    comment = models.CharField(max_length=500, default=None, null=True, blank=True)
+
+    def __str__(self):
+        return str(self.pk)
