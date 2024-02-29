@@ -174,7 +174,7 @@ class DetailedOrderSerializer(serializers.ModelSerializer):
 
 class RatesSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.Order
+        model = models.Rates
         fields = "__all__"
 
 
