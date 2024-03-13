@@ -37,6 +37,7 @@ class User(UserMixin, CustomModel, AbstractUser):
     # verification
     is_active = models.BooleanField(default=True)
     is_new = models.BooleanField(default=True)
+    daftra_id = models.IntegerField(default=None, null=True, blank=True)
 
     verification_code = models.CharField(
         max_length=10, default=rand_int_4digits, null=True, blank=True
