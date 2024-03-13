@@ -13,6 +13,7 @@ from django_lifecycle import (
     hook,
 )
 
+from ..addonsapp.daftra_integration import create_invoice
 from ..addonsapp.utils import NotificationHandler
 from .utils import payment_refund
 
@@ -74,6 +75,7 @@ class OrderMixin(LifecycleModelMixin):
     def calculate_loyalty_points(self):
         self.user.loyalty_points += int(self.total / 8)
         self.user.save()
+
     def get_provider_admin_id(self):
         if self.restaurant:
             return self.restaurant.admin.id
@@ -81,6 +83,7 @@ class OrderMixin(LifecycleModelMixin):
             return self.hotel.admin.id
         else:
             return None
+
     @hook(AFTER_UPDATE, when="payment_type", has_changed=True)
     def update_is_checkout(self):
         self.calculate_loyalty_points()
@@ -92,17 +95,18 @@ class OrderMixin(LifecycleModelMixin):
             self.send_pending_confirmation_notification()
         self.ordered_time = timezone.now()
         self.is_checkout = True
+        self.daftra_invoice = create_invoice(self.user.daftra_id, self.id)
         self.save(skip_hooks=True)
 
     @hook(AFTER_SAVE, when="status", has_changed=True, is_now="pending_confirmation")
     def send_pending_confirmation_notification_hook(self):
         self.send_pending_confirmation_notification()
+
     def send_pending_confirmation_notification(self):
         from ..userapp.models import User
+
         print(self.get_provider_admin_id())
-        users = User.objects.filter(
-             id=self.get_provider_admin_id()
-        )
+        users = User.objects.filter(id=self.get_provider_admin_id())
         NotificationHandler(
             users=users,
             title="there is an order that waiting your confirmation",
@@ -110,7 +114,6 @@ class OrderMixin(LifecycleModelMixin):
             is_in_app=True,
             is_push_notification=True,
         )
-
 
     @hook(BEFORE_UPDATE, when="status", has_changed=True, is_now="ready_for_pickup")
     def send_ready_for_pickup_notification(self):
@@ -124,7 +127,6 @@ class OrderMixin(LifecycleModelMixin):
             is_in_app=True,
             is_push_notification=True,
         )
-
 
     @hook(
         AFTER_SAVE,
