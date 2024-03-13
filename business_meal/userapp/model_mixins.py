@@ -1,17 +1,17 @@
 from django.utils.crypto import get_random_string
+from django_lifecycle import AFTER_CREATE, LifecycleModelMixin, hook
 
+from ..addonsapp.daftra_integration import create_client
 from ..addonsapp.models import SiteConfiguration
 from .utils import send_sms
 
 
-class UserMixin:
-    # def soft_delete(self):
-    #     self.is_deleted = True
-    #     user_email = self.email
-    #     random = get_random_string(10)
-    #     self.email = user_email + random
-    #     self.save()
-    #     return self
+class UserMixin(LifecycleModelMixin):
+
+    @hook(AFTER_CREATE)
+    def create_daftra_client(self):
+        self.daftra_id = create_client(self.name, self.email)
+        self.save(skip_hooks=True)
 
     @classmethod
     def create_user_or_login(cls, validated_data):
