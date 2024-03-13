@@ -73,6 +73,10 @@ class Order(OrderMixin, models.Model):
     has_sent_mony_to_provider = models.BooleanField(default=False)
     has_sent_mony_to_driver = models.BooleanField(default=False)
     invoice_details = models.TextField(null=True, blank=True, default=None)
+
+    daftra_invoice = models.URLField(
+        max_length=400, default=None, null=True, blank=True
+    )
     objects: OrderQuerySet = OrderQuerySet.as_manager()
 
 
