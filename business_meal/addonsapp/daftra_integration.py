@@ -41,7 +41,7 @@ def get_invoice_pdf(id):
 
 
 def create_invoice(client_id, order_id):
-    from ..order_app.models import OrderItem
+    from ..order_app.models import OrderItem, OrderItemOption
 
     url = f"{base_url}/invoices"
     order_items = OrderItem.objects.filter(order_id=order_id).annotate(
@@ -58,10 +58,30 @@ def create_invoice(client_id, order_id):
             output_field=CharField(),
         ),
     )
+    order_items_options = OrderItemOption.objects.filter(
+        order_item__order_id=order_id
+    ).annotate(
+        name=Case(
+            When(meal_option__isnull=False, then=F("meal_option__option")),
+            When(package_option__isnull=False, then=F("package_option__option")),
+            When(hall_option__isnull=False, then=F("hall_option__option")),
+            output_field=CharField(),
+        ),
+        price=Case(
+            When(meal_option__isnull=False, then=F("meal_option__price")),
+            When(package_option__isnull=False, then=F("package_option__price")),
+            When(hall_option__isnull=False, then=F("hall_option__price")),
+            output_field=CharField(),
+        ),
+    )
     items_array = [
         {"quantity": item.quantity, "item": item.name, "unit_price": item.price}
         for item in order_items
     ]
+    for option in order_items_options:
+        items_array.append(
+            {"quantity": 1, "item": option.name, "unit_price": option.price}
+        )
     payload = json.dumps(
         {
             "Invoice": {"client_id": client_id},
