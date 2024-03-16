@@ -10,7 +10,8 @@ class UserMixin(LifecycleModelMixin):
 
     @hook(AFTER_CREATE)
     def create_daftra_client(self):
-        self.daftra_id = create_client(self.username, self.email)
+        name = self.username or self.email
+        self.daftra_id = create_client(name, self.email)
         self.save(skip_hooks=True)
 
     @classmethod
