@@ -1,7 +1,7 @@
 from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
 from bit68_notifications.models import ExpoDevice
 from dj_rest_auth.registration.views import SocialLoginView
-from django.db.models import Sum
+from django.db.models import Q, Sum
 from rest_framework import mixins, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -30,6 +30,18 @@ class UserViewSet(
     queryset = models.User.objects.all()
     serializer_class = UserSerializer
 
+    def get_queryset(self):
+        if self.action == "my_drivers":
+            return models.User.objects.filter(
+                Q(user_type="delivery"),
+                Q(
+                    Q(restaurant__admin=self.request.user)
+                    | Q(hotel__admin=self.request.user)
+                ),
+            )
+
+        return super().get_queryset()
+
     def get_serializer_class(self):
         if self.action == "login":
             return LoginSerializer
@@ -47,6 +59,8 @@ class UserViewSet(
             return UpdatePhoneSerializer
         elif self.action == "validate_new_phone":
             return ValidateNewPhone
+        elif self.action == "my_drivers":
+            return UserDataSerializer
         return super().get_serializer_class()
 
     @action(methods=["post"], detail=False)
@@ -102,6 +116,10 @@ class UserViewSet(
         )
         total_delivery_fees = user_orders.aggregate(fee=Sum("delivery_fee"))["fee"]
         return Response({"total_delivery": total_delivery_fees})
+
+    @action(methods=["get"], detail=False)
+    def my_drivers(self, request, *args, **kwargs):
+        return super().list_clone(request, *args, **kwargs)
 
 
 class FacebookLogin(SocialLoginView):
