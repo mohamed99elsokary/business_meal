@@ -192,6 +192,7 @@ class UpdateOrderSerializer(serializers.ModelSerializer):
             "promo",
             "note",
             "scheduled_time",
+            "delivery_user",
             "status",
             "scheduled_time",
             "estimated_time",
