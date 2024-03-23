@@ -8,7 +8,9 @@ from .managers import BranchQuerySet
 
 class Restaurant(models.Model):
     # relations
-    admin = models.ForeignKey(User, on_delete=models.CASCADE)
+    admin = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="restaurant_admin"
+    )
     # fields
     name = models.CharField(max_length=250)
     phone = models.CharField(max_length=50)

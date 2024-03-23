@@ -16,7 +16,12 @@ class Hotel(models.Model):
     description = models.TextField()
     address = models.CharField(max_length=50)
     admin = models.ForeignKey(
-        User, on_delete=models.CASCADE, null=True, blank=True, default=None
+        User,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        default=None,
+        related_name="hotel_admin",
     )
     rate = models.IntegerField(default=0)
     location = gis_model.PointField(srid=4326, blank=True, null=True)

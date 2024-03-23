@@ -15,6 +15,22 @@ class CustomUserManager(UserManager):
 
 
 class User(UserMixin, CustomModel, AbstractUser):
+    restaurant = models.ForeignKey(
+        "resturant_app.Restaurant",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        default=None,
+        related_name="driver_restaurant",
+    )
+    hotel = models.ForeignKey(
+        "hotel_app.Hotel",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        default=None,
+        related_name="driver_hotel",
+    )
     email = models.EmailField(
         verbose_name="email address",
         unique=True,
