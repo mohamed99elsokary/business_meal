@@ -38,6 +38,8 @@ class UserAdmin(BaseUserAdmin, ImportExportModelAdmin):
                     "email",
                     "user_type",
                     "loyalty_points",
+                    "restaurant",
+                    "hotel",
                 )
             },
         ),
